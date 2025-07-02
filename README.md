@@ -183,6 +183,7 @@ Each agent exposes specialized endpoints:
 - `/sec_filings`: SEC filing analysis
 - `/market_news`: News sentiment analysis
 - `/social_media`: Social media analysis
+- `/insider_trading`: Insider trading activity tracking
 - `/equity_research`: Research report processing
 - `/fundamental_pricing`: Valuation analysis
 - `/kpi_tracker`: Performance metrics
@@ -195,6 +196,7 @@ Each agent exposes specialized endpoints:
 - `/dark_pool`: Alternative trading analysis
 - `/short_interest`: Short interest tracking
 - `/commodity`: Commodity price and sector impact analysis
+- `/ml_model_testing`: Machine learning model validation
 - `/discovery`: Question generation and coordination
 - `/repository_management`: Code management
 - `/api_key_management`: Credential management
