@@ -97,7 +97,7 @@ class MacroCalendarAgent:
         while True:
             try:
                 await self.process_mcp_messages()
-                await self.fetch_and_process_macro()
+            await self.fetch_and_process_macro()
                 await self.update_health_metrics()
                 sleep_interval = self.calculate_sleep_interval()
                 await asyncio.sleep(sleep_interval)

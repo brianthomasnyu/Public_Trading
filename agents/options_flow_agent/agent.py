@@ -141,7 +141,7 @@ class OptionsFlowAgent:
         }
         
         self.agent_name = "options_flow_agent"
-    
+
     async def check_knowledge_base_for_existing_data(self, ticker: str, event_type: str = None) -> Dict[str, Any]:
         """
         AI Reasoning: Check knowledge base for existing options flow data
@@ -397,7 +397,7 @@ class OptionsFlowAgent:
             })
         
         return next_actions
-    
+
     async def fetch_and_process_options(self):
         """
         AI Reasoning: Fetch and process options flow data from multiple sources
@@ -669,7 +669,7 @@ class OptionsFlowAgent:
         elif "connection" in str(error).lower():
             logger.info("Connection error, retrying with exponential backoff")
             await asyncio.sleep(30)  # Wait 30 seconds before retry
-    
+
     async def listen_for_mcp_messages(self):
         """
         AI Reasoning: Listen for MCP messages from orchestrator and other agents
@@ -692,8 +692,8 @@ class OptionsFlowAgent:
             # if message:
             #     await self.handle_mcp_message(message)
             
-            await asyncio.sleep(1)
-            
+        await asyncio.sleep(1)
+
         except Exception as e:
             logger.error(f"Error in MCP message handling: {e}")
     

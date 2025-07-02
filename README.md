@@ -1,348 +1,328 @@
 # AI Financial Data Aggregation Framework
 
-## 🎯 **Framework Overview**
+## Overview
 
-This is a **comprehensive mold/framework** for building intelligent financial data aggregation platforms. It provides a complete foundation with AI reasoning capabilities, multi-agent coordination, and advanced data processing - designed to be extended and customized for specific production needs.
+This is a comprehensive AI-powered financial data aggregation framework designed for research, analysis, and knowledge base management. The system coordinates multiple intelligent agents to collect, analyze, and synthesize financial data from various sources.
 
 **CRITICAL SYSTEM POLICY: NO TRADING DECISIONS**
-This framework is STRICTLY for data aggregation, analysis, and knowledge base management. NO TRADING DECISIONS are made. All analysis is for informational purposes only.
 
-## 🏗️ **Architecture Overview**
+This framework is STRICTLY for data aggregation, analysis, and knowledge base management. NO TRADING DECISIONS, RECOMMENDATIONS, OR ADVICE are provided. All analysis is for informational and research purposes only.
 
-### **Intelligent Multi-Agent System**
-- **14 Specialized AI Agents** with advanced reasoning capabilities
-- **Central Orchestrator** with intelligent query routing and coordination
-- **MCP Communication System** for seamless agent interaction
-- **Comprehensive Error Handling** and recovery strategies
-- **Data Validation** and quality assurance systems
+## Architecture
 
-### **AI Reasoning Framework**
-Each agent includes sophisticated AI reasoning functions:
-- **Query Classification** and intelligent routing
-- **Pattern Recognition** and anomaly detection
-- **Confidence Scoring** and significance assessment
-- **Next Action Decision Logic** for autonomous operation
-- **MCP Coordination** protocols for multi-agent collaboration
+### Core Components
 
-## 🤖 **Intelligent Agents**
+- **Orchestrator**: Intelligent query routing and agent coordination
+- **Agents**: Specialized AI agents for different data sources and analysis types
+- **Knowledge Base**: Centralized data storage and correlation engine
+- **MCP Communication**: Inter-agent messaging and coordination system
+- **Frontend**: React-based user interface for querying and visualization
 
-### **Data Collection Agents**
-1. **SEC Filings Agent** - Intelligent SEC document analysis and filing tracking
-2. **Market News Agent** - Real-time news monitoring and sentiment analysis
-3. **Social Media NLP Agent** - Advanced sentiment analysis and trend detection
-4. **Equity Research Agent** - Analyst report processing and rating analysis
-5. **Insider Trading Agent** - Form 4 monitoring and insider activity tracking
+### AI Reasoning Capabilities
 
-### **Analysis Agents**
-6. **Fundamental Pricing Agent** - Valuation models and pricing analysis
-7. **KPI Tracker Agent** - Performance metrics monitoring and analysis
-8. **Event Impact Agent** - Market event impact analysis and correlation
-9. **Options Flow Agent** - Options activity analysis and flow patterns
-10. **Macro Calendar Agent** - Economic calendar monitoring and analysis
+The framework implements advanced AI reasoning across all components:
 
-### **Specialized Agents**
-11. **Revenue Geography Agent** - Geographic revenue analysis and trends
-12. **Data Tagging Agent** - Intelligent data classification and organization
-13. **ML Model Testing Agent** - Model validation and performance testing
-14. **Investor Portfolio Agent** - Portfolio tracking and investor analysis
+1. **Query Classification**: Intelligent routing based on query intent and complexity
+2. **Agent Coordination**: MCP-based communication for multi-agent collaboration
+3. **Data Validation**: Quality assessment and anomaly detection
+4. **Pattern Recognition**: Automated identification of trends and correlations
+5. **Knowledge Synthesis**: Integration of data from multiple sources
+6. **Error Handling**: Intelligent recovery and fallback strategies
 
-## 🧠 **AI Reasoning Capabilities**
+## Agents
 
-### **Intelligent Query Processing**
-- **Natural Language Understanding** for complex financial queries
-- **Intent Classification** (research, monitoring, analysis, alert)
-- **Optimal Agent Selection** based on query content and requirements
-- **Priority Assessment** and resource allocation
-- **Confidence Scoring** for all analysis results
+### Data Collection Agents
 
-### **Advanced Pattern Recognition**
-- **Market Pattern Detection** across multiple timeframes
-- **Anomaly Identification** and significance scoring
-- **Correlation Analysis** between different data sources
-- **Trend Analysis** and predictive insights
-- **Risk Assessment** and impact evaluation
+1. **SEC Filings Agent**: Analyzes SEC filings, financial statements, and regulatory documents
+2. **Market News Agent**: Processes market news, announcements, and media coverage
+3. **Social Media NLP Agent**: Analyzes social media sentiment and trends
+4. **Insider Trading Agent**: Tracks insider trading activities and Form 4 filings
+5. **Investor Portfolio Agent**: Monitors institutional and congressional trading activities
 
-### **Autonomous Decision Making**
-- **Next Action Logic** for each agent
-- **Resource Optimization** and load balancing
-- **Error Recovery** and system resilience
-- **Coordination Planning** between agents
-- **Performance Monitoring** and optimization
+### Analysis Agents
 
-## 🔄 **MCP Communication System**
+6. **Equity Research Agent**: Processes analyst reports, ratings, and research coverage
+7. **Fundamental Pricing Agent**: Performs valuation analysis using multiple methodologies
+8. **KPI Tracker Agent**: Monitors key performance indicators and earnings metrics
+9. **Event Impact Agent**: Analyzes the impact of events and catalysts on performance
+10. **Comparative Analysis Agent**: Performs peer, sector, and historical comparisons
+11. **ML Model Testing Agent**: Validates and tests machine learning models and predictions
 
-### **Intelligent Message Routing**
-- **Priority-Based Processing** (urgent, high, normal, low)
-- **Agent Health Monitoring** and availability checking
-- **Message Correlation** and tracking
-- **Delivery Guarantees** with retry logic
-- **Load Balancing** across agent instances
+### Specialized Agents
 
-### **Coordination Protocols**
-- **Agent-to-Agent Communication** for complex workflows
-- **Orchestrator Coordination** for system-wide operations
-- **Event-Driven Messaging** for real-time updates
-- **Correlation Tracking** for related operations
-- **Audit Logging** for compliance and debugging
+12. **Options Flow Agent**: Analyzes options trading patterns and unusual activity
+13. **Macro Calendar Agent**: Tracks economic events and macro trends
+14. **Revenue Geography Agent**: Analyzes geographic revenue distribution
+15. **Data Tagging Agent**: Categorizes and organizes data for better retrieval
+16. **Dark Pool Agent**: Monitors alternative trading venues and OTC activity
+17. **Short Interest Agent**: Tracks short interest and borrowing patterns
 
-## 🛡️ **Error Handling & Recovery**
+### System Management Agents
 
-### **Comprehensive Error Management**
-- **Error Classification** by severity and type
-- **Recovery Strategy Selection** based on error patterns
-- **Exponential Backoff** for transient failures
-- **Fallback Mechanisms** for critical operations
-- **Health Monitoring** and alerting
+18. **Discovery Agent**: Generates context-aware questions and coordinates with other agents
+19. **Repository Management Agent**: Manages codebase, version control, and development workflows
+20. **API Key Management Agent**: Securely manages credentials and access controls
 
-### **System Resilience**
-- **Graceful Degradation** during partial failures
-- **Data Source Fallbacks** for high availability
-- **Agent Restart Logic** for critical failures
-- **Performance Monitoring** and optimization
-- **Resource Management** and load balancing
+## Key Features
 
-## 📊 **Data Validation & Quality**
+### Intelligent Query Processing
+- Natural language query understanding
+- Multi-agent coordination for comprehensive answers
+- Context-aware response generation
+- Confidence scoring and quality assessment
 
-### **Intelligent Data Assessment**
-- **Format Validation** against schemas
-- **Quality Scoring** based on multiple metrics
-- **Freshness Monitoring** and staleness detection
-- **Completeness Assessment** and gap identification
-- **Consistency Checking** across data sources
+### Advanced Data Analysis
+- Multi-source data integration
+- Pattern recognition and trend analysis
+- Anomaly detection and alerting
+- Correlation and causation analysis
 
-### **Quality Assurance**
-- **Source Reliability Scoring** for data providers
-- **Cross-Validation** between multiple sources
-- **Anomaly Detection** in data patterns
-- **Confidence Calculation** for all data points
-- **Recommendation Engine** for data improvements
+### Security and Compliance
+- Encrypted credential management
+- Audit logging and compliance tracking
+- Access control and permission management
+- Data privacy and protection
 
-## 🧪 **Integration Testing**
+### Scalability and Reliability
+- Microservices architecture
+- Docker containerization
+- Health monitoring and auto-recovery
+- Load balancing and performance optimization
 
-### **Comprehensive Test Suite**
-- **Agent Communication Testing** for MCP protocols
-- **Data Flow Validation** across the entire pipeline
-- **Error Handling Verification** for all failure scenarios
-- **Performance Benchmarking** and optimization
-- **End-to-End Workflow Testing**
+## Installation and Setup
 
-### **Quality Assurance**
-- **Automated Test Execution** with CI/CD integration
-- **Performance Regression Testing** for optimization
-- **Load Testing** for scalability validation
-- **Security Testing** for vulnerability assessment
-- **Compliance Testing** for regulatory requirements
+### Prerequisites
+- Python 3.11+
+- Docker and Docker Compose
+- PostgreSQL database
+- Git
 
-## 🚀 **Getting Started**
+### Quick Start
 
-### **Prerequisites**
+1. **Clone the repository**
 ```bash
-# System Requirements
-- Python 3.8+
-- PostgreSQL 12+
-- Docker & Docker Compose
-- 8GB+ RAM (for full system)
-- 50GB+ Storage
-```
-
-### **Quick Start**
-```bash
-# Clone the framework
 git clone <repository-url>
 cd Public_Trading
-
-# Set up environment
-cp .env.example .env
-# Edit .env with your configuration
-
-# Start the system
-docker-compose up -d
-
-# Access the orchestrator
-curl http://localhost:8000/health
 ```
 
-### **Configuration**
+2. **Set up environment variables**
 ```bash
-# Database Configuration
+cp .env.template .env
+# Edit .env with your configuration
+```
+
+3. **Start the system**
+```bash
+docker-compose up -d
+```
+
+4. **Access the frontend**
+```
+http://localhost:3000
+```
+
+### Configuration
+
+The system is configured through environment variables:
+
+```bash
+# Database
 POSTGRES_USER=your_user
 POSTGRES_PASSWORD=your_password
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 POSTGRES_DB=financial_data
 
-# API Keys (as needed)
+# API Keys (for data sources)
 ALPHA_VANTAGE_API_KEY=your_key
+POLYGON_API_KEY=your_key
 FINNHUB_API_KEY=your_key
-# ... other API keys
+
+# Agent Configuration
+ORCHESTRATOR_URL=http://localhost:8000
+AGENT_TIMEOUT=30
+MAX_RETRIES=3
 ```
 
-## 🔧 **Customization & Extension**
+## Usage
 
-### **Adding New Agents**
-```python
-# Template for new agent
-class CustomAgent:
-    def __init__(self):
-        self.agent_name = "custom_agent"
-        # AI reasoning configuration
-    
-    async def run(self):
-        # Main agent loop with AI reasoning
-        pass
-    
-    async def analyze_data(self):
-        # AI-powered data analysis
-        pass
+### Querying the System
+
+The system accepts natural language queries:
+
+```
+"Analyze Apple's recent earnings performance"
+"What's driving Tesla's stock price movement?"
+"Compare tech sector performance to healthcare"
+"Track insider trading activity in Microsoft"
 ```
 
-### **Extending AI Reasoning**
-```python
-# Add new reasoning patterns
-self.reasoning_patterns = {
-    'custom_analysis': {
-        'confidence_threshold': 0.8,
-        'analysis_horizon': 'medium_term',
-        'key_metrics': ['metric1', 'metric2']
-    }
-}
+### API Endpoints
+
+- `POST /query`: Submit analysis queries
+- `GET /timeline`: Retrieve event timeline
+- `GET /agents/status`: Check agent health
+- `POST /mcp`: Inter-agent communication
+
+### Agent-Specific Endpoints
+
+Each agent exposes specialized endpoints:
+
+- `/sec_filings`: SEC filing analysis
+- `/market_news`: News sentiment analysis
+- `/social_media`: Social media analysis
+- `/equity_research`: Research report processing
+- `/fundamental_pricing`: Valuation analysis
+- `/kpi_tracker`: Performance metrics
+- `/event_impact`: Event impact analysis
+- `/options_flow`: Options activity analysis
+- `/macro_calendar`: Economic event tracking
+- `/revenue_geography`: Geographic analysis
+- `/data_tagging`: Data categorization
+- `/investor_portfolio`: Portfolio tracking
+- `/dark_pool`: Alternative trading analysis
+- `/short_interest`: Short interest tracking
+- `/discovery`: Question generation and coordination
+- `/repository_management`: Code management
+- `/api_key_management`: Credential management
+- `/comparative_analysis`: Comparative studies
+
+## Development
+
+### Adding New Agents
+
+1. Create agent directory structure:
+```
+agents/new_agent/
+├── agent.py
+├── main.py
+├── Dockerfile
+├── requirements.txt
+└── README.md
 ```
 
-### **Custom Data Sources**
-```python
-# Integrate new data sources
-async def fetch_custom_data(self):
-    # AI reasoning for data source selection
-    # Quality validation and processing
-    # Integration with knowledge base
-    pass
+2. Implement agent logic with AI reasoning
+3. Add MCP communication capabilities
+4. Update orchestrator agent mapping
+5. Add to docker-compose.yml
+
+### Agent Development Guidelines
+
+- **AI Reasoning**: Implement comprehensive pseudocode for all operations
+- **Error Handling**: Robust error handling and recovery mechanisms
+- **Data Validation**: Validate all inputs and outputs
+- **Security**: Follow security best practices
+- **Documentation**: Comprehensive documentation and examples
+
+### Testing
+
+```bash
+# Run unit tests
+python -m pytest tests/
+
+# Run integration tests
+python -m pytest tests/integration/
+
+# Run agent-specific tests
+python -m pytest tests/agents/
 ```
 
-## 📈 **Performance & Scalability**
+## Monitoring and Analytics
 
-### **Current Capabilities**
-- **14 Intelligent Agents** with AI reasoning
-- **Real-time Data Processing** with sub-second latency
-- **Multi-source Data Integration** with quality validation
-- **Autonomous Operation** with error recovery
-- **Scalable Architecture** for horizontal expansion
+### Health Monitoring
+- Agent health scores and status
+- System performance metrics
+- Error rates and recovery times
+- Data quality assessments
 
-### **Optimization Features**
-- **Parallel Processing** for independent operations
-- **Caching Strategies** for frequently accessed data
-- **Load Balancing** across agent instances
-- **Resource Optimization** based on AI reasoning
-- **Performance Monitoring** and auto-tuning
+### Analytics Dashboard
+- Query processing statistics
+- Agent utilization metrics
+- Data source performance
+- User activity patterns
 
-## 🔒 **Security & Compliance**
+## Security Considerations
 
-### **Security Features**
-- **API Key Management** with secure storage
-- **Data Encryption** for sensitive information
-- **Access Control** and authentication
-- **Audit Logging** for all operations
-- **Vulnerability Scanning** and monitoring
+### Data Protection
+- Encrypted storage of sensitive data
+- Secure API key management
+- Access control and authentication
+- Audit logging and compliance
 
-### **Compliance Framework**
-- **No Trading Policy** enforcement
-- **Data Privacy** compliance (GDPR, CCPA)
-- **Financial Regulations** adherence
-- **Audit Trail** maintenance
-- **Disclosure Requirements** tracking
+### System Security
+- Container security best practices
+- Network isolation and segmentation
+- Regular security updates
+- Vulnerability scanning
 
-## 🎯 **Use Cases & Applications**
+## Compliance and Legal
 
-### **Research & Analysis**
-- **Market Research** with multi-source data
-- **Company Analysis** with comprehensive metrics
-- **Sector Analysis** with correlation insights
-- **Trend Analysis** with predictive capabilities
-- **Risk Assessment** with impact analysis
+### Regulatory Compliance
+- SEC filing data usage compliance
+- Market data licensing requirements
+- Data privacy regulations (GDPR, CCPA)
+- Financial data handling regulations
 
-### **Monitoring & Alerting**
-- **Real-time Monitoring** of market events
-- **Anomaly Detection** with intelligent alerts
-- **Performance Tracking** with KPI monitoring
-- **News Monitoring** with sentiment analysis
-- **Regulatory Compliance** with automated checks
+### Legal Disclaimers
+- NO TRADING ADVICE: This system does not provide trading advice
+- DATA ACCURACY: Data is provided as-is without guarantees
+- USE AT OWN RISK: Users are responsible for their own decisions
+- RESEARCH PURPOSES: All analysis is for research purposes only
 
-### **Data Management**
-- **Knowledge Base** management and organization
-- **Data Quality** assurance and validation
-- **Correlation Analysis** across data sources
-- **Historical Analysis** with pattern recognition
-- **Predictive Analytics** with ML integration
+## Contributing
 
-## 🔮 **Future Roadmap**
+### Development Workflow
+1. Fork the repository
+2. Create feature branch
+3. Implement changes with tests
+4. Submit pull request
+5. Code review and approval
 
-### **Phase 1: Foundation (Current)**
-- ✅ Complete agent framework with AI reasoning
-- ✅ MCP communication system
-- ✅ Error handling and recovery
-- ✅ Data validation and quality assurance
-- ✅ Integration testing framework
+### Code Standards
+- Python PEP 8 compliance
+- Comprehensive documentation
+- Unit test coverage >80%
+- Type hints and validation
 
-### **Phase 2: Enhancement**
-- 🔄 Advanced ML model integration
-- 🔄 Real-time streaming capabilities
-- 🔄 Advanced visualization tools
-- 🔄 Predictive analytics engine
-- 🔄 Performance optimization
+## License
 
-### **Phase 3: Production**
-- 📋 Production deployment tools
-- 📋 Advanced security features
-- 📋 Compliance automation
-- 📋 Enterprise integration
-- 📋 Cloud-native architecture
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🤝 **Contributing**
+## Support
 
-### **Development Guidelines**
-1. **Maintain AI Reasoning Patterns** - Follow established pseudocode structure
-2. **No Trading Decisions** - Strictly enforce the no-trading policy
-3. **Comprehensive Testing** - Include integration and unit tests
-4. **Documentation** - Update README files with new capabilities
-5. **Error Handling** - Implement robust error recovery
-6. **Performance** - Optimize for speed and efficiency
+### Documentation
+- [Framework Overview](FRAMEWORK_SUMMARY.md)
+- [Agent Documentation](agents/)
+- [API Documentation](docs/api.md)
+- [Deployment Guide](docs/deployment.md)
 
-### **Code Standards**
-```python
-# AI Reasoning: Always include detailed pseudocode
-# PSEUDOCODE:
-# 1. Step-by-step reasoning
-# 2. Decision points and logic
-# 3. Error handling considerations
-# 4. NO TRADING DECISIONS - only data analysis
+### Community
+- GitHub Issues for bug reports
+- GitHub Discussions for questions
+- Contributing guidelines for developers
 
-# Include comprehensive error handling
-try:
-    # AI reasoning implementation
-    pass
-except Exception as e:
-    await self.handle_error_recovery(e)
-```
+## Roadmap
 
-## 📄 **License**
+### Phase 1: Core Framework ✅
+- Basic agent architecture
+- MCP communication
+- Data collection and storage
 
-This framework is provided as a foundation for building financial data aggregation systems. It includes comprehensive AI reasoning capabilities, multi-agent coordination, and advanced data processing features.
+### Phase 2: Advanced Analytics 🔄
+- Machine learning integration
+- Advanced pattern recognition
+- Predictive analytics
 
-**Important**: This framework is for educational and development purposes. Users are responsible for ensuring compliance with all applicable laws and regulations when implementing production systems.
+### Phase 3: Cloud Integration 🔄
+- Cloud deployment options
+- Auto-scaling capabilities
+- Multi-region support
 
-## 🆘 **Support**
-
-### **Documentation**
-- **Agent Documentation**: Each agent has detailed README with AI reasoning capabilities
-- **API Documentation**: Comprehensive API documentation with examples
-- **Architecture Guide**: Detailed system architecture and design patterns
-- **Deployment Guide**: Step-by-step deployment instructions
-
-### **Community**
-- **Issues**: Report bugs and request features via GitHub issues
-- **Discussions**: Join community discussions for best practices
-- **Contributions**: Submit pull requests for improvements
-- **Examples**: Share implementation examples and use cases
+### Phase 4: Enterprise Features 🔄
+- Advanced security features
+- Enterprise integrations
+- Custom agent development
 
 ---
 
-**Remember**: This is a **framework/mold** for building intelligent financial data aggregation systems. It provides the foundation, AI reasoning capabilities, and architectural patterns needed to create production-ready systems. The actual implementation, customization, and deployment are the responsibility of the end user. 
+**Remember: This framework is for data aggregation and analysis only. NO TRADING DECISIONS are made by any component of this system.** 

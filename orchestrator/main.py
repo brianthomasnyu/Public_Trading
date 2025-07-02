@@ -105,7 +105,13 @@ class QueryClassifier:
             'revenue_geography': ['geography', 'regional', 'revenue', 'location'],
             'ml_model_testing': ['ml', 'model', 'prediction', 'algorithm'],
             'data_tagging': ['tag', 'categorize', 'classify', 'organize'],
-            'investor_portfolio': ['portfolio', 'investor', 'congress', 'hedge_fund']
+            'investor_portfolio': ['portfolio', 'investor', 'congress', 'hedge_fund'],
+            'discovery': ['question', 'investigation', 'analysis', 'research'],
+            'repository_management': ['code', 'git', 'version', 'repository'],
+            'api_key_management': ['credential', 'api_key', 'password', 'security'],
+            'comparative_analysis': ['compare', 'benchmark', 'peer', 'relative'],
+            'dark_pool': ['dark_pool', 'otc', 'alternative', 'trading'],
+            'short_interest': ['short', 'interest', 'borrow', 'squeeze']
         }
     
     def classify_query(self, query: str, ticker: Optional[str] = None) -> Dict[str, Any]:

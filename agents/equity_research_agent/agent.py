@@ -105,7 +105,7 @@ class EquityResearchAgent:
                 await self.process_mcp_messages()
                 
                 # Fetch and process research reports
-                await self.fetch_and_process_reports()
+            await self.fetch_and_process_reports()
                 
                 # Update health metrics
                 await self.update_health_metrics()
