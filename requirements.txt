@@ -1,0 +1,38 @@
+# FastAPI for web services
+fastapi
+uvicorn
+
+# HTTP requests
+requests
+
+# OpenAI API
+openai
+
+# PostgreSQL and ORM
+psycopg2-binary
+sqlalchemy
+
+# Environment variable management
+python-dotenv
+
+# Data parsing and NLP
+pydantic
+pdfplumber
+PyPDF2
+beautifulsoup4
+spacy
+
+# Async and task management
+aiohttp
+celery
+redis
+
+# Vector search (optional)
+pgvector
+
+# Machine learning
+scikit-learn
+
+# For agent communication (gRPC, optional)
+grpcio
+grpcio-tools 

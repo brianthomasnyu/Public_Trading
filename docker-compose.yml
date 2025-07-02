@@ -1,0 +1,115 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    # PostgreSQL database for the knowledge base
+
+  orchestrator:
+    build: ./orchestrator
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    # Orchestrator service for agent coordination and MCP communication
+
+  # Each agent runs as a separate microservice
+  equity_research_agent:
+    build: ./agents/equity_research_agent
+    env_file: .env
+    depends_on:
+      - db
+    # Ingests and parses equity research reports
+
+  sec_filings_agent:
+    build: ./agents/sec_filings_agent
+    env_file: .env
+    depends_on:
+      - db
+    # Parses SEC filings and extracts financial statements
+
+  market_news_agent:
+    build: ./agents/market_news_agent
+    env_file: .env
+    depends_on:
+      - db
+    # Scrapes and analyzes market news
+
+  insider_trading_agent:
+    build: ./agents/insider_trading_agent
+    env_file: .env
+    depends_on:
+      - db
+    # Monitors insider trading activity
+
+  social_media_nlp_agent:
+    build: ./agents/social_media_nlp_agent
+    env_file: .env
+    depends_on:
+      - db
+    # Analyzes social media for sentiment and claims
+
+  fundamental_pricing_agent:
+    build: ./agents/fundamental_pricing_agent
+    env_file: .env
+    depends_on:
+      - db
+    # Calculates intrinsic value and pricing models
+
+  kpi_tracker_agent:
+    build: ./agents/kpi_tracker_agent
+    env_file: .env
+    depends_on:
+      - db
+    # Tracks KPIs by ticker/industry
+
+  event_impact_agent:
+    build: ./agents/event_impact_agent
+    env_file: .env
+    depends_on:
+      - db
+    # Analyzes event-driven price impacts
+
+  data_tagging_agent:
+    build: ./agents/data_tagging_agent
+    env_file: .env
+    depends_on:
+      - db
+    # Tags and indexes all data/events
+
+  revenue_geography_agent:
+    build: ./agents/revenue_geography_agent
+    env_file: .env
+    depends_on:
+      - db
+    # Maps company sales by region
+
+  macro_calendar_agent:
+    build: ./agents/macro_calendar_agent
+    env_file: .env
+    depends_on:
+      - db
+    # Tags macro calendar events
+
+  options_flow_agent:
+    build: ./agents/options_flow_agent
+    env_file: .env
+    depends_on:
+      - db
+    # Detects options flow and volatility events
+
+  ml_model_testing_agent:
+    build: ./agents/ml_model_testing_agent
+    env_file: .env
+    depends_on:
+      - db
+    # Tests and deploys ML models 
