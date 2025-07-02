@@ -1,0 +1,293 @@
+# ============================================================================
+# FINANCIAL DATA AGGREGATION SYSTEM - ENVIRONMENT CONFIGURATION
+# ============================================================================
+# 
+# CRITICAL SYSTEM POLICY: NO TRADING DECISIONS OR RECOMMENDATIONS
+# This system is STRICTLY for data aggregation, analysis, and knowledge base
+# management. NO TRADING ADVICE is provided by any agent.
+#
+# Copy this file to .env and fill in your actual values
+# ============================================================================
+
+# ============================================================================
+# DATABASE CONFIGURATION
+# ============================================================================
+POSTGRES_USER=financial_user
+POSTGRES_PASSWORD=your_secure_password_here
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=financial_data
+
+# ============================================================================
+# SYSTEM CONFIGURATION
+# ============================================================================
+ORCHESTRATOR_URL=http://localhost:8000
+AGENT_TIMEOUT=30
+MAX_RETRIES=3
+HEALTH_CHECK_INTERVAL=60
+LOG_LEVEL=INFO
+ENABLE_DEBUG_MODE=false
+ENABLE_METRICS_COLLECTION=true
+
+# ============================================================================
+# SECURITY AND ENCRYPTION
+# ============================================================================
+ENCRYPTION_KEY_FILE=master.key
+CREDENTIALS_FILE=credentials.json.enc
+BACKUP_ENABLED=true
+ENABLE_AUDIT_LOGGING=true
+ENABLE_RATE_LIMITING=true
+RATE_LIMIT_REQUESTS_PER_MINUTE=100
+ENABLE_SSL=false
+ENABLE_IP_WHITELISTING=false
+ALLOWED_IPS=127.0.0.1,::1
+
+# ============================================================================
+# API KEYS - CORE MARKET DATA PROVIDERS
+# ============================================================================
+ALPHA_VANTAGE_API_KEY=your_alpha_vantage_key_here
+POLYGON_API_KEY=your_polygon_key_here
+FINNHUB_API_KEY=your_finnhub_key_here
+QUANDL_API_KEY=your_quandl_key_here
+YAHOO_FINANCE_API_KEY=your_yahoo_key_here
+
+# ============================================================================
+# API KEYS - FINANCIAL RESEARCH AND NEWS
+# ============================================================================
+TIPRANKS_API_KEY=your_tipranks_key_here
+ZACKS_API_KEY=your_zacks_key_here
+SEEKING_ALPHA_API_KEY=your_seeking_alpha_key_here
+BLOOMBERG_API_KEY=your_bloomberg_key_here
+REUTERS_API_KEY=your_reuters_key_here
+
+# ============================================================================
+# API KEYS - REGULATORY AND SEC DATA
+# ============================================================================
+SEC_API_KEY=your_sec_key_here
+EDGAR_API_KEY=your_edgar_key_here
+
+# ============================================================================
+# API KEYS - SOCIAL MEDIA AND SENTIMENT
+# ============================================================================
+TWITTER_API_KEY=your_twitter_key_here
+TWITTER_API_SECRET=your_twitter_secret_here
+TWITTER_ACCESS_TOKEN=your_twitter_access_token_here
+TWITTER_ACCESS_SECRET=your_twitter_access_secret_here
+
+REDDIT_CLIENT_ID=your_reddit_client_id_here
+REDDIT_CLIENT_SECRET=your_reddit_client_secret_here
+REDDIT_USER_AGENT=your_reddit_user_agent_here
+
+STOCKTWITS_API_KEY=your_stocktwits_key_here
+
+# ============================================================================
+# API KEYS - OPTIONS AND DERIVATIVES
+# ============================================================================
+CBOE_API_KEY=your_cboe_key_here
+SQUEEZEMETRICS_API_KEY=your_squeezemetrics_key_here
+OPTIONMETRICS_API_KEY=your_optionmetrics_key_here
+
+# ============================================================================
+# API KEYS - ALTERNATIVE DATA AND INSTITUTIONAL
+# ============================================================================
+IEX_API_KEY=your_iex_key_here
+DARK_POOL_API_KEY=your_dark_pool_key_here
+INSIDER_TRADING_API_KEY=your_insider_trading_key_here
+
+# ============================================================================
+# API KEYS - ACADEMIC AND RESEARCH
+# ============================================================================
+ARXIV_API_KEY=your_arxiv_key_here
+PAPERS_WITH_CODE_API_KEY=your_papers_with_code_key_here
+GOOGLE_SCHOLAR_API_KEY=your_google_scholar_key_here
+SSRN_API_KEY=your_ssrn_key_here
+
+# ============================================================================
+# AI REASONING CONFIGURATION - OPENAI
+# ============================================================================
+OPENAI_API_KEY=your_openai_api_key_here
+
+# Model Selection for Different Tasks
+OPENAI_MODEL_GPT4O=gpt-4o
+OPENAI_MODEL_GPTO4_mini=gpt-o4-mini
+OPENAI_MODEL_GPTO3=gpt-o3
+
+# Model Usage Configuration
+OPENAI_MAX_TOKENS=4000
+OPENAI_TEMPERATURE=0.1
+OPENAI_REQUEST_TIMEOUT=30
+
+# AI Reasoning Thresholds
+CONFIDENCE_THRESHOLD=0.7
+RELEVANCE_THRESHOLD=0.6
+QUALITY_THRESHOLD=0.8
+ANOMALY_DETECTION_THRESHOLD=0.75
+MIN_DATA_QUALITY_SCORE=0.6
+
+# AI Reasoning Features
+ENABLE_DATA_VALIDATION=true
+ENABLE_CROSS_REFERENCING=true
+ENABLE_ANOMALY_DETECTION=true
+ENABLE_RISK_ASSESSMENT=true
+ENABLE_INTEGRATION_TESTING=true
+
+# Model Selection Rules
+USE_GPT4O_FOR_CRITICAL_ANALYSIS=true
+USE_GPT4O3_FOR_QUICK_REQUESTS=true
+USE_GPT4_FOR_COMPLEX_REASONING=true
+
+# ============================================================================
+# AGENT UPDATE INTERVALS (in seconds)
+# ============================================================================
+RESEARCH_UPDATE_INTERVAL=3600
+SEC_UPDATE_INTERVAL=1800
+NEWS_UPDATE_INTERVAL=300
+SOCIAL_MEDIA_UPDATE_INTERVAL=600
+INSIDER_UPDATE_INTERVAL=3600
+PRICING_UPDATE_INTERVAL=7200
+KPI_UPDATE_INTERVAL=3600
+IMPACT_UPDATE_INTERVAL=300
+OPTIONS_UPDATE_INTERVAL=300
+ML_UPDATE_INTERVAL=86400
+MACRO_UPDATE_INTERVAL=3600
+GEOGRAPHY_UPDATE_INTERVAL=7200
+TAGGING_UPDATE_INTERVAL=1800
+DARK_POOL_UPDATE_INTERVAL=600
+SHORT_INTEREST_UPDATE_INTERVAL=3600
+COMMODITY_UPDATE_INTERVAL=1800
+PORTFOLIO_UPDATE_INTERVAL=7200
+DISCOVERY_UPDATE_INTERVAL=1800
+REPOSITORY_UPDATE_INTERVAL=3600
+API_KEY_UPDATE_INTERVAL=86400
+COMPARATIVE_UPDATE_INTERVAL=7200
+
+# ============================================================================
+# AGENT ALERT THRESHOLDS
+# ============================================================================
+RESEARCH_ALERT_THRESHOLD=0.2
+SEC_ALERT_THRESHOLD=0.15
+NEWS_ALERT_THRESHOLD=0.25
+SOCIAL_MEDIA_ALERT_THRESHOLD=0.3
+INSIDER_ALERT_THRESHOLD=0.4
+PRICING_ALERT_THRESHOLD=0.1
+KPI_ALERT_THRESHOLD=0.15
+IMPACT_ALERT_THRESHOLD=0.2
+OPTIONS_ALERT_THRESHOLD=0.35
+ML_ALERT_THRESHOLD=0.1
+MACRO_ALERT_THRESHOLD=0.25
+GEOGRAPHY_ALERT_THRESHOLD=0.2
+TAGGING_ALERT_THRESHOLD=0.1
+DARK_POOL_ALERT_THRESHOLD=0.4
+SHORT_INTEREST_ALERT_THRESHOLD=0.3
+COMMODITY_ALERT_THRESHOLD=0.25
+PORTFOLIO_ALERT_THRESHOLD=0.3
+DISCOVERY_ALERT_THRESHOLD=0.2
+REPOSITORY_ALERT_THRESHOLD=0.1
+API_KEY_ALERT_THRESHOLD=0.5
+COMPARATIVE_ALERT_THRESHOLD=0.2
+
+# ============================================================================
+# FRONTEND CONFIGURATION
+# ============================================================================
+FRONTEND_PORT=3000
+FRONTEND_HOST=localhost
+ENABLE_CORS=true
+CORS_ORIGINS=http://localhost:3000,http://localhost:3001
+
+# ============================================================================
+# MONITORING AND ANALYTICS
+# ============================================================================
+ENABLE_HEALTH_MONITORING=true
+ENABLE_PERFORMANCE_METRICS=true
+ENABLE_ERROR_TRACKING=true
+ENABLE_USAGE_ANALYTICS=true
+METRICS_PORT=9090
+METRICS_ENDPOINT=/metrics
+ENABLE_PROMETHEUS_METRICS=true
+
+# ============================================================================
+# BACKUP AND RECOVERY
+# ============================================================================
+BACKUP_SCHEDULE=daily
+BACKUP_RETENTION_DAYS=30
+BACKUP_ENCRYPTION_ENABLED=true
+BACKUP_COMPRESSION_ENABLED=true
+
+# ============================================================================
+# DEVELOPMENT AND TESTING
+# ============================================================================
+ENVIRONMENT=development
+ENABLE_TEST_MODE=false
+ENABLE_MOCK_DATA=false
+ENABLE_DEBUG_ENDPOINTS=false
+
+# ============================================================================
+# INTEGRATION SETTINGS
+# ============================================================================
+KNOWLEDGE_BASE_URL=http://localhost:8000/kb
+ANALYTICS_URL=http://localhost:8000/analytics
+NOTIFICATION_URL=http://localhost:8000/notifications
+ENABLE_WEBHOOKS=false
+WEBHOOK_URL=https://your-webhook-url.com/endpoint
+WEBHOOK_SECRET=your_webhook_secret_here
+
+# ============================================================================
+# NOTIFICATION SETTINGS
+# ============================================================================
+ENABLE_EMAIL_NOTIFICATIONS=false
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=your_email@gmail.com
+SMTP_PASSWORD=your_email_password_here
+
+ENABLE_SLACK_NOTIFICATIONS=false
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/your/webhook/url
+SLACK_CHANNEL=#financial-alerts
+
+# ============================================================================
+# CACHE AND PERFORMANCE
+# ============================================================================
+ENABLE_REDIS_CACHE=false
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_PASSWORD=your_redis_password_here
+REDIS_DB=0
+CACHE_TTL_SECONDS=3600
+ENABLE_QUERY_CACHING=true
+ENABLE_RESULT_CACHING=true
+
+# ============================================================================
+# DATA RETENTION AND CLEANUP
+# ============================================================================
+DATA_RETENTION_DAYS=365
+ENABLE_AUTO_CLEANUP=true
+CLEANUP_SCHEDULE=daily
+ARCHIVE_OLD_DATA=true
+ARCHIVE_RETENTION_DAYS=1095
+
+# ============================================================================
+# SYSTEM LIMITS AND THROTTLING
+# ============================================================================
+MAX_CONCURRENT_REQUESTS=50
+MAX_DATABASE_CONNECTIONS=20
+MAX_FILE_SIZE_MB=100
+MAX_MEMORY_USAGE_MB=2048
+MAX_CPU_USAGE_PERCENT=80
+
+# ============================================================================
+# END OF CONFIGURATION
+# ============================================================================
+#
+# Remember to:
+# 1. Replace all placeholder values with actual credentials
+# 2. Keep this file secure and never commit to version control
+# 3. Use different API keys for development and production
+# 4. Regularly rotate API keys and credentials
+# 5. Monitor API usage and rate limits
+#
+# For production deployment:
+# - Use strong, unique passwords
+# - Enable SSL/TLS encryption
+# - Configure proper firewall rules
+# - Set up monitoring and alerting
+# - Implement proper backup strategies 

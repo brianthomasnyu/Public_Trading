@@ -116,9 +116,11 @@ cd Public_Trading
 
 2. **Set up environment variables**
 ```bash
-cp .env.template .env
+cp env_template.txt .env
 # Edit .env with your configuration
 ```
+
+**📋 For detailed environment setup instructions, see [ENVIRONMENT_SETUP.md](ENVIRONMENT_SETUP.md)**
 
 3. **Start the system**
 ```bash
