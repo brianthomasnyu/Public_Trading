@@ -23,19 +23,19 @@ SYSTEM POLICY: This agent is STRICTLY for data aggregation, analysis, and knowle
 NO TRADING DECISIONS should be made. All analysis is for informational purposes only.
 
 AI REASONING: The agent should:
-1. Track and analyze key performance indicators (KPIs)
-2. Monitor financial and operational metrics
+1. Track and analyze macroeconomic events and surprises
+2. Monitor economic indicators and their impact
 3. Store data in the knowledge base
 4. Trigger other agents when relevant
 5. NEVER make buy/sell recommendations
 6. NEVER provide trading advice
 """
 
-class KPITrackerAgent:
+class MacroCalendarAgent:
     """
-    AI Reasoning: KPI Tracker Agent for intelligent performance monitoring and analysis
-    - Tracks key performance indicators (KPIs) from multiple sources
-    - Analyzes trends and anomalies using AI
+    AI Reasoning: Macro Calendar Agent for intelligent macroeconomic event analysis
+    - Tracks macroeconomic events and surprises using FRED and Trading Economics APIs
+    - Analyzes economic indicators and their impact using AI
     - Determines significance and triggers other agents when appropriate
     - NO TRADING DECISIONS - only data aggregation and analysis
     """
@@ -47,12 +47,16 @@ class KPITrackerAgent:
             f"@{os.getenv('POSTGRES_HOST')}:{os.getenv('POSTGRES_PORT')}/{os.getenv('POSTGRES_DB')}"
         )
         self.engine = create_engine(self.db_url)
-        self.agent_name = "kpi_tracker_agent"
+        self.api_keys = {
+            'fred': os.getenv('FRED_API_KEY'),
+            'trading_economics': os.getenv('TRADING_ECONOMICS_API_KEY')
+        }
+        self.agent_name = "macro_calendar_agent"
         
         # AI Reasoning: Initialize AI reasoning components
         self.ai_reasoning_engine = None  # GPT-4 integration
         self.confidence_threshold = 0.7
-        self.anomaly_threshold = 0.5
+        self.macro_threshold = 0.5
         
         # MCP Communication setup
         self.mcp_endpoint = os.getenv('ORCHESTRATOR_URL', 'http://localhost:8000/mcp')
@@ -65,13 +69,13 @@ class KPITrackerAgent:
         
         # Data quality metrics
         self.data_quality_scores = {}
-        self.processed_kpis_count = 0
+        self.processed_events_count = 0
 
     async def run(self):
         """
         AI Reasoning: Main agent execution loop with intelligent scheduling
         - Monitor for MCP messages and queries
-        - Schedule KPI tracking based on reporting cycles
+        - Schedule macro event tracking based on economic calendar
         - Handle errors and recovery automatically
         - NO TRADING DECISIONS - only data collection
         """
@@ -82,10 +86,10 @@ class KPITrackerAgent:
         # 2. Start MCP message listener in background
         # 3. Begin continuous execution loop:
         #    - Check for urgent MCP messages
-        #    - Fetch and process KPI data
+        #    - Fetch and process macro events
         #    - Update agent health and performance metrics
         #    - Handle any errors with recovery strategies
-        #    - Sleep for appropriate interval based on reporting cycles
+        #    - Sleep for appropriate interval based on economic calendar
         # 4. Monitor system resources and adjust processing frequency
         # 5. Log all activities for audit trail
         # 6. NO TRADING DECISIONS - only data aggregation
@@ -93,7 +97,7 @@ class KPITrackerAgent:
         while True:
             try:
                 await self.process_mcp_messages()
-                await self.fetch_and_process_kpis()
+                await self.fetch_and_process_macro()
                 await self.update_health_metrics()
                 sleep_interval = self.calculate_sleep_interval()
                 await asyncio.sleep(sleep_interval)
@@ -101,292 +105,289 @@ class KPITrackerAgent:
                 await self.handle_error(e, "main_loop")
                 await asyncio.sleep(60)
 
-    async def fetch_and_process_kpis(self):
+    async def fetch_and_process_macro(self):
         """
-        AI Reasoning: Intelligent KPI tracking and processing
-        - Track key performance indicators from multiple sources
-        - Use AI to determine if KPIs are already in knowledge base
-        - Analyze trends and identify anomalies
+        AI Reasoning: Intelligent macroeconomic event tracking and processing
+        - Track macroeconomic events and surprises (CPI, NFP, FOMC)
+        - Use AI to determine if events are already in knowledge base
+        - Analyze economic indicators and their impact
         - Determine significance and trigger other agents
         - NO TRADING DECISIONS - only data analysis
         """
-        # PSEUDOCODE for intelligent KPI processing:
+        # PSEUDOCODE for intelligent macro processing:
         # 1. AI REASONING FOR DATA EXISTENCE:
-        #    - Use GPT-4 to check if KPI data is already in knowledge base
-        #    - Compare with existing knowledge base entries for same metrics
-        #    - Determine if new data adds value or is redundant
+        #    - Use GPT-4 to check if macro events are already in knowledge base
+        #    - Compare with existing knowledge base entries for same events
+        #    - Determine if new events add value or are redundant
         
-        # 2. KPI EXTRACTION:
-        #    - AI extracts key performance indicators from financial reports
-        #    - Identify revenue, profit, growth, and efficiency metrics
-        #    - Extract operational KPIs and industry-specific metrics
-        #    - Calculate derived KPIs and ratios
+        # 2. MACRO EVENT TRACKING:
+        #    - AI tracks macroeconomic events and surprises (CPI, NFP, FOMC)
+        #    - Identify economic indicators and their significance
+        #    - Extract key economic entities and relationships
+        #    - Calculate surprise factors and market impact
         
-        # 3. TREND ANALYSIS:
-        #    - AI analyzes KPI trends over time
-        #    - Identify patterns, seasonality, and cyclical behavior
-        #    - Compare with historical performance and benchmarks
-        #    - Assess trend significance and confidence levels
+        # 3. ECONOMIC ANALYSIS:
+        #    - AI analyzes economic indicators and their impact
+        #    - Compare actual vs expected economic data
+        #    - Identify economic trends and patterns
+        #    - Assess economic conditions and outlook
         
-        # 4. ANOMALY DETECTION:
-        #    - AI identifies unusual KPI movements and outliers
-        #    - Detect statistical anomalies and unexpected changes
-        #    - Assess anomaly severity and potential impact
-        #    - Flag anomalies for further investigation
+        # 4. NEXT ACTION DECISION:
+        #    - If significant macro surprises detected → trigger equity research agent
+        #    - If unusual economic patterns → trigger event impact agent
+        #    - If policy changes identified → trigger multiple analysis agents
         
-        # 5. NEXT ACTION DECISION:
-        #    - If significant KPI changes detected → trigger equity research agent
-        #    - If unusual financial metrics → trigger SEC filings agent
-        #    - If operational anomalies → trigger event impact agent
+        # 5. IMPACT ASSESSMENT:
+        #    - AI assesses potential impact of macro events on markets
+        #    - Identify affected sectors and companies
+        #    - Analyze historical impact patterns
+        #    - Calculate impact probability and magnitude
         
-        # 6. BENCHMARK COMPARISON:
-        #    - AI compares KPIs with industry benchmarks and peers
-        #    - Identify relative performance and competitive position
-        #    - Assess benchmark quality and relevance
-        #    - Calculate performance gaps and opportunities
+        # 6. TREND ANALYSIS:
+        #    - AI analyzes macroeconomic trends over time
+        #    - Identify economic cycles and patterns
+        #    - Compare with historical economic data
+        #    - Assess economic policy implications
         
         # 7. DATA STORAGE AND TRIGGERS:
-        #    - Store processed KPI data in knowledge base with metadata
+        #    - Store processed macro data in knowledge base with metadata
         #    - Send MCP messages to relevant agents
         #    - Update data quality scores
         #    - Log processing results for audit trail
         
-        logger.info("Fetching and processing KPI data")
-        # TODO: Implement the above pseudocode with real KPI tracking integration
+        logger.info("Fetching and processing macroeconomic events")
+        # TODO: Implement the above pseudocode with real FRED/Trading Economics API integration
         pass
 
-    async def ai_reasoning_for_data_existence(self, kpi_data: Dict[str, Any]) -> Dict[str, Any]:
+    async def ai_reasoning_for_data_existence(self, macro_data: Dict[str, Any]) -> Dict[str, Any]:
         """
-        AI Reasoning: Check if KPI data is already in knowledge base
-        - Use GPT-4 to analyze KPI data semantically
+        AI Reasoning: Check if macro events are already in knowledge base
+        - Use GPT-4 to analyze macro data semantically
         - Compare with existing knowledge base entries
-        - Determine if new data adds value
+        - Determine if new events add value
         - NO TRADING DECISIONS - only data validation
         """
-        # PSEUDOCODE for KPI Tracker specific data existence check:
-        # 1. Extract KPI metrics, time periods, and key parameters from KPI data
-        # 2. Query knowledge base for similar KPI data or metrics
-        # 3. Use GPT-4 to compare new vs existing KPI data for accuracy and completeness
-        # 4. Check if KPI data has been updated, verified, or is still current
-        # 5. Calculate similarity score based on KPI overlap and time periods
-        # 6. Determine if new data adds value (updated metrics, new time period, etc.)
+        # PSEUDOCODE for Macro Calendar specific data existence check:
+        # 1. Extract macro events, indicators, and key parameters from macro data
+        # 2. Query knowledge base for similar macro events or economic data
+        # 3. Use GPT-4 to compare new vs existing events for accuracy and completeness
+        # 4. Check if events have been updated, verified, or are still current
+        # 5. Calculate similarity score based on event overlap and economic data
+        # 6. Determine if new data adds value (new events, updated indicators, etc.)
         # 7. Return analysis with confidence score and reasoning
         # 8. NO TRADING DECISIONS - only data comparison
         
         return {
             'exists_in_kb': False,
-            'kpi_status': 'current',
+            'macro_status': 'current',
             'similarity_score': 0.0,
             'confidence': 0.8,
-            'reasoning': 'New KPI data identified',
+            'reasoning': 'New macro event identified',
             'recommended_action': 'process_and_analyze'
         }
 
-    async def extract_kpis(self, financial_data: Dict[str, Any]) -> Dict[str, Any]:
+    async def track_macro_events(self, economic_data: Dict[str, Any]) -> Dict[str, Any]:
         """
-        AI Reasoning: Extract key performance indicators from financial data
-        - Identify revenue, profit, growth, and efficiency metrics
-        - NO TRADING DECISIONS - only KPI extraction
+        AI Reasoning: Track macroeconomic events and surprises
+        - Identify economic indicators and their significance
+        - NO TRADING DECISIONS - only event tracking
         """
-        # PSEUDOCODE for KPI Tracker specific KPI extraction:
-        # 1. Use GPT-4 to identify and extract key performance indicators
-        # 2. Calculate financial KPIs (revenue growth, profit margins, ROE, ROA)
-        # 3. Extract operational KPIs (efficiency ratios, productivity metrics)
-        # 4. Identify industry-specific KPIs and benchmarks
-        # 5. Calculate derived KPIs and composite metrics
-        # 6. Assess data quality and completeness for each KPI
-        # 7. Return structured KPI data with metadata and confidence scores
-        # 8. NO TRADING DECISIONS - only KPI parsing
+        # PSEUDOCODE for Macro Calendar specific event tracking:
+        # 1. Use GPT-4 to analyze economic data and identify macro events
+        # 2. Track key economic indicators (CPI, NFP, FOMC, GDP, etc.)
+        # 3. Calculate surprise factors and market impact
+        # 4. Identify key economic entities and relationships
+        # 5. Assess data quality and completeness for each event
+        # 6. Return structured macro event data with metadata and confidence scores
+        # 7. NO TRADING DECISIONS - only tracking
         
         return {
-            'revenue_growth': 0.08,
-            'profit_margin': 0.15,
-            'roe': 0.12,
-            'roa': 0.08,
-            'efficiency_ratio': 0.65,
+            'cpi_surprise': 0.2,
+            'nfp_surprise': -0.1,
+            'fomc_decision': 'hold',
+            'gdp_growth': 0.03,
+            'significance_score': 0.7,
             'confidence': 0.8,
-            'extraction_confidence': 0.9
+            'tracking_confidence': 0.9
         }
 
-    async def analyze_trends(self, kpi_data: List[Dict[str, Any]]) -> Dict[str, Any]:
+    async def analyze_economic_impact(self, macro_data: List[Dict[str, Any]]) -> Dict[str, Any]:
         """
-        AI Reasoning: Analyze KPI trends over time
-        - Identify patterns, seasonality, and cyclical behavior
-        - NO TRADING DECISIONS - only trend analysis
+        AI Reasoning: Analyze economic indicators and their impact
+        - Compare actual vs expected economic data
+        - NO TRADING DECISIONS - only impact analysis
         """
-        # PSEUDOCODE for KPI Tracker specific trend analysis:
-        # 1. Use GPT-4 to analyze KPI trends and patterns over time
-        # 2. Identify seasonal patterns and cyclical behavior
-        # 3. Detect trend direction and strength (increasing, decreasing, stable)
-        # 4. Calculate trend significance and confidence levels
-        # 5. Compare with historical performance and expectations
-        # 6. Identify trend acceleration or deceleration
-        # 7. Return trend analysis with predictions and confidence
-        # 8. NO TRADING DECISIONS - only trend evaluation
+        # PSEUDOCODE for Macro Calendar specific impact analysis:
+        # 1. Use GPT-4 to analyze economic indicators and their market impact
+        # 2. Compare actual vs expected economic data
+        # 3. Identify economic trends and patterns
+        # 4. Assess economic conditions and outlook
+        # 5. Calculate impact significance and confidence levels
+        # 6. Return impact analysis with predictions and confidence
+        # 7. NO TRADING DECISIONS - only impact evaluation
         
         return {
-            'trend_direction': 'increasing',
-            'trend_strength': 0.7,
-            'seasonality': 'moderate',
+            'impact_direction': 'positive',
+            'impact_strength': 0.6,
+            'economic_trends': ['inflation_decline', 'employment_growth'],
             'confidence': 0.8,
-            'prediction': 'continued_growth',
+            'prediction': 'continued_economic_growth',
             'analysis_confidence': 0.8
         }
 
-    async def detect_anomalies(self, kpi_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    async def assess_macro_surprises(self, macro_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """
-        AI Reasoning: Identify unusual KPI movements and outliers
-        - Detect statistical anomalies and unexpected changes
-        - NO TRADING DECISIONS - only anomaly detection
+        AI Reasoning: Identify significant macro surprises and their impact
+        - Detect unusual economic patterns and deviations
+        - NO TRADING DECISIONS - only surprise assessment
         """
-        # PSEUDOCODE for KPI Tracker specific anomaly detection:
-        # 1. Use GPT-4 to identify statistical anomalies in KPI data
-        # 2. Detect unexpected changes and outliers
-        # 3. Assess anomaly severity and potential impact
-        # 4. Compare with historical patterns and expectations
-        # 5. Identify potential causes and contributing factors
-        # 6. Flag anomalies for further investigation
-        # 7. Return anomaly analysis with severity and confidence
-        # 8. NO TRADING DECISIONS - only anomaly identification
+        # PSEUDOCODE for Macro Calendar specific surprise assessment:
+        # 1. Use GPT-4 to identify significant macro surprises
+        # 2. Detect unusual economic patterns and deviations
+        # 3. Assess surprise magnitude and significance
+        # 4. Compare with historical surprise patterns
+        # 5. Identify potential market impact and affected sectors
+        # 6. Return surprise assessment with severity and confidence
+        # 7. NO TRADING DECISIONS - only surprise identification
         
-        anomalies = []
-        # Example anomaly detection logic
-        if kpi_data.get('revenue_growth', 0) > 0.2:
-            anomalies.append({
-                'kpi': 'revenue_growth',
+        surprises = []
+        # Example surprise assessment logic
+        if macro_data.get('cpi_surprise', 0) > 0.3:
+            surprises.append({
+                'indicator': 'cpi',
+                'surprise_type': 'inflation_higher_than_expected',
                 'severity': 'high',
-                'deviation': 0.15,
+                'description': 'Significant inflation surprise',
                 'confidence': 0.8,
-                'potential_causes': ['new_product', 'market_expansion']
+                'potential_impact': 'rate_hike_expectations'
             })
-        return anomalies
+        return surprises
 
-    async def compare_benchmarks(self, kpi_data: Dict[str, Any]) -> Dict[str, Any]:
+    async def compare_economic_indicators(self, macro_data: Dict[str, Any]) -> Dict[str, Any]:
         """
-        AI Reasoning: Compare KPIs with industry benchmarks and peers
-        - Identify relative performance and competitive position
-        - NO TRADING DECISIONS - only benchmark comparison
+        AI Reasoning: Compare economic indicators with benchmarks
+        - Identify economic trends and relative performance
+        - NO TRADING DECISIONS - only indicator comparison
         """
-        # PSEUDOCODE for KPI Tracker specific benchmark comparison:
-        # 1. Use GPT-4 to identify relevant industry benchmarks and peer companies
-        # 2. Compare company KPIs with industry averages and peer performance
-        # 3. Identify relative performance and competitive position
-        # 4. Assess benchmark quality and relevance
-        # 5. Calculate performance gaps and opportunities
-        # 6. Identify areas of strength and weakness
-        # 7. Return benchmark comparison with insights and confidence
-        # 8. NO TRADING DECISIONS - only comparison
+        # PSEUDOCODE for Macro Calendar specific indicator comparison:
+        # 1. Use GPT-4 to compare economic indicators with historical benchmarks
+        # 2. Identify economic trends and relative performance
+        # 3. Assess economic conditions and outlook
+        # 4. Calculate performance gaps and opportunities
+        # 5. Identify areas of strength and weakness
+        # 6. Return indicator comparison with insights and confidence
+        # 7. NO TRADING DECISIONS - only comparison
         
         return {
-            'industry_rank': 'top_quartile',
-            'peer_comparison': 'above_average',
-            'performance_gaps': ['efficiency_ratio'],
-            'strengths': ['revenue_growth', 'profit_margin'],
+            'economic_rank': 'above_average',
+            'performance_gaps': ['employment_growth'],
+            'strengths': ['inflation_control', 'gdp_growth'],
+            'weaknesses': ['wage_growth'],
             'confidence': 0.8,
             'benchmark_quality': 'high'
         }
 
-    async def select_optimal_kpi_set(self, company_data: Dict[str, Any]) -> List[str]:
+    async def select_optimal_macro_analysis(self, economic_data: Dict[str, Any]) -> str:
         """
-        AI Reasoning: Determine optimal KPI set based on company characteristics
-        - Consider industry, business model, and strategic focus
-        - NO TRADING DECISIONS - only KPI selection
+        AI Reasoning: Determine optimal macro analysis approach
+        - Consider economic conditions and data availability
+        - NO TRADING DECISIONS - only analysis optimization
         """
-        # PSEUDOCODE for KPI Tracker specific KPI selection:
-        # 1. Analyze company characteristics (industry, size, business model)
-        # 2. Consider strategic focus and business objectives
-        # 3. Factor in industry standards and best practices
-        # 4. Select optimal KPI set:
-        #    - Growth companies: Revenue growth, customer acquisition, market share
-        #    - Mature companies: Profitability, efficiency, cash flow
-        #    - Financial companies: Capital ratios, asset quality, efficiency
-        #    - Technology companies: R&D efficiency, user metrics, scalability
-        # 5. Consider KPI interrelationships and dependencies
-        # 6. Return selected KPI set with reasoning and confidence
-        # 7. NO TRADING DECISIONS - only KPI optimization
+        # PSEUDOCODE for Macro Calendar specific analysis selection:
+        # 1. Analyze economic conditions and data availability
+        # 2. Consider economic calendar and event timing
+        # 3. Factor in data quality and reliability by indicator
+        # 4. Select optimal analysis approach:
+        #    - High-frequency data: Real-time monitoring and alerts
+        #    - Monthly data: Trend analysis and pattern recognition
+        #    - Quarterly data: Comprehensive economic analysis
+        #    - Policy events: Impact assessment and forecasting
+        # 5. Consider analysis depth and granularity requirements
+        # 6. Return selected approach with reasoning and confidence
+        # 7. NO TRADING DECISIONS - only analysis optimization
         
-        return ['revenue_growth', 'profit_margin', 'roe', 'efficiency_ratio']  # Placeholder
+        return 'comprehensive_economic_analysis'  # Placeholder
 
-    async def determine_next_actions(self, kpi_insights: Dict[str, Any]) -> List[Dict[str, Any]]:
+    async def determine_next_actions(self, macro_insights: Dict[str, Any]) -> List[Dict[str, Any]]:
         """
-        AI Reasoning: Determine optimal next actions based on KPI findings
+        AI Reasoning: Determine optimal next actions based on macro findings
         - Trigger other agents when relevant
         - Decide on data storage and processing priorities
         - Plan follow-up analysis requirements
         - NO TRADING DECISIONS - only action planning
         """
-        # PSEUDOCODE for KPI Tracker specific next action decision:
-        # 1. Analyze KPI insights for key triggers
-        # 2. If significant KPI changes detected → trigger equity research agent
-        # 3. If unusual financial metrics → trigger SEC filings agent
-        # 4. If operational anomalies → trigger event impact agent
-        # 5. If benchmark discrepancies → trigger multiple verification agents
+        # PSEUDOCODE for Macro Calendar specific next action decision:
+        # 1. Analyze macro insights for key triggers
+        # 2. If significant macro surprises detected → trigger equity research agent
+        # 3. If unusual economic patterns → trigger event impact agent
+        # 4. If policy changes identified → trigger multiple analysis agents
+        # 5. If economic risks detected → trigger risk assessment agents
         # 6. Determine priority and timing for each action
         # 7. Return action plan with reasoning
         # 8. NO TRADING DECISIONS - only coordination planning
         
         actions = []
-        if kpi_insights.get('anomaly_count', 0) > 2:
+        if macro_insights.get('macro_surprises', []):
             actions.append({
                 'action': 'trigger_agent',
                 'agent': 'equity_research_agent',
-                'reasoning': 'Multiple KPI anomalies detected',
+                'reasoning': 'Significant macro surprises detected',
                 'priority': 'high',
-                'data': kpi_insights
+                'data': macro_insights
             })
         return actions
 
-    async def assess_kpi_significance(self, kpi_data: Dict[str, Any]) -> Dict[str, Any]:
+    async def assess_macro_significance(self, macro_data: Dict[str, Any]) -> Dict[str, Any]:
         """
-        AI Reasoning: Assess significance of KPI changes and trends
-        - Evaluate impact on business performance and outlook
+        AI Reasoning: Assess significance of macro events and trends
+        - Evaluate impact on economic outlook and policy
         - NO TRADING DECISIONS - only significance assessment
         """
-        # PSEUDOCODE for KPI Tracker specific significance assessment:
-        # 1. Use GPT-4 to analyze KPI changes and their business impact
-        # 2. Evaluate significance relative to historical performance
-        # 3. Consider industry context and market conditions
-        # 4. Assess impact on business strategy and objectives
+        # PSEUDOCODE for Macro Calendar specific significance assessment:
+        # 1. Use GPT-4 to analyze macro events and their economic impact
+        # 2. Evaluate significance relative to historical patterns
+        # 3. Consider economic context and policy implications
+        # 4. Assess impact on economic outlook and forecasts
         # 5. Identify potential risks and opportunities
         # 6. Assign significance scores and confidence levels
         # 7. Return significance assessment with reasoning
         # 8. NO TRADING DECISIONS - only significance evaluation
         
         return {
-            'overall_significance': 'moderate',
-            'business_impact': 'positive',
+            'overall_significance': 'high',
+            'economic_impact': 'positive',
+            'policy_impact': 'moderate',
             'risk_level': 'low',
-            'opportunity_level': 'medium',
             'confidence': 0.7,
-            'key_factors': ['revenue_growth', 'profit_margin']
+            'key_factors': ['inflation_control', 'employment_growth']
         }
 
-    def is_in_knowledge_base(self, kpi: Dict[str, Any]) -> bool:
+    def is_in_knowledge_base(self, macro_event: Dict[str, Any]) -> bool:
         """
-        AI Reasoning: Check if KPI data already exists in knowledge base
+        AI Reasoning: Check if macro event already exists in knowledge base
         - Use semantic similarity to identify duplicates
-        - Consider metric, date, and source overlap
+        - Consider event type, date, and data overlap
         - NO TRADING DECISIONS - only duplicate detection
         """
-        # PSEUDOCODE for KPI Tracker specific duplicate detection:
-        # 1. Extract unique identifiers from KPI (metric, time period, source)
-        # 2. Query knowledge base for similar KPI data
-        # 3. Use semantic similarity to check for data overlap
+        # PSEUDOCODE for Macro Calendar specific duplicate detection:
+        # 1. Extract unique identifiers from macro event (type, date, source)
+        # 2. Query knowledge base for similar macro events
+        # 3. Use semantic similarity to check for event overlap
         # 4. Consider time window for duplicate detection
         # 5. Return boolean with confidence score
         # 6. NO TRADING DECISIONS - only duplicate checking
         
         return False
 
-    async def store_in_knowledge_base(self, kpi: Dict[str, Any]) -> bool:
+    async def store_in_knowledge_base(self, macro_event: Dict[str, Any]) -> bool:
         """
-        AI Reasoning: Store processed KPI data in knowledge base
+        AI Reasoning: Store processed macro data in knowledge base
         - Validate data quality before storage
         - Add metadata and processing information
         - Update data quality metrics
         - NO TRADING DECISIONS - only data storage
         """
-        # PSEUDOCODE for KPI Tracker specific data storage:
+        # PSEUDOCODE for Macro Calendar specific data storage:
         # 1. Validate data quality and completeness
         # 2. Add processing metadata (timestamp, agent, confidence scores)
         # 3. Store structured data in database
@@ -397,23 +398,23 @@ class KPITrackerAgent:
         
         try:
             # TODO: Implement database storage
-            self.processed_kpis_count += 1
-            logger.info(f"Stored KPI data in knowledge base")
+            self.processed_events_count += 1
+            logger.info(f"Stored macro event in knowledge base")
             return True
         except Exception as e:
             await self.handle_error(e, "store_in_knowledge_base")
             return False
 
-    async def notify_orchestrator(self, kpi: Dict[str, Any]) -> bool:
+    async def notify_orchestrator(self, macro_event: Dict[str, Any]) -> bool:
         """
-        AI Reasoning: Send MCP message to orchestrator about new KPI data
+        AI Reasoning: Send MCP message to orchestrator about new macro data
         - Format message with relevant metadata
         - Include confidence scores and reasoning
         - Trigger other agents if needed
         - NO TRADING DECISIONS - only data coordination
         """
-        # PSEUDOCODE for KPI Tracker specific MCP messaging:
-        # 1. Format MCP message with KPI data and metadata
+        # PSEUDOCODE for Macro Calendar specific MCP messaging:
+        # 1. Format MCP message with macro data and metadata
         # 2. Include confidence scores and AI reasoning
         # 3. Add correlation ID for tracking
         # 4. Send message to orchestrator via MCP
@@ -425,8 +426,8 @@ class KPITrackerAgent:
         message = {
             'sender': self.agent_name,
             'recipient': 'orchestrator',
-            'message_type': 'kpi_update',
-            'content': kpi,
+            'message_type': 'macro_update',
+            'content': macro_event,
             'timestamp': datetime.utcnow(),
             'correlation_id': str(uuid.uuid4()),
             'priority': 'normal'
@@ -447,12 +448,12 @@ class KPITrackerAgent:
         - Maintain message processing guarantees
         - NO TRADING DECISIONS - only message coordination
         """
-        # PSEUDOCODE for KPI Tracker specific MCP message processing:
+        # PSEUDOCODE for Macro Calendar specific MCP message processing:
         # 1. Check for new MCP messages from orchestrator
         # 2. Parse message type and content
         # 3. Route to appropriate handler based on message type:
-        #    - query: Process KPI query
-        #    - data_request: Fetch specific KPI data
+        #    - query: Process macro query
+        #    - data_request: Fetch specific macro data
         #    - coordination: Coordinate with other agents
         #    - alert: Handle urgent notifications
         # 4. Process message with appropriate priority
@@ -471,14 +472,14 @@ class KPITrackerAgent:
         - Update health metrics
         - NO TRADING DECISIONS - only error recovery
         """
-        # PSEUDOCODE for KPI Tracker specific error handling:
+        # PSEUDOCODE for Macro Calendar specific error handling:
         # 1. Log error with timestamp, context, and details
         # 2. Classify error severity (critical, warning, info)
         # 3. Select recovery strategy based on error type:
         #    - Data validation error: Skip and log
-        #    - Calculation error: Retry with different parameters
-        #    - Database error: Retry with connection reset
         #    - API error: Retry with backoff
+        #    - Database error: Retry with connection reset
+        #    - Event error: Retry with different parameters
         # 4. Execute recovery strategy
         # 5. Update health score and error metrics
         # 6. Notify orchestrator if critical error
@@ -488,8 +489,8 @@ class KPITrackerAgent:
         self.error_count += 1
         self.health_score = max(0.0, self.health_score - 0.1)
         logger.error(f"Error in {context}: {str(error)}")
-        if "calculation" in str(error).lower():
-            await asyncio.sleep(30)
+        if "api" in str(error).lower():
+            await asyncio.sleep(300)
         elif "database" in str(error).lower():
             await asyncio.sleep(60)
         return True
@@ -502,10 +503,10 @@ class KPITrackerAgent:
         - Identify potential issues early
         - NO TRADING DECISIONS - only health monitoring
         """
-        # PSEUDOCODE for KPI Tracker specific health monitoring:
+        # PSEUDOCODE for Macro Calendar specific health monitoring:
         # 1. Calculate health score based on:
         #    - Error rate and recent errors
-        #    - KPI tracking accuracy and performance
+        #    - API response times and success rates
         #    - Data quality scores
         #    - Processing throughput
         # 2. Update performance metrics
@@ -520,13 +521,13 @@ class KPITrackerAgent:
     def calculate_sleep_interval(self) -> int:
         """
         AI Reasoning: Calculate optimal sleep interval based on conditions
-        - Consider reporting cycles and data availability
+        - Consider economic calendar and event timing
         - Factor in error rates and health scores
         - Adjust based on urgency and priority
         - NO TRADING DECISIONS - only scheduling optimization
         """
-        # PSEUDOCODE for KPI Tracker specific scheduling:
-        # 1. Check current reporting cycles and data availability
+        # PSEUDOCODE for Macro Calendar specific scheduling:
+        # 1. Check current economic calendar and event timing
         # 2. Consider recent error rates and health scores
         # 3. Factor in pending MCP messages and urgency
         # 4. Adjust interval based on processing load
@@ -548,7 +549,7 @@ class KPITrackerAgent:
         - Maintain message processing guarantees
         - NO TRADING DECISIONS - only message listening
         """
-        # PSEUDOCODE for KPI Tracker specific message listening:
+        # PSEUDOCODE for Macro Calendar specific message listening:
         # 1. Set up continuous monitoring for MCP messages
         # 2. Parse incoming messages and determine priority
         # 3. Route urgent messages for immediate processing
@@ -565,7 +566,7 @@ class KPITrackerAgent:
 """
 NEXT STEPS:
 1. Implement GPT-4 integration for AI reasoning functions
-2. Add real KPI tracking integrations and data sources
+2. Add real FRED and Trading Economics API integrations
 3. Implement MCP communication with orchestrator
 4. Add comprehensive error handling and recovery mechanisms
 5. Create integration tests for agent coordination
