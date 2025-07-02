@@ -111,7 +111,8 @@ class QueryClassifier:
             'api_key_management': ['credential', 'api_key', 'password', 'security'],
             'comparative_analysis': ['compare', 'benchmark', 'peer', 'relative'],
             'dark_pool': ['dark_pool', 'otc', 'alternative', 'trading'],
-            'short_interest': ['short', 'interest', 'borrow', 'squeeze']
+            'short_interest': ['short', 'interest', 'borrow', 'squeeze'],
+            'commodity': ['commodity', 'oil', 'gold', 'copper', 'cocoa', 'supply', 'demand']
         }
     
     def classify_query(self, query: str, ticker: Optional[str] = None) -> Dict[str, Any]:
