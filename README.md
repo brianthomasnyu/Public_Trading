@@ -56,12 +56,13 @@ The framework implements advanced AI reasoning across all components:
 15. **Data Tagging Agent**: Categorizes and organizes data for better retrieval
 16. **Dark Pool Agent**: Monitors alternative trading venues and OTC activity
 17. **Short Interest Agent**: Tracks short interest and borrowing patterns
+18. **Commodity Agent**: Monitors commodity prices and sector impacts
 
 ### System Management Agents
 
-18. **Discovery Agent**: Generates context-aware questions and coordinates with other agents
-19. **Repository Management Agent**: Manages codebase, version control, and development workflows
-20. **API Key Management Agent**: Securely manages credentials and access controls
+19. **Discovery Agent**: Generates context-aware questions and coordinates with other agents
+20. **Repository Management Agent**: Manages codebase, version control, and development workflows
+21. **API Key Management Agent**: Securely manages credentials and access controls
 
 ## Key Features
 
@@ -76,6 +77,14 @@ The framework implements advanced AI reasoning across all components:
 - Pattern recognition and trend analysis
 - Anomaly detection and alerting
 - Correlation and causation analysis
+
+### A2A Protocol & MCP Communication
+- **Agent-to-Agent Communication**: Seamless inter-agent messaging
+- **Parallel Execution**: Concurrent processing across multiple agents
+- **Context Sharing**: Intelligent context propagation between agents
+- **Database Integration**: Centralized knowledge base with agent coordination
+- **Message Routing**: Intelligent message routing based on agent capabilities
+- **Error Recovery**: Robust error handling and message retry mechanisms
 
 ### Security and Compliance
 - Encrypted credential management
@@ -137,6 +146,7 @@ POSTGRES_DB=financial_data
 ALPHA_VANTAGE_API_KEY=your_key
 POLYGON_API_KEY=your_key
 FINNHUB_API_KEY=your_key
+QUANDL_API_KEY=your_key
 
 # Agent Configuration
 ORCHESTRATOR_URL=http://localhost:8000
@@ -155,6 +165,8 @@ The system accepts natural language queries:
 "What's driving Tesla's stock price movement?"
 "Compare tech sector performance to healthcare"
 "Track insider trading activity in Microsoft"
+"Monitor oil prices and their impact on airlines"
+"Analyze commodity price movements and sector effects"
 ```
 
 ### API Endpoints
@@ -182,6 +194,7 @@ Each agent exposes specialized endpoints:
 - `/investor_portfolio`: Portfolio tracking
 - `/dark_pool`: Alternative trading analysis
 - `/short_interest`: Short interest tracking
+- `/commodity`: Commodity price and sector impact analysis
 - `/discovery`: Question generation and coordination
 - `/repository_management`: Code management
 - `/api_key_management`: Credential management
@@ -213,6 +226,8 @@ agents/new_agent/
 - **Data Validation**: Validate all inputs and outputs
 - **Security**: Follow security best practices
 - **Documentation**: Comprehensive documentation and examples
+- **MCP Integration**: Implement proper MCP communication protocols
+- **Database Integration**: Use centralized knowledge base for data sharing
 
 ### Testing
 
@@ -234,12 +249,14 @@ python -m pytest tests/agents/
 - System performance metrics
 - Error rates and recovery times
 - Data quality assessments
+- MCP communication health
 
 ### Analytics Dashboard
 - Query processing statistics
 - Agent utilization metrics
 - Data source performance
 - User activity patterns
+- Inter-agent communication patterns
 
 ## Security Considerations
 
@@ -307,21 +324,25 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Basic agent architecture
 - MCP communication
 - Data collection and storage
+- Uniform agent structure
 
 ### Phase 2: Advanced Analytics 🔄
 - Machine learning integration
 - Advanced pattern recognition
 - Predictive analytics
+- Commodity and sector analysis
 
 ### Phase 3: Cloud Integration 🔄
 - Cloud deployment options
 - Auto-scaling capabilities
 - Multi-region support
+- Advanced MCP coordination
 
 ### Phase 4: Enterprise Features 🔄
 - Advanced security features
 - Enterprise integrations
 - Custom agent development
+- Advanced A2A protocols
 
 ---
 

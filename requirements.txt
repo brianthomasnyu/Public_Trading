@@ -1,38 +1,71 @@
 # FastAPI for web services
-fastapi
-uvicorn
+fastapi==0.104.1
+uvicorn==0.24.0
 
-# HTTP requests
-requests
+# HTTP requests and async communication
+requests==2.31.0
+aiohttp==3.9.1
+httpx==0.25.2
 
-# OpenAI API
-openai
+# OpenAI API and AI services
+openai==1.3.7
 
 # PostgreSQL and ORM
-psycopg2-binary
-sqlalchemy
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.23
+alembic==1.13.1
 
 # Environment variable management
-python-dotenv
+python-dotenv==1.0.0
 
 # Data parsing and NLP
-pydantic
-pdfplumber
-PyPDF2
-beautifulsoup4
-spacy
+pydantic==2.5.0
+pdfplumber==0.10.3
+PyPDF2==3.0.1
+beautifulsoup4==4.12.2
+spacy==3.7.2
+nltk==3.8.1
 
 # Async and task management
-aiohttp
-celery
-redis
+celery==5.3.4
+redis==5.0.1
 
-# Vector search (optional)
-pgvector
+# Vector search and embeddings
+pgvector==0.2.4
+sentence-transformers==2.2.2
 
-# Machine learning
-scikit-learn
+# Machine learning and data science
+scikit-learn==1.3.2
+numpy==1.25.2
+pandas==2.1.4
+scipy==1.11.4
 
-# For agent communication (gRPC, optional)
-grpcio
-grpcio-tools 
+# Agent communication (MCP Protocol)
+grpcio==1.59.3
+grpcio-tools==1.59.3
+protobuf==4.25.1
+
+# Message queuing for A2A communication
+pika==1.3.2
+kombu==5.3.4
+
+# Monitoring and health checks
+prometheus-client==0.19.0
+structlog==23.2.0
+
+# Security and encryption
+cryptography==41.0.8
+passlib==1.7.4
+
+# Date and time handling
+python-dateutil==2.8.2
+pytz==2023.3
+
+# JSON and data serialization
+orjson==3.9.10
+msgpack==1.0.7
+
+# Testing and development
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0 
