@@ -24,6 +24,66 @@ from sqlalchemy import create_engine, text
 from dotenv import load_dotenv
 import uuid
 
+# Multi-Tool Integration Imports
+from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
+from langchain.agents import Tool, AgentExecutor, LLMSingleActionAgent
+from langchain.schema import AgentAction, AgentFinish
+from langchain.memory import ConversationBufferWindowMemory
+from langchain.prompts import StringPromptTemplate
+from langchain.tools import BaseTool
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import Chroma
+from langchain.chains import LLMChain
+from langchain.callbacks import get_openai_callback
+import langchain
+
+# Computer Use Integration
+try:
+    from computer_use import ComputerUseToolSelector, ComputerUseOptimizer
+    COMPUTER_USE_AVAILABLE = True
+except ImportError:
+    COMPUTER_USE_AVAILABLE = False
+    ComputerUseToolSelector = None
+    ComputerUseOptimizer = None
+
+# LlamaIndex Integration
+try:
+    from llama_index import VectorStoreIndex, Document, ServiceContext
+    from llama_index.llms import OpenAI as LlamaOpenAI
+    from llama_index.embeddings import OpenAIEmbedding
+    from llama_index.node_parser import SimpleNodeParser
+    from llama_index.storage.storage_context import StorageContext
+    LLAMA_INDEX_AVAILABLE = True
+except ImportError:
+    LLAMA_INDEX_AVAILABLE = False
+    VectorStoreIndex = None
+    Document = None
+    ServiceContext = None
+
+# Haystack Integration
+try:
+    from haystack import Pipeline
+    from haystack.nodes import PreProcessor, EmbeddingRetriever, PromptNode
+    from haystack.schema import Document as HaystackDocument
+    from haystack.document_stores import InMemoryDocumentStore
+    HAYSTACK_AVAILABLE = True
+except ImportError:
+    HAYSTACK_AVAILABLE = False
+    Pipeline = None
+    PreProcessor = None
+    EmbeddingRetriever = None
+
+# AutoGen Integration
+try:
+    from autogen import AssistantAgent, UserProxyAgent, GroupChat, GroupChatManager
+    from autogen.agentchat.contrib.text_analyzer_agent import TextAnalyzerAgent
+    AUTOGEN_AVAILABLE = True
+except ImportError:
+    AUTOGEN_AVAILABLE = False
+    AssistantAgent = None
+    UserProxyAgent = None
+
 # Load environment variables
 load_dotenv()
 

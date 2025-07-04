@@ -2,7 +2,7 @@
 Commodity Agent - Main Entry Point
 =================================
 
-FastAPI server for commodity analysis and sector impact assessment.
+FastAPI server for commodity analysis and sector impact assessment with multi-tool integration.
 """
 
 import asyncio
@@ -13,6 +13,12 @@ from pydantic import BaseModel
 from typing import Dict, Any, Optional, List
 import os
 from dotenv import load_dotenv
+
+# Multi-Tool Integration Imports
+from langchain.tracing import LangChainTracer
+from llama_index import VectorStoreIndex
+from haystack import Pipeline
+import autogen
 
 from agent import CommodityAgent
 
@@ -107,13 +113,27 @@ async def startup_event():
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint"""
-    return {
-        "status": "healthy",
-        "agent": agent.name,
-        "version": agent.version,
-        "health_score": agent.health_score
-    }
+    """Health check endpoint with multi-tool integration status"""
+    try:
+        metrics = agent.get_metrics()
+        return {
+            "status": "healthy",
+            "agent": agent.name,
+            "version": agent.version,
+            "health_score": agent.health_score,
+            "multi_tool_integration": metrics.get("multi_tool_integration", {}),
+            "last_update": metrics.get("last_update"),
+            "error_count": metrics.get("error_count", 0)
+        }
+    except Exception as e:
+        logger.error(f"Health check failed: {e}")
+        return {
+            "status": "unhealthy",
+            "agent": agent.name,
+            "version": agent.version,
+            "health_score": 0.0,
+            "error": str(e)
+        }
 
 @app.post("/commodity/data", response_model=CommodityDataResponse)
 async def get_commodity_data(request: CommodityDataRequest):

@@ -3,7 +3,7 @@ Repository Management Agent - Autonomous Codebase Management
 ==========================================================
 
 This agent manages repository operations, code updates, and version control
-through intelligent automation and change tracking.
+through intelligent automation and change tracking with advanced multi-tool integration.
 
 CRITICAL SYSTEM POLICY: NO TRADING DECISIONS OR RECOMMENDATIONS
 This agent only performs repository management, code updates, and version
@@ -26,6 +26,66 @@ import hashlib
 from sqlalchemy import create_engine, text
 from dotenv import load_dotenv
 import uuid
+
+# Multi-Tool Integration Imports
+from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
+from langchain.agents import Tool, AgentExecutor, LLMSingleActionAgent
+from langchain.schema import AgentAction, AgentFinish
+from langchain.memory import ConversationBufferWindowMemory
+from langchain.prompts import StringPromptTemplate
+from langchain.tools import BaseTool
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import Chroma
+from langchain.chains import LLMChain
+from langchain.callbacks import get_openai_callback
+import langchain
+
+# Computer Use Integration
+try:
+    from computer_use import ComputerUseToolSelector, ComputerUseOptimizer
+    COMPUTER_USE_AVAILABLE = True
+except ImportError:
+    COMPUTER_USE_AVAILABLE = False
+    ComputerUseToolSelector = None
+    ComputerUseOptimizer = None
+
+# LlamaIndex Integration
+try:
+    from llama_index import VectorStoreIndex, Document, ServiceContext
+    from llama_index.llms import OpenAI as LlamaOpenAI
+    from llama_index.embeddings import OpenAIEmbedding
+    from llama_index.node_parser import SimpleNodeParser
+    from llama_index.storage.storage_context import StorageContext
+    LLAMA_INDEX_AVAILABLE = True
+except ImportError:
+    LLAMA_INDEX_AVAILABLE = False
+    VectorStoreIndex = None
+    Document = None
+    ServiceContext = None
+
+# Haystack Integration
+try:
+    from haystack import Pipeline
+    from haystack.nodes import PreProcessor, EmbeddingRetriever, PromptNode
+    from haystack.schema import Document as HaystackDocument
+    from haystack.document_stores import InMemoryDocumentStore
+    HAYSTACK_AVAILABLE = True
+except ImportError:
+    HAYSTACK_AVAILABLE = False
+    Pipeline = None
+    PreProcessor = None
+    EmbeddingRetriever = None
+
+# AutoGen Integration
+try:
+    from autogen import AssistantAgent, UserProxyAgent, GroupChat, GroupChatManager
+    from autogen.agentchat.contrib.text_analyzer_agent import TextAnalyzerAgent
+    AUTOGEN_AVAILABLE = True
+except ImportError:
+    AUTOGEN_AVAILABLE = False
+    AssistantAgent = None
+    UserProxyAgent = None
 
 # Load environment variables
 load_dotenv()
@@ -52,12 +112,16 @@ NO TRADING DECISIONS should be made. All repository operations are for framework
 maintenance and development purposes only.
 
 AI REASONING: The agent should:
-1. Manage repository health and version control
-2. Automate code updates and change tracking
-3. Coordinate with other agents for code changes
-4. NEVER implement trading logic or algorithms
-5. NEVER process market data for trading purposes
-6. NEVER provide trading advice
+1. Manage repository health and version control with multi-tool orchestration
+2. Automate code updates and change tracking with intelligent analysis
+3. Coordinate with other agents for code changes using AutoGen
+4. Use LangChain for repository operation orchestration
+5. Apply Computer Use for optimal tool selection and optimization
+6. Use LlamaIndex for repository knowledge base management
+7. Apply Haystack for code document analysis and QA
+8. NEVER implement trading logic or algorithms
+9. NEVER process market data for trading purposes
+10. NEVER provide trading advice
 """
 
 @dataclass
@@ -92,7 +156,7 @@ class RepositoryStatus:
 
 class RepositoryManagementAgent:
     """
-    Autonomous repository management agent
+    Autonomous repository management agent with advanced multi-tool integration
     """
     
     def __init__(self, config: Dict[str, Any]):
@@ -103,6 +167,9 @@ class RepositoryManagementAgent:
         self.repo = None
         self.pending_changes = []
         self.change_history = []
+        
+        # Multi-Tool Integration Initialization
+        self._initialize_multi_tool_integration()
         
         # MCP Communication setup
         self.mcp_endpoint = os.getenv('ORCHESTRATOR_URL', 'http://localhost:8000/mcp')
@@ -118,6 +185,218 @@ class RepositoryManagementAgent:
         self.commits_made = 0
         self.branches_created = 0
         
+    def _initialize_multi_tool_integration(self):
+        """Initialize all multi-tool integrations"""
+        logger.info("Initializing multi-tool integration for Repository Management Agent")
+        
+        # LangChain Integration
+        try:
+            self.llm = ChatOpenAI(
+                temperature=0.1,
+                model_name="gpt-4",
+                openai_api_key=os.getenv('OPENAI_API_KEY')
+            )
+            self.memory = ConversationBufferWindowMemory(
+                memory_key="chat_history",
+                k=10,
+                return_messages=True
+            )
+            logger.info("LangChain integration initialized successfully")
+        except Exception as e:
+            logger.warning(f"LangChain integration failed: {e}")
+            self.llm = None
+            self.memory = None
+        
+        # Computer Use Integration
+        if COMPUTER_USE_AVAILABLE:
+            try:
+                self.tool_selector = ComputerUseToolSelector()
+                self.optimizer = ComputerUseOptimizer()
+                logger.info("Computer Use integration initialized successfully")
+            except Exception as e:
+                logger.warning(f"Computer Use integration failed: {e}")
+                self.tool_selector = None
+                self.optimizer = None
+        else:
+            self.tool_selector = None
+            self.optimizer = None
+        
+        # LlamaIndex Integration
+        if LLAMA_INDEX_AVAILABLE:
+            try:
+                self.llama_llm = LlamaOpenAI(
+                    model="gpt-4",
+                    temperature=0.1,
+                    openai_api_key=os.getenv('OPENAI_API_KEY')
+                )
+                self.llama_embedding = OpenAIEmbedding(
+                    openai_api_key=os.getenv('OPENAI_API_KEY')
+                )
+                self.service_context = ServiceContext.from_defaults(
+                    llm=self.llama_llm,
+                    embed_model=self.llama_embedding
+                )
+                self.llama_index = None  # Will be initialized with documents
+                logger.info("LlamaIndex integration initialized successfully")
+            except Exception as e:
+                logger.warning(f"LlamaIndex integration failed: {e}")
+                self.llama_index = None
+        else:
+            self.llama_index = None
+        
+        # Haystack Integration
+        if HAYSTACK_AVAILABLE:
+            try:
+                self.document_store = InMemoryDocumentStore(embedding_dim=1536)
+                self.preprocessor = PreProcessor(
+                    clean_empty_lines=True,
+                    clean_whitespace=True,
+                    clean_header_footer=True,
+                    split_by="word",
+                    split_length=500,
+                    split_overlap=50
+                )
+                self.retriever = EmbeddingRetriever(
+                    document_store=self.document_store,
+                    embedding_model="sentence-transformers/multi-qa-mpnet-base-dot-v1",
+                    model_format="sentence_transformers"
+                )
+                self.haystack_pipeline = Pipeline()
+                self.haystack_pipeline.add_node(component=self.retriever, name="Retriever", inputs=["Query"])
+                logger.info("Haystack integration initialized successfully")
+            except Exception as e:
+                logger.warning(f"Haystack integration failed: {e}")
+                self.haystack_pipeline = None
+        else:
+            self.haystack_pipeline = None
+        
+        # AutoGen Integration
+        if AUTOGEN_AVAILABLE:
+            try:
+                self.repository_agent = AssistantAgent(
+                    name="repository_manager",
+                    system_message="You are a repository management expert. Focus on code organization, version control, and repository health.",
+                    llm_config={"config_list": [{"model": "gpt-4", "api_key": os.getenv('OPENAI_API_KEY')}]}
+                )
+                self.code_analyzer = AssistantAgent(
+                    name="code_analyzer",
+                    system_message="You are a code analysis expert. Focus on code quality, patterns, and improvement suggestions.",
+                    llm_config={"config_list": [{"model": "gpt-4", "api_key": os.getenv('OPENAI_API_KEY')}]}
+                )
+                self.user_proxy = UserProxyAgent(
+                    name="user_proxy",
+                    human_input_mode="NEVER",
+                    max_consecutive_auto_reply=10,
+                    llm_config={"config_list": [{"model": "gpt-4", "api_key": os.getenv('OPENAI_API_KEY')}]}
+                )
+                self.group_chat = GroupChat(
+                    agents=[self.user_proxy, self.repository_agent, self.code_analyzer],
+                    messages=[],
+                    max_round=50
+                )
+                self.manager = GroupChatManager(groupchat=self.group_chat, llm_config={"config_list": [{"model": "gpt-4", "api_key": os.getenv('OPENAI_API_KEY')}]})
+                logger.info("AutoGen integration initialized successfully")
+            except Exception as e:
+                logger.warning(f"AutoGen integration failed: {e}")
+                self.manager = None
+        else:
+            self.manager = None
+        
+        logger.info("Multi-tool integration initialization completed")
+    
+    async def _update_llama_index(self, documents: List[str]):
+        """Update LlamaIndex with new repository documents"""
+        if not LLAMA_INDEX_AVAILABLE or not self.llama_index:
+            return
+            
+        try:
+            # Create documents from repository files
+            llama_docs = []
+            for doc_content in documents:
+                llama_docs.append(Document(text=doc_content))
+            
+            # Update index
+            if self.llama_index:
+                self.llama_index.refresh_ref_docs(llama_docs)
+            else:
+                self.llama_index = VectorStoreIndex.from_documents(
+                    llama_docs,
+                    service_context=self.service_context
+                )
+            logger.info(f"Updated LlamaIndex with {len(documents)} documents")
+        except Exception as e:
+            logger.error(f"Failed to update LlamaIndex: {e}")
+    
+    async def _query_llama_index(self, query: str) -> str:
+        """Query LlamaIndex for repository knowledge"""
+        if not LLAMA_INDEX_AVAILABLE or not self.llama_index:
+            return "LlamaIndex not available"
+            
+        try:
+            query_engine = self.llama_index.as_query_engine()
+            response = query_engine.query(query)
+            return str(response)
+        except Exception as e:
+            logger.error(f"Failed to query LlamaIndex: {e}")
+            return f"Query failed: {e}"
+    
+    async def _optimize_with_computer_use(self, operation: str, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Optimize repository operations using Computer Use"""
+        if not COMPUTER_USE_AVAILABLE or not self.optimizer:
+            return context
+            
+        try:
+            # Optimize the operation based on context
+            optimized_context = self.optimizer.optimize(operation, context)
+            logger.info(f"Computer Use optimization applied to {operation}")
+            return optimized_context
+        except Exception as e:
+            logger.warning(f"Computer Use optimization failed: {e}")
+            return context
+    
+    async def _coordinate_with_autogen(self, task: str, context: Dict[str, Any]) -> str:
+        """Coordinate repository tasks using AutoGen"""
+        if not AUTOGEN_AVAILABLE or not self.manager:
+            return "AutoGen not available"
+            
+        try:
+            # Create task description for AutoGen
+            task_description = f"""
+            Task: {task}
+            Context: {json.dumps(context, indent=2)}
+            
+            Please analyze this repository management task and provide recommendations.
+            """
+            
+            # Initiate group chat
+            response = await self.manager.run_async(task_description, sender=self.user_proxy)
+            return str(response)
+        except Exception as e:
+            logger.error(f"AutoGen coordination failed: {e}")
+            return f"Coordination failed: {e}"
+    
+    async def _analyze_with_haystack(self, documents: List[str], query: str) -> str:
+        """Analyze repository documents using Haystack"""
+        if not HAYSTACK_AVAILABLE or not self.haystack_pipeline:
+            return "Haystack not available"
+            
+        try:
+            # Add documents to document store
+            haystack_docs = []
+            for i, doc_content in enumerate(documents):
+                haystack_docs.append(HaystackDocument(content=doc_content, meta={"source": f"repo_file_{i}"}))
+            
+            # Preprocess documents
+            processed_docs = self.preprocessor.process(haystack_docs)
+            self.document_store.write_documents(processed_docs)
+            
+            # Query the pipeline
+            result = self.haystack_pipeline.run(query=query)
+            return str(result)
+        except Exception as e:
+            logger.error(f"Haystack analysis failed: {e}")
+            return f"Analysis failed: {e}"
+    
     async def initialize(self):
         """Initialize the repository management agent"""
         logger.info(f"Initializing {self.name} v{self.version}")

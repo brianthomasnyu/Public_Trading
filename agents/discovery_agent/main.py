@@ -76,13 +76,27 @@ async def startup_event():
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint"""
-    return {
-        "status": "healthy",
-        "agent": agent.name,
-        "version": agent.version,
-        "health_score": agent.health_score
-    }
+    """Health check endpoint with multi-tool integration status"""
+    try:
+        metrics = agent.get_metrics()
+        return {
+            "status": "healthy",
+            "agent": agent.name,
+            "version": agent.version,
+            "health_score": agent.health_score,
+            "multi_tool_integration": metrics.get("multi_tool_integration", {}),
+            "last_update": metrics.get("last_update"),
+            "error_count": metrics.get("error_count", 0)
+        }
+    except Exception as e:
+        logger.error(f"Health check failed: {e}")
+        return {
+            "status": "unhealthy",
+            "agent": agent.name,
+            "version": agent.version,
+            "health_score": 0.0,
+            "error": str(e)
+        }
 
 @app.post("/questions/generate")
 async def generate_questions(request: QuestionGenerationRequest):

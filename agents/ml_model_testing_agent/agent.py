@@ -1,5 +1,6 @@
 """
-ML Model Testing Agent
+ML Model Testing Agent - Multi-Tool Enhanced
+===========================================
 
 AI Reasoning: This agent tests and validates machine learning models for:
 1. Financial data analysis and prediction models
@@ -22,6 +23,35 @@ from dataclasses import dataclass
 import aiohttp
 from sqlalchemy import create_engine, text
 from dotenv import load_dotenv
+
+# Multi-Tool Integration Imports
+from langchain.llms import ChatOpenAI
+from langchain.agents import AgentExecutor, create_react_agent
+from langchain.memory import ConversationBufferWindowMemory
+from langchain.tools import Tool
+from langchain.prompts import PromptTemplate
+from langchain.schema import BaseMessage
+from langchain.tracing import LangChainTracer
+
+from llama_index import VectorStoreIndex, Document, ServiceContext
+from llama_index.llms import OpenAI
+from llama_index.embeddings import OpenAIEmbedding
+from llama_index.storage.storage_context import StorageContext
+
+from haystack import Pipeline
+from haystack.nodes import PreProcessor, EmbeddingRetriever, PromptNode
+from haystack.schema import Document as HaystackDocument
+
+import autogen
+from autogen import AssistantAgent, UserProxyAgent, GroupChat, GroupChatManager
+
+# Computer Use Integration
+try:
+    from computer_use import ComputerUseToolSelector
+    COMPUTER_USE_AVAILABLE = True
+except ImportError:
+    COMPUTER_USE_AVAILABLE = False
+    ComputerUseToolSelector = None
 
 # Load environment variables
 load_dotenv()
@@ -196,6 +226,219 @@ class MLModelTestingAgent:
         }
         
         self.agent_name = "ml_model_testing_agent"
+        
+        # Multi-Tool Integration
+        self._initialize_langchain()
+        self._initialize_llama_index()
+        self._initialize_haystack()
+        self._initialize_autogen()
+        self._initialize_computer_use()
+        
+        # Performance tracking
+        self.health_score = 1.0
+        self.last_update = datetime.now()
+        self.error_count = 0
+        
+        logger.info(f"Initialized {self.agent_name} with multi-tool integration")
+
+    def _initialize_langchain(self):
+        """Initialize LangChain for agent orchestration"""
+        try:
+            self.llm = ChatOpenAI(
+                model="gpt-4",
+                temperature=0.1,
+                api_key=os.getenv("OPENAI_API_KEY")
+            )
+            
+            self.memory = ConversationBufferWindowMemory(
+                memory_key="chat_history",
+                return_messages=True,
+                k=10
+            )
+            
+            # Create tools for ML model testing
+            self.tools = [
+                Tool(
+                    name="test_model_performance",
+                    func=self._test_model_performance_tool,
+                    description="Test ML model performance and accuracy"
+                ),
+                Tool(
+                    name="analyze_research_papers",
+                    func=self._analyze_research_papers_tool,
+                    description="Analyze research papers for ML model insights"
+                ),
+                Tool(
+                    name="detect_model_drift",
+                    func=self._detect_model_drift_tool,
+                    description="Detect model drift and degradation"
+                )
+            ]
+            
+            # Create agent executor
+            prompt = PromptTemplate.from_template(
+                "You are an ML model testing expert. Use the available tools to test and validate machine learning models.\n\n"
+                "Available tools: {tools}\n"
+                "Chat history: {chat_history}\n"
+                "Question: {input}\n"
+                "Answer:"
+            )
+            
+            self.agent = create_react_agent(
+                llm=self.llm,
+                tools=self.tools,
+                prompt=prompt
+            )
+            
+            self.agent_executor = AgentExecutor(
+                agent=self.agent,
+                tools=self.tools,
+                memory=self.memory,
+                verbose=True,
+                max_iterations=5
+            )
+            
+            logger.info("LangChain integration initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize LangChain: {e}")
+            self.agent_executor = None
+
+    def _initialize_llama_index(self):
+        """Initialize LlamaIndex for knowledge base management"""
+        try:
+            # Initialize embedding model
+            embed_model = OpenAIEmbedding(
+                model="text-embedding-ada-002",
+                api_key=os.getenv("OPENAI_API_KEY")
+            )
+            
+            # Create service context
+            service_context = ServiceContext.from_defaults(
+                llm=OpenAI(model="gpt-4", api_key=os.getenv("OPENAI_API_KEY")),
+                embed_model=embed_model
+            )
+            
+            # Initialize storage context
+            storage_context = StorageContext.from_defaults()
+            
+            # Create vector store index
+            self.llama_index = VectorStoreIndex(
+                [],
+                service_context=service_context,
+                storage_context=storage_context
+            )
+            
+            # Create query engine
+            self.query_engine = self.llama_index.as_query_engine(
+                response_mode="compact",
+                streaming=True
+            )
+            
+            logger.info("LlamaIndex integration initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize LlamaIndex: {e}")
+            self.query_engine = None
+
+    def _initialize_haystack(self):
+        """Initialize Haystack for document QA"""
+        try:
+            # Create preprocessing pipeline
+            self.preprocessor = PreProcessor(
+                clean_empty_lines=True,
+                clean_whitespace=True,
+                clean_header_footer=True,
+                split_by="word",
+                split_length=500,
+                split_overlap=50
+            )
+            
+            # Create embedding retriever
+            self.retriever = EmbeddingRetriever(
+                document_store=None,  # Will be set when document store is available
+                embedding_model="sentence-transformers/all-MiniLM-L6-v2",
+                model_format="sentence_transformers"
+            )
+            
+            # Create prompt node for QA
+            self.prompt_node = PromptNode(
+                model_name_or_path="gpt-4",
+                api_key=os.getenv("OPENAI_API_KEY"),
+                default_prompt_template="question-answering"
+            )
+            
+            # Create QA pipeline
+            self.qa_pipeline = Pipeline()
+            self.qa_pipeline.add_node(component=self.retriever, name="Retriever", inputs=["Query"])
+            self.qa_pipeline.add_node(component=self.prompt_node, name="PromptNode", inputs=["Retriever"])
+            
+            logger.info("Haystack integration initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize Haystack: {e}")
+            self.qa_pipeline = None
+
+    def _initialize_autogen(self):
+        """Initialize AutoGen for multi-agent coordination"""
+        try:
+            # Create ML model testing assistant
+            self.ml_testing_assistant = AssistantAgent(
+                name="ml_testing_analyst",
+                system_message="You are an expert ML model testing analyst. Test and validate machine learning models for financial applications.",
+                llm_config={"config_list": [{"model": "gpt-4", "api_key": os.getenv("OPENAI_API_KEY")}]}
+            )
+            
+            # Create research analysis assistant
+            self.research_assistant = AssistantAgent(
+                name="research_analyst",
+                system_message="You are an expert research analyst. Analyze research papers and extract ML model insights.",
+                llm_config={"config_list": [{"model": "gpt-4", "api_key": os.getenv("OPENAI_API_KEY")}]}
+            )
+            
+            # Create user proxy
+            self.user_proxy = UserProxyAgent(
+                name="user_proxy",
+                human_input_mode="NEVER",
+                max_consecutive_auto_reply=10,
+                llm_config={"config_list": [{"model": "gpt-4", "api_key": os.getenv("OPENAI_API_KEY")}]}
+            )
+            
+            # Create group chat
+            self.group_chat = GroupChat(
+                agents=[self.user_proxy, self.ml_testing_assistant, self.research_assistant],
+                messages=[],
+                max_round=10
+            )
+            
+            # Create group chat manager
+            self.chat_manager = GroupChatManager(
+                groupchat=self.group_chat,
+                llm_config={"config_list": [{"model": "gpt-4", "api_key": os.getenv("OPENAI_API_KEY")}]}
+            )
+            
+            logger.info("AutoGen integration initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize AutoGen: {e}")
+            self.chat_manager = None
+
+    def _initialize_computer_use(self):
+        """Initialize Computer Use for dynamic tool selection"""
+        try:
+            if COMPUTER_USE_AVAILABLE:
+                self.tool_selector = ComputerUseToolSelector(
+                    available_tools=self.tools,
+                    optimization_strategy="performance"
+                )
+                logger.info("Computer Use integration initialized successfully")
+            else:
+                self.tool_selector = None
+                logger.warning("Computer Use not available, using default tool selection")
+                
+        except Exception as e:
+            logger.error(f"Failed to initialize Computer Use: {e}")
+            self.tool_selector = None
 
     async def parse_research_papers(self, query: str, max_papers: int = 10) -> List[Dict[str, Any]]:
         """

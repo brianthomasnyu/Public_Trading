@@ -14,12 +14,46 @@ Every agent follows the same professional structure:
 
 ```
 agents/agent_name/
-├── agent.py          # Main agent logic with AI reasoning
-├── main.py           # FastAPI server with endpoints
-├── Dockerfile        # Containerized deployment
-├── requirements.txt  # Python dependencies
+├── agent.py          # Main agent logic with AI reasoning and multi-tool integration
+├── main.py           # FastAPI server with endpoints and health checks
+├── Dockerfile        # Containerized deployment with security enhancements
+├── requirements.txt  # Python dependencies with multi-tool libraries
 └── README.md         # Comprehensive documentation
 ```
+
+## Multi-Tool Integration Framework
+
+All agents now implement a comprehensive multi-tool integration framework:
+
+### LangChain Integration
+- **LLM Chains**: Advanced language model orchestration
+- **Prompt Templates**: Structured prompt management
+- **Memory Systems**: Context-aware conversation memory
+- **Tool Integration**: Seamless external tool connectivity
+
+### Computer Use Integration
+- **Web Scraping**: Automated data collection from web sources
+- **File Operations**: Intelligent file system interactions
+- **System Commands**: Secure system-level operations
+- **API Interactions**: Automated API data fetching
+
+### LlamaIndex Integration
+- **Vector Storage**: Advanced document indexing and retrieval
+- **Knowledge Graphs**: Intelligent relationship mapping
+- **Query Engines**: Natural language query processing
+- **Document Processing**: Automated document analysis
+
+### Haystack Integration
+- **Question Answering**: Advanced Q&A capabilities
+- **Document Search**: Intelligent document retrieval
+- **Pipeline Orchestration**: Complex workflow management
+- **Model Management**: Multi-model inference coordination
+
+### AutoGen Integration
+- **Multi-Agent Conversations**: Intelligent agent-to-agent communication
+- **Task Delegation**: Automated task distribution
+- **Workflow Automation**: Complex process orchestration
+- **Collaborative Problem Solving**: Multi-agent reasoning
 
 ## Agent Categories
 
@@ -29,26 +63,31 @@ agents/agent_name/
    - Analyzes SEC filings, financial statements, and regulatory documents
    - Extracts key financial metrics and disclosures
    - Tracks filing patterns and compliance
+   - **Status**: ✅ Fully integrated with multi-tool framework
 
 2. **Market News Agent** (`market_news_agent/`)
    - Processes market news, announcements, and media coverage
    - Performs sentiment analysis on news content
    - Tracks news impact on stock prices
+   - **Status**: ✅ Fully integrated with multi-tool framework
 
 3. **Social Media NLP Agent** (`social_media_nlp_agent/`)
    - Analyzes social media sentiment and trends
    - Processes Reddit, Twitter, and other platforms
    - Identifies viral content and sentiment shifts
+   - **Status**: ✅ Fully integrated with multi-tool framework
 
 4. **Insider Trading Agent** (`insider_trading_agent/`)
    - Tracks insider trading activities and Form 4 filings
    - Monitors executive and director transactions
    - Analyzes insider trading patterns
+   - **Status**: ✅ Fully integrated with multi-tool framework
 
 5. **Investor Portfolio Agent** (`investor_portfolio_agent/`)
    - Monitors institutional and congressional trading activities
    - Tracks hedge fund and mutual fund positions
    - Analyzes portfolio changes and trends
+   - **Status**: ✅ Fully integrated with multi-tool framework
 
 ### Analysis Agents
 
@@ -56,31 +95,37 @@ agents/agent_name/
    - Processes analyst reports, ratings, and research coverage
    - Extracts price targets and recommendations
    - Tracks analyst sentiment changes
+   - **Status**: ✅ Fully integrated with multi-tool framework
 
 7. **Fundamental Pricing Agent** (`fundamental_pricing_agent/`)
    - Performs valuation analysis using multiple methodologies
    - Calculates DCF, DDM, and relative valuation models
    - Tracks intrinsic value vs market price
+   - **Status**: ✅ Fully integrated with multi-tool framework
 
 8. **KPI Tracker Agent** (`kpi_tracker_agent/`)
    - Monitors key performance indicators and earnings metrics
    - Tracks revenue, profit, and growth metrics
    - Analyzes KPI trends and forecasts
+   - **Status**: ✅ Fully integrated with multi-tool framework
 
 9. **Event Impact Agent** (`event_impact_agent/`)
    - Analyzes the impact of events and catalysts on performance
    - Tracks earnings, product launches, and regulatory events
    - Calculates event-driven price impacts
+   - **Status**: ✅ Fully integrated with multi-tool framework
 
 10. **Comparative Analysis Agent** (`comparative_analysis_agent/`)
     - Performs peer, sector, and historical comparisons
     - Benchmarks companies against competitors
     - Analyzes relative performance metrics
+    - **Status**: ✅ Fully integrated with multi-tool framework
 
 11. **ML Model Testing Agent** (`ml_model_testing_agent/`)
     - Validates and tests machine learning models and predictions
     - Processes research papers and academic literature
     - Implements and validates predictive models
+    - **Status**: ✅ Fully integrated with multi-tool framework
 
 ### Specialized Agents
 
@@ -88,36 +133,43 @@ agents/agent_name/
     - Analyzes options trading patterns and unusual activity
     - Tracks options volume and open interest
     - Identifies unusual options activity
+    - **Status**: ✅ Fully integrated with multi-tool framework
 
 13. **Macro Calendar Agent** (`macro_calendar_agent/`)
     - Tracks economic events and macro trends
     - Monitors Fed meetings, economic data releases
     - Analyzes macro impact on markets
+    - **Status**: ✅ Fully integrated with multi-tool framework
 
 14. **Revenue Geography Agent** (`revenue_geography_agent/`)
     - Analyzes geographic revenue distribution
     - Maps company sales by region and country
     - Tracks geographic expansion and risks
+    - **Status**: ✅ Fully integrated with multi-tool framework
 
 15. **Data Tagging Agent** (`data_tagging_agent/`)
     - Categorizes and organizes data for better retrieval
     - Implements intelligent tagging and indexing
     - Enables semantic search and correlation
+    - **Status**: ✅ Fully integrated with multi-tool framework
 
 16. **Dark Pool Agent** (`dark_pool_agent/`)
     - Monitors alternative trading venues and OTC activity
     - Tracks dark pool volume and patterns
     - Analyzes institutional trading behavior
+    - **Status**: ✅ Fully integrated with multi-tool framework
 
 17. **Short Interest Agent** (`short_interest_agent/`)
     - Tracks short interest and borrowing patterns
     - Monitors short squeeze potential
     - Analyzes short interest trends
+    - **Status**: ✅ Fully integrated with multi-tool framework
 
 18. **Commodity Agent** (`commodity_agent/`)
     - Monitors commodity prices and sector impacts
     - Tracks energy, metals, agriculture, and softs
     - Analyzes commodity-sector correlations
+    - **Status**: ✅ Fully integrated with multi-tool framework
 
 ### System Management Agents
 
@@ -125,34 +177,46 @@ agents/agent_name/
     - Generates context-aware questions and coordinates with other agents
     - Implements intelligent question generation
     - Coordinates multi-agent investigations
+    - **Status**: ✅ Fully integrated with multi-tool framework
 
 20. **Repository Management Agent** (`repository_management_agent/`)
     - Manages codebase, version control, and development workflows
     - Handles Git operations and code deployment
     - Manages development and deployment pipelines
+    - **Status**: ✅ Fully integrated with multi-tool framework
 
 21. **API Key Management Agent** (`api_key_management_agent/`)
     - Securely manages credentials and access controls
     - Handles API key rotation and security
     - Manages authentication and authorization
+    - **Status**: ✅ Fully integrated with multi-tool framework
 
-## A2A Protocol & MCP Communication
+## Infrastructure Updates
 
-All agents implement the Agent-to-Agent (A2A) protocol with MCP (Message Communication Protocol):
+### FastAPI Server Standardization
+All agents now implement standardized FastAPI servers with:
+- **Health Check Endpoints**: `/health` for monitoring and orchestration
+- **CORS Middleware**: Cross-origin resource sharing support
+- **Error Handling**: Comprehensive exception management
+- **Metrics Endpoints**: Performance and usage tracking
+- **Configuration Management**: Environment-based configuration
 
-### Communication Features
-- **Inter-Agent Messaging**: Seamless communication between agents
-- **Parallel Execution**: Concurrent processing across multiple agents
-- **Context Sharing**: Intelligent context propagation
-- **Database Integration**: Centralized knowledge base coordination
-- **Message Routing**: Intelligent routing based on agent capabilities
-- **Error Recovery**: Robust error handling and retry mechanisms
+### Docker Security Enhancements
+All Dockerfiles include:
+- **Non-Root User**: Security-first container execution
+- **Health Checks**: Automated health monitoring
+- **Resource Limits**: CPU and memory constraints
+- **Security Scanning**: Vulnerability assessment
+- **Multi-Stage Builds**: Optimized image sizes
 
-### MCP Endpoints
-Each agent exposes:
-- `POST /mcp`: Receive messages from other agents
-- `GET /health`: Health check and status
-- Agent-specific endpoints for specialized functionality
+### Multi-Tool Dependencies
+All agents include comprehensive dependency management:
+- **LangChain**: Advanced LLM orchestration
+- **Computer Use**: Web scraping and system operations
+- **LlamaIndex**: Vector storage and knowledge graphs
+- **Haystack**: Question answering and document search
+- **AutoGen**: Multi-agent conversations and workflows
+- **Additional Utilities**: Redis, Celery, Prometheus, Structlog
 
 ## Agent Capabilities
 
@@ -196,14 +260,14 @@ Agents are configured via environment variables:
 
 ### Adding New Agents
 1. Create agent directory with uniform structure
-2. Implement agent logic with AI reasoning
-3. Add MCP communication capabilities
+2. Implement agent logic with AI reasoning and multi-tool integration
+3. Add FastAPI server with health checks
 4. Update orchestrator agent mapping
 5. Add to docker-compose.yml
 
 ### Testing
 - Unit tests for agent logic
-- Integration tests for MCP communication
+- Integration tests for multi-tool communication
 - End-to-end tests for complete workflows
 - Performance tests for scalability
 
@@ -223,4 +287,6 @@ Agents are configured via environment variables:
 
 ---
 
-**Total Agents: 21 | All Standardized | All Containerized | All AI-Powered** 
+**Total Agents: 21 | All Standardized | All Containerized | All AI-Powered | All Multi-Tool Integrated** 
+
+**Infrastructure Status**: ✅ All agents updated with FastAPI servers, security-enhanced Dockerfiles, and comprehensive multi-tool dependencies 

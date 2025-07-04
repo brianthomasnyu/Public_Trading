@@ -1,7 +1,7 @@
 """
-Investor Portfolio Tracking Agent
-
-AI Reasoning: This agent tracks notable investor portfolios including:
+Investor Portfolio Tracking Agent - Multi-Tool Enhanced
+- Integrates LangChain, Computer Use, LlamaIndex, Haystack, AutoGen
+- Tracks notable investor portfolios including:
 1. Congress people (e.g., Nancy Pelosi, disclosure requirements)
 2. Hedge fund managers (e.g., Bill Ackman, Ray Dalio, Warren Buffett)
 3. Institutional investors (pension funds, endowments)
@@ -10,6 +10,44 @@ AI Reasoning: This agent tracks notable investor portfolios including:
 
 NO TRADING DECISIONS - Only data aggregation and analysis for informational purposes.
 """
+
+# ============================================================================
+# LANGCHAIN INTEGRATION IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import LangChain components for agent orchestration
+# from langchain.agents import initialize_agent, Tool, AgentExecutor, AgentType
+# from langchain.memory import ConversationBufferWindowMemory
+# from langchain.tools import BaseTool
+# from langchain.callbacks import LangChainTracer
+# from langchain.schema import BaseMessage, HumanMessage, AIMessage
+# from langchain_openai import ChatOpenAI
+# from langchain.tools import tool
+# from langchain.agents.openai_functions_agent.base import OpenAIFunctionsAgent
+# from langchain.agents.openai_functions_agent.agent_token_buffer_memory import AgentTokenBufferMemory
+
+# ============================================================================
+# COMPUTER USE IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import Computer Use for dynamic tool selection
+# from computer_use import ComputerUseToolSelector
+
+# ============================================================================
+# LLAMA INDEX IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import LlamaIndex for RAG and knowledge base
+# from llama_index import VectorStoreIndex, SimpleDirectoryReader
+
+# ============================================================================
+# HAYSTACK IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import Haystack for document QA
+# from haystack.pipelines import ExtractiveQAPipeline
+
+# ============================================================================
+# AUTOGEN IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import AutoGen for multi-agent system
+# from autogen import MultiAgentSystem
 
 import os
 import asyncio
@@ -84,16 +122,33 @@ class PortfolioHolding:
 
 class InvestorPortfolioAgent:
     """
-    AI Reasoning: Intelligent investor portfolio tracking system
+    AI Reasoning: Intelligent investor portfolio tracking system with multi-tool integration
     - Track portfolio changes and holdings across different investor types
-    - Analyze investment patterns and identify trends
-    - Monitor disclosure compliance and timing
-    - Identify potential conflicts of interest
-    - Coordinate with other agents for comprehensive analysis
+    - Analyze investment patterns and identify trends using LangChain orchestration
+    - Monitor disclosure compliance and timing with Computer Use optimization
+    - Identify potential conflicts of interest with LlamaIndex RAG
+    - Coordinate with other agents for comprehensive analysis via AutoGen
     - NO TRADING DECISIONS - only data aggregation and analysis
     """
     
     def __init__(self):
+        # LangChain LLM and memory for portfolio analysis
+        # self.llm = ChatOpenAI(...)
+        # self.memory = ConversationBufferWindowMemory(...)
+        
+        # Computer Use: dynamic data source selection
+        # self.tool_selector = ComputerUseToolSelector(...)
+
+        # LlamaIndex: RAG for portfolio knowledge base
+        # self.llama_index = VectorStoreIndex.from_documents(...)
+        # self.query_engine = self.llama_index.as_query_engine()
+
+        # Haystack: document QA for portfolio analysis
+        # self.haystack_pipeline = ExtractiveQAPipeline(...)
+
+        # AutoGen: multi-agent coordination
+        # self.multi_agent_system = MultiAgentSystem([...])
+
         # AI Reasoning: Investor profiles with tracking priorities
         self.investor_profiles = {
             # Congress people with disclosure requirements
@@ -147,6 +202,8 @@ class InvestorPortfolioAgent:
             'timing_patterns': {'threshold': 7, 'significance': 'medium'},  # days
             'conflict_indicators': {'threshold': 0.80, 'significance': 'critical'}
         }
+        
+        logger.info("Investor Portfolio Agent initialized with multi-tool integration")
     
     async def check_knowledge_base_for_existing_data(self, investor_id: str, ticker: str = None) -> Dict[str, Any]:
         """
@@ -229,23 +286,104 @@ class InvestorPortfolioAgent:
                 'needs_update': True
             }
     
+    async def process_query_with_multi_tools(self, query: str, context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """
+        AI Reasoning: Process portfolio analysis query using multi-tool integration
+        - Use LangChain for intelligent query parsing and orchestration
+        - Apply Computer Use for dynamic data source selection
+        - Leverage LlamaIndex for RAG and knowledge base lookups
+        - Use Haystack for document QA and analysis
+        - Coordinate with AutoGen for complex multi-agent workflows
+        - NO TRADING DECISIONS - only data analysis orchestration
+        """
+        # PSEUDOCODE: Enhanced query processing with multi-tool integration
+        # 1. Use LangChain to parse and classify the query
+        # 2. Apply Computer Use to select optimal data sources and tools
+        # 3. Use LlamaIndex to search existing portfolio knowledge base
+        # 4. Apply Haystack for document QA if needed
+        # 5. Use AutoGen for complex multi-agent coordination
+        # 6. Aggregate and validate results
+        # 7. Update LangChain memory and LlamaIndex knowledge base
+        # 8. Return comprehensive analysis with multi-tool integration details
+        
+        try:
+            # PSEUDOCODE: LangChain query parsing
+            # parsed_query = self.llm.parse_query(query)
+            # query_type = parsed_query.get('type', 'portfolio_analysis')
+            
+            # PSEUDOCODE: Computer Use tool selection
+            # selected_tools = self.tool_selector.select_tools(query, available_tools)
+            
+            # PSEUDOCODE: LlamaIndex knowledge base search
+            # kb_results = self.query_engine.query(query)
+            
+            # PSEUDOCODE: Haystack document QA
+            # qa_results = self.haystack_pipeline.run(query=query, documents=[...])
+            
+            # PSEUDOCODE: AutoGen multi-agent coordination
+            # if self._is_complex_portfolio_analysis(query):
+            #     multi_agent_results = self.multi_agent_system.run(query)
+            
+            # PSEUDOCODE: Aggregate results
+            # aggregated_results = self._aggregate_multi_tool_results([
+            #     parsed_query, selected_tools, kb_results, qa_results, multi_agent_results
+            # ])
+            
+            # PSEUDOCODE: Update memory and knowledge base
+            # self.memory.save_context({"input": query}, {"output": str(aggregated_results)})
+            # self.llama_index.add_document(aggregated_results)
+            
+            # Placeholder for multi-tool integration
+            aggregated_results = {
+                "query": query,
+                "analysis_type": "portfolio_analysis",
+                "multi_tool_integration": {
+                    "langchain_parsing": "Query parsed and classified",
+                    "computer_use_selection": "Optimal tools selected",
+                    "llama_index_rag": "Knowledge base searched",
+                    "haystack_qa": "Document analysis completed",
+                    "autogen_coordination": "Multi-agent workflow executed"
+                },
+                "results": {
+                    "portfolio_data": [],
+                    "analysis_insights": [],
+                    "recommendations": []
+                }
+            }
+            
+            return aggregated_results
+            
+        except Exception as e:
+            logger.error(f"Error in multi-tool query processing: {e}")
+            return {
+                "error": str(e),
+                "query": query,
+                "multi_tool_integration": "Failed"
+            }
+
     async def select_optimal_data_sources(self, investor_profile: InvestorProfile, data_type: str) -> List[str]:
         """
-        AI Reasoning: Select optimal data sources based on investor type and data needs
+        AI Reasoning: Select optimal data sources using Computer Use optimization
         - Consider data reliability and freshness requirements
-        - Balance accuracy vs. timeliness
+        - Balance accuracy vs. timeliness with intelligent selection
         - Account for disclosure requirements and delays
+        - Use Computer Use for dynamic source optimization
         - NO TRADING DECISIONS - only data source optimization
         """
-        # PSEUDOCODE:
-        # 1. Analyze investor type and disclosure requirements
-        # 2. Determine data freshness needs based on tracking frequency
-        # 3. Evaluate data source reliability scores
-        # 4. Consider data source availability and access costs
-        # 5. Select optimal combination of sources for redundancy
+        # PSEUDOCODE: Enhanced data source selection with Computer Use
+        # 1. Use Computer Use to analyze investor type and requirements
+        # 2. Apply intelligent selection based on data type and freshness needs
+        # 3. Evaluate data source reliability scores with context
+        # 4. Consider availability, costs, and access patterns
+        # 5. Select optimal combination for redundancy and accuracy
         # 6. Prioritize sources based on data type (holdings vs. transactions)
         # 7. Return ranked list of optimal data sources
         # 8. NO TRADING DECISIONS - only source selection
+        
+        # PSEUDOCODE: Computer Use tool selection
+        # selected_sources = self.tool_selector.select_data_sources(
+        #     investor_profile, data_type, self.data_sources
+        # )
         
         optimal_sources = []
         

@@ -6,6 +6,7 @@
 # This system is STRICTLY for data aggregation, analysis, and knowledge base
 # management. NO TRADING ADVICE is provided by any agent.
 #
+# ENHANCED TOOL STACK: LangChain + Computer Use + LlamaIndex + Haystack + AutoGen
 # Copy this file to .env and fill in your actual values
 # ============================================================================
 
@@ -28,6 +29,169 @@ HEALTH_CHECK_INTERVAL=60
 LOG_LEVEL=INFO
 ENABLE_DEBUG_MODE=false
 ENABLE_METRICS_COLLECTION=true
+
+# ============================================================================
+# ENHANCED TOOL STACK CONFIGURATION
+# ============================================================================
+
+# ============================================================================
+# LANGCHAIN CONFIGURATION
+# ============================================================================
+# LangChain Agent Orchestration
+LANGCHAIN_ENABLED=true
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_ENDPOINT=https://api.smith.langchain.com
+LANGCHAIN_API_KEY=your_langchain_api_key_here
+LANGCHAIN_PROJECT=financial_data_aggregation
+
+# LangChain Memory Management
+LANGCHAIN_MEMORY_ENABLED=true
+LANGCHAIN_MEMORY_TYPE=conversation_buffer_window
+LANGCHAIN_MEMORY_K=10
+LANGCHAIN_MEMORY_RETURN_MESSAGES=true
+
+# LangChain Tool Registry
+LANGCHAIN_TOOL_REGISTRY_ENABLED=true
+LANGCHAIN_TOOL_CACHE_ENABLED=true
+LANGCHAIN_TOOL_CACHE_TTL=3600
+LANGCHAIN_TOOL_VALIDATION_ENABLED=true
+
+# LangChain Workflow Configuration
+LANGCHAIN_WORKFLOW_ENABLED=true
+LANGCHAIN_WORKFLOW_MAX_STEPS=50
+LANGCHAIN_WORKFLOW_TIMEOUT=300
+LANGCHAIN_WORKFLOW_RETRY_ATTEMPTS=3
+
+# ============================================================================
+# COMPUTER USE CONFIGURATION
+# ============================================================================
+# OpenAI Computer Use Integration
+COMPUTER_USE_ENABLED=true
+COMPUTER_USE_MODEL=gpt-4o
+COMPUTER_USE_MAX_TOKENS=8000
+COMPUTER_USE_TEMPERATURE=0.1
+
+# Computer Use Tool Selection
+COMPUTER_USE_DYNAMIC_TOOL_SELECTION=true
+COMPUTER_USE_TOOL_FALLBACK_ENABLED=true
+COMPUTER_USE_TOOL_VALIDATION_ENABLED=true
+COMPUTER_USE_TOOL_CACHE_ENABLED=true
+
+# Computer Use Self-Healing
+COMPUTER_USE_SELF_HEALING_ENABLED=true
+COMPUTER_USE_ERROR_RECOVERY_ATTEMPTS=3
+COMPUTER_USE_ERROR_RECOVERY_DELAY=5
+COMPUTER_USE_CRITICAL_ERROR_THRESHOLD=5
+
+# Computer Use Natural Language Interface
+COMPUTER_USE_NL_INTERFACE_ENABLED=true
+COMPUTER_USE_NL_CONTEXT_WINDOW=10
+COMPUTER_USE_NL_CONFIDENCE_THRESHOLD=0.7
+
+# ============================================================================
+# LLAMAINDEX CONFIGURATION
+# ============================================================================
+# LlamaIndex Data Processing
+LLAMAINDEX_ENABLED=true
+LLAMAINDEX_CACHE_DIR=./llama_index_cache
+LLAMAINDEX_PERSIST_DIR=./llama_index_persist
+
+# LlamaIndex Document Processing
+LLAMAINDEX_DOCUMENT_PROCESSING_ENABLED=true
+LLAMAINDEX_CHUNK_SIZE=1024
+LLAMAINDEX_CHUNK_OVERLAP=200
+LLAMAINDEX_EMBEDDING_MODEL=text-embedding-ada-002
+LLAMAINDEX_EMBEDDING_DIMENSION=1536
+
+# LlamaIndex Query Engine
+LLAMAINDEX_QUERY_ENGINE_ENABLED=true
+LLAMAINDEX_QUERY_ENGINE_SIMILARITY_TOP_K=5
+LLAMAINDEX_QUERY_ENGINE_RESPONSE_MODE=compact
+LLAMAINDEX_QUERY_ENGINE_STREAMING=true
+
+# LlamaIndex Financial Data Specialization
+LLAMAINDEX_FINANCIAL_PARSING_ENABLED=true
+LLAMAINDEX_SEC_FILING_PARSER_ENABLED=true
+LLAMAINDEX_FINANCIAL_STATEMENT_PARSER_ENABLED=true
+LLAMAINDEX_EDGAR_PARSER_ENABLED=true
+
+# LlamaIndex RAG Database
+LLAMAINDEX_RAG_ENABLED=true
+LLAMAINDEX_RAG_VECTOR_STORE=pgvector
+LLAMAINDEX_RAG_INDEX_TYPE=vector_store_index
+LLAMAINDEX_RAG_QUERY_MODE=hybrid
+LLAMAINDEX_RAG_RERANK_ENABLED=true
+
+# ============================================================================
+# HAYSTACK CONFIGURATION
+# ============================================================================
+# Haystack Document Analysis
+HAYSTACK_ENABLED=true
+HAYSTACK_PIPELINE_CONFIG_PATH=./haystack_pipelines
+HAYSTACK_MODEL_PATH=./haystack_models
+
+# Haystack Document Store
+HAYSTACK_DOCUMENT_STORE_TYPE=elasticsearch
+HAYSTACK_ELASTICSEARCH_HOST=localhost
+HAYSTACK_ELASTICSEARCH_PORT=9200
+HAYSTACK_ELASTICSEARCH_USERNAME=elastic
+HAYSTACK_ELASTICSEARCH_PASSWORD=your_elasticsearch_password
+
+# Haystack Retriever Configuration
+HAYSTACK_RETRIEVER_TYPE=dense_passage_retriever
+HAYSTACK_RETRIEVER_TOP_K=10
+HAYSTACK_RETRIEVER_USE_GPU=false
+HAYSTACK_RETRIEVER_BATCH_SIZE=16
+
+# Haystack Reader Configuration
+HAYSTACK_READER_TYPE=farm
+HAYSTACK_READER_MODEL_NAME=deepset/roberta-base-squad2
+HAYSTACK_READER_USE_GPU=false
+HAYSTACK_READER_BATCH_SIZE=8
+
+# Haystack Question Answering
+HAYSTACK_QA_ENABLED=true
+HAYSTACK_QA_PIPELINE_TYPE=extractive_qa
+HAYSTACK_QA_CONFIDENCE_THRESHOLD=0.7
+HAYSTACK_QA_MAX_ANSWERS=5
+
+# Haystack Document Processing
+HAYSTACK_DOC_PROCESSING_ENABLED=true
+HAYSTACK_DOC_CONVERTER_ENABLED=true
+HAYSTACK_DOC_PREPROCESSOR_ENABLED=true
+HAYSTACK_DOC_CLEANER_ENABLED=true
+
+# ============================================================================
+# AUTOGEN CONFIGURATION
+# ============================================================================
+# AutoGen Multi-Agent System
+AUTOGEN_ENABLED=true
+AUTOGEN_CONFIG_PATH=./autogen_configs
+AUTOGEN_MODEL_PATH=./autogen_models
+
+# AutoGen Agent Configuration
+AUTOGEN_AGENT_CONFIG_ENABLED=true
+AUTOGEN_AGENT_MAX_CONVERSATION_TURNS=20
+AUTOGEN_AGENT_HUMAN_INPUT_MODE=NEVER
+AUTOGEN_AGENT_LLM_CONFIG_ENABLED=true
+
+# AutoGen Code Generation
+AUTOGEN_CODE_GENERATION_ENABLED=true
+AUTOGEN_CODE_GENERATION_MODEL=gpt-4o
+AUTOGEN_CODE_GENERATION_TEMPERATURE=0.1
+AUTOGEN_CODE_GENERATION_MAX_TOKENS=4000
+
+# AutoGen Task Decomposition
+AUTOGEN_TASK_DECOMPOSITION_ENABLED=true
+AUTOGEN_TASK_DECOMPOSITION_STRATEGY=hierarchical
+AUTOGEN_TASK_DECOMPOSITION_MAX_DEPTH=5
+AUTOGEN_TASK_DECOMPOSITION_PARALLEL_ENABLED=true
+
+# AutoGen Human Collaboration
+AUTOGEN_HUMAN_COLLABORATION_ENABLED=false
+AUTOGEN_HUMAN_INPUT_MODE=NEVER
+AUTOGEN_HUMAN_APPROVAL_REQUIRED=false
+AUTOGEN_HUMAN_FALLBACK_ENABLED=true
 
 # ============================================================================
 # SECURITY AND ENCRYPTION

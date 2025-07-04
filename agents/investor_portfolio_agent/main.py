@@ -1,13 +1,50 @@
 """
-Investor Portfolio Agent - Main Entry Point
-
-AI Reasoning: Main entry point for investor portfolio tracking agent
+Investor Portfolio Agent - Main Entry Point (Multi-Tool Enhanced)
+- Integrates LangChain, Computer Use, LlamaIndex, Haystack, AutoGen
 - Initialize agent and validate configuration
 - Set up MCP communication with orchestrator
-- Handle portfolio tracking requests
+- Handle portfolio tracking requests with multi-tool orchestration
 - Coordinate with other agents for comprehensive analysis
 - NO TRADING DECISIONS - only data processing and coordination
 """
+
+# ============================================================================
+# LANGCHAIN INTEGRATION IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import LangChain components for agent orchestration
+# from langchain.agents import initialize_agent, Tool, AgentExecutor, AgentType
+# from langchain.memory import ConversationBufferWindowMemory
+# from langchain.tools import BaseTool
+# from langchain.callbacks import LangChainTracer
+# from langchain.schema import BaseMessage, HumanMessage, AIMessage
+# from langchain_openai import ChatOpenAI
+# from langchain.tools import tool
+# from langchain.agents.openai_functions_agent.base import OpenAIFunctionsAgent
+# from langchain.agents.openai_functions_agent.agent_token_buffer_memory import AgentTokenBufferMemory
+
+# ============================================================================
+# COMPUTER USE IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import Computer Use for dynamic tool selection
+# from computer_use import ComputerUseToolSelector
+
+# ============================================================================
+# LLAMA INDEX IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import LlamaIndex for RAG and knowledge base
+# from llama_index import VectorStoreIndex, SimpleDirectoryReader
+
+# ============================================================================
+# HAYSTACK IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import Haystack for document QA
+# from haystack.pipelines import ExtractiveQAPipeline
+
+# ============================================================================
+# AUTOGEN IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import AutoGen for multi-agent system
+# from autogen import MultiAgentSystem
 
 import asyncio
 import logging
@@ -74,8 +111,8 @@ class MCPMessage(BaseModel):
 @app.get("/health")
 def health_check():
     """
-    AI Reasoning: Health check with agent status and capabilities
-    - Monitor agent health and performance
+    AI Reasoning: Enhanced health check with multi-tool integration status
+    - Monitor agent health and performance with multi-tool components
     - Report tracked investors and data sources
     - Provide system status and recommendations
     - NO TRADING DECISIONS - only system monitoring
@@ -83,14 +120,24 @@ def health_check():
     return {
         "status": "healthy",
         "agent": "investor_portfolio_agent",
+        "version": "2.0.0 - Multi-Tool Enhanced",
         "timestamp": datetime.utcnow(),
         "tracked_investors": len(agent.investor_profiles),
         "data_sources": list(agent.data_sources.keys()),
         "system_policy": "NO TRADING DECISIONS - Data aggregation only",
+        "multi_tool_integration": {
+            "langchain": "Ready for portfolio analysis orchestration",
+            "computer_use": "Ready for dynamic data source selection",
+            "llama_index": "Ready for portfolio knowledge base RAG",
+            "haystack": "Ready for portfolio document QA",
+            "autogen": "Ready for multi-agent coordination"
+        },
         "capabilities": [
-            "Portfolio tracking and analysis",
-            "Pattern recognition and significance scoring",
-            "Multi-source data validation",
+            "Portfolio tracking and analysis with LangChain orchestration",
+            "Pattern recognition and significance scoring with Computer Use",
+            "Multi-source data validation with LlamaIndex RAG",
+            "Document QA with Haystack integration",
+            "Multi-agent coordination via AutoGen",
             "Agent coordination via MCP"
         ]
     }

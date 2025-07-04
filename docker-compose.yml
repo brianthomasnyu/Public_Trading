@@ -20,96 +20,221 @@ services:
       - db
     ports:
       - "8000:8000"
-    # Orchestrator service for agent coordination and MCP communication
+    # Orchestrator service for agent coordination and multi-tool integration
 
-  # Each agent runs as a separate microservice
-  equity_research_agent:
-    build: ./agents/equity_research_agent
-    env_file: .env
-    depends_on:
-      - db
-    # Ingests and parses equity research reports
+  # ============================================================================
+  # DATA COLLECTION AGENTS
+  # ============================================================================
 
   sec_filings_agent:
     build: ./agents/sec_filings_agent
     env_file: .env
     depends_on:
       - db
-    # Parses SEC filings and extracts financial statements
+    ports:
+      - "8001:8000"
+    # Analyzes SEC filings, financial statements, and regulatory documents
 
   market_news_agent:
     build: ./agents/market_news_agent
     env_file: .env
     depends_on:
       - db
-    # Scrapes and analyzes market news
-
-  insider_trading_agent:
-    build: ./agents/insider_trading_agent
-    env_file: .env
-    depends_on:
-      - db
-    # Monitors insider trading activity
+    ports:
+      - "8002:8000"
+    # Processes market news, announcements, and media coverage
 
   social_media_nlp_agent:
     build: ./agents/social_media_nlp_agent
     env_file: .env
     depends_on:
       - db
-    # Analyzes social media for sentiment and claims
+    ports:
+      - "8003:8000"
+    # Analyzes social media sentiment and trends
+
+  insider_trading_agent:
+    build: ./agents/insider_trading_agent
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - "8004:8000"
+    # Tracks insider trading activities and Form 4 filings
+
+  investor_portfolio_agent:
+    build: ./agents/investor_portfolio_agent
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - "8005:8000"
+    # Monitors institutional and congressional trading activities
+
+  # ============================================================================
+  # ANALYSIS AGENTS
+  # ============================================================================
+
+  equity_research_agent:
+    build: ./agents/equity_research_agent
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - "8006:8000"
+    # Processes analyst reports, ratings, and research coverage
 
   fundamental_pricing_agent:
     build: ./agents/fundamental_pricing_agent
     env_file: .env
     depends_on:
       - db
-    # Calculates intrinsic value and pricing models
+    ports:
+      - "8007:8000"
+    # Performs valuation analysis using multiple methodologies
 
   kpi_tracker_agent:
     build: ./agents/kpi_tracker_agent
     env_file: .env
     depends_on:
       - db
-    # Tracks KPIs by ticker/industry
+    ports:
+      - "8008:8000"
+    # Monitors key performance indicators and earnings metrics
 
   event_impact_agent:
     build: ./agents/event_impact_agent
     env_file: .env
     depends_on:
       - db
-    # Analyzes event-driven price impacts
+    ports:
+      - "8009:8000"
+    # Analyzes the impact of events and catalysts on performance
 
-  data_tagging_agent:
-    build: ./agents/data_tagging_agent
+  comparative_analysis_agent:
+    build: ./agents/comparative_analysis_agent
     env_file: .env
     depends_on:
       - db
-    # Tags and indexes all data/events
-
-  revenue_geography_agent:
-    build: ./agents/revenue_geography_agent
-    env_file: .env
-    depends_on:
-      - db
-    # Maps company sales by region
-
-  macro_calendar_agent:
-    build: ./agents/macro_calendar_agent
-    env_file: .env
-    depends_on:
-      - db
-    # Tags macro calendar events
-
-  options_flow_agent:
-    build: ./agents/options_flow_agent
-    env_file: .env
-    depends_on:
-      - db
-    # Detects options flow and volatility events
+    ports:
+      - "8010:8000"
+    # Performs peer, sector, and historical comparisons
 
   ml_model_testing_agent:
     build: ./agents/ml_model_testing_agent
     env_file: .env
     depends_on:
       - db
-    # Tests and deploys ML models 
+    ports:
+      - "8011:8000"
+    # Validates and tests machine learning models and predictions
+
+  # ============================================================================
+  # SPECIALIZED AGENTS
+  # ============================================================================
+
+  options_flow_agent:
+    build: ./agents/options_flow_agent
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - "8012:8000"
+    # Analyzes options trading patterns and unusual activity
+
+  macro_calendar_agent:
+    build: ./agents/macro_calendar_agent
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - "8013:8000"
+    # Tracks economic events and macro trends
+
+  revenue_geography_agent:
+    build: ./agents/revenue_geography_agent
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - "8014:8000"
+    # Analyzes geographic revenue distribution
+
+  data_tagging_agent:
+    build: ./agents/data_tagging_agent
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - "8015:8000"
+    # Categorizes and organizes data for better retrieval
+
+  dark_pool_agent:
+    build: ./agents/dark_pool_agent
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - "8016:8000"
+    # Monitors alternative trading venues and OTC activity
+
+  short_interest_agent:
+    build: ./agents/short_interest_agent
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - "8017:8000"
+    # Tracks short interest and borrowing patterns
+
+  commodity_agent:
+    build: ./agents/commodity_agent
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - "8018:8000"
+    # Monitors commodity prices and sector impacts
+
+  # ============================================================================
+  # SYSTEM MANAGEMENT AGENTS
+  # ============================================================================
+
+  discovery_agent:
+    build: ./agents/discovery_agent
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - "8019:8000"
+    # Generates context-aware questions and coordinates with other agents
+
+  repository_management_agent:
+    build: ./agents/repository_management_agent
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - "8020:8000"
+    # Manages codebase, version control, and development workflows
+
+  api_key_management_agent:
+    build: ./agents/api_key_management_agent
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - "8021:8000"
+    # Securely manages credentials and access controls
+
+  # ============================================================================
+  # FRONTEND
+  # ============================================================================
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - orchestrator
+    # React-based user interface for querying and visualization 

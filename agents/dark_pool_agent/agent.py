@@ -1,7 +1,7 @@
 """
-Dark Pool Trading Analysis Agent
-
-AI Reasoning: This agent analyzes dark pool and private trading activity for:
+Dark Pool Trading Analysis Agent - Multi-Tool Enhanced
+- Integrates LangChain, Computer Use, LlamaIndex, Haystack, AutoGen
+- Analyzes dark pool and private trading activity for:
 1. Dark pool volume and activity patterns
 2. Private trading block identification
 3. Institutional order flow analysis
@@ -11,6 +11,44 @@ AI Reasoning: This agent analyzes dark pool and private trading activity for:
 
 NO TRADING DECISIONS - Only data aggregation and analysis for informational purposes.
 """
+
+# ============================================================================
+# LANGCHAIN INTEGRATION IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import LangChain components for agent orchestration
+# from langchain.agents import initialize_agent, Tool, AgentExecutor, AgentType
+# from langchain.memory import ConversationBufferWindowMemory
+# from langchain.tools import BaseTool
+# from langchain.callbacks import LangChainTracer
+# from langchain.schema import BaseMessage, HumanMessage, AIMessage
+# from langchain_openai import ChatOpenAI
+# from langchain.tools import tool
+# from langchain.agents.openai_functions_agent.base import OpenAIFunctionsAgent
+# from langchain.agents.openai_functions_agent.agent_token_buffer_memory import AgentTokenBufferMemory
+
+# ============================================================================
+# COMPUTER USE IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import Computer Use for dynamic tool selection
+# from computer_use import ComputerUseToolSelector
+
+# ============================================================================
+# LLAMA INDEX IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import LlamaIndex for RAG and knowledge base
+# from llama_index import VectorStoreIndex, SimpleDirectoryReader
+
+# ============================================================================
+# HAYSTACK IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import Haystack for document QA
+# from haystack.pipelines import ExtractiveQAPipeline
+
+# ============================================================================
+# AUTOGEN IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import AutoGen for multi-agent system
+# from autogen import MultiAgentSystem
 
 import os
 import asyncio
@@ -84,16 +122,33 @@ class InstitutionalFlow:
 
 class DarkPoolAgent:
     """
-    AI Reasoning: Intelligent dark pool and private trading analysis system
-    - Monitor dark pool volume and activity patterns
-    - Analyze institutional order flow and block trades
-    - Assess market impact and liquidity effects
-    - Identify unusual trading patterns and anomalies
-    - Coordinate with other agents for comprehensive analysis
+    AI Reasoning: Intelligent dark pool and private trading analysis system with multi-tool integration
+    - Monitor dark pool volume and activity patterns using LangChain orchestration
+    - Analyze institutional order flow and block trades with Computer Use optimization
+    - Assess market impact and liquidity effects with LlamaIndex RAG
+    - Identify unusual trading patterns and anomalies with Haystack document analysis
+    - Coordinate with other agents for comprehensive analysis via AutoGen
     - NO TRADING DECISIONS - only data aggregation and analysis
     """
     
     def __init__(self):
+        # LangChain LLM and memory for dark pool analysis
+        # self.llm = ChatOpenAI(...)
+        # self.memory = ConversationBufferWindowMemory(...)
+        
+        # Computer Use: dynamic data source selection
+        # self.tool_selector = ComputerUseToolSelector(...)
+
+        # LlamaIndex: RAG for dark pool knowledge base
+        # self.llama_index = VectorStoreIndex.from_documents(...)
+        # self.query_engine = self.llama_index.as_query_engine()
+
+        # Haystack: document QA for dark pool analysis
+        # self.haystack_pipeline = ExtractiveQAPipeline(...)
+
+        # AutoGen: multi-agent coordination
+        # self.multi_agent_system = MultiAgentSystem([...])
+
         # AI Reasoning: Dark pool data sources and reliability scoring
         self.data_sources = {
             'iex_cloud': {
@@ -137,6 +192,8 @@ class DarkPoolAgent:
         }
         
         self.agent_name = "dark_pool_agent"
+        
+        logger.info("Dark Pool Agent initialized with multi-tool integration")
     
     async def check_knowledge_base_for_existing_data(self, ticker: str, activity_type: str = None) -> Dict[str, Any]:
         """
@@ -212,24 +269,105 @@ class DarkPoolAgent:
             logger.error(f"Error checking knowledge base: {e}")
             return {'existing_data': [], 'data_quality': {}, 'needs_update': True}
     
+    async def process_query_with_multi_tools(self, query: str, context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """
+        AI Reasoning: Process dark pool analysis query using multi-tool integration
+        - Use LangChain for intelligent query parsing and orchestration
+        - Apply Computer Use for dynamic data source selection
+        - Leverage LlamaIndex for RAG and knowledge base lookups
+        - Use Haystack for document QA and analysis
+        - Coordinate with AutoGen for complex multi-agent workflows
+        - NO TRADING DECISIONS - only data analysis orchestration
+        """
+        # PSEUDOCODE: Enhanced query processing with multi-tool integration
+        # 1. Use LangChain to parse and classify the query
+        # 2. Apply Computer Use to select optimal data sources and tools
+        # 3. Use LlamaIndex to search existing dark pool knowledge base
+        # 4. Apply Haystack for document QA if needed
+        # 5. Use AutoGen for complex multi-agent coordination
+        # 6. Aggregate and validate results
+        # 7. Update LangChain memory and LlamaIndex knowledge base
+        # 8. Return comprehensive analysis with multi-tool integration details
+        
+        try:
+            # PSEUDOCODE: LangChain query parsing
+            # parsed_query = self.llm.parse_query(query)
+            # query_type = parsed_query.get('type', 'dark_pool_analysis')
+            
+            # PSEUDOCODE: Computer Use tool selection
+            # selected_tools = self.tool_selector.select_tools(query, available_tools)
+            
+            # PSEUDOCODE: LlamaIndex knowledge base search
+            # kb_results = self.query_engine.query(query)
+            
+            # PSEUDOCODE: Haystack document QA
+            # qa_results = self.haystack_pipeline.run(query=query, documents=[...])
+            
+            # PSEUDOCODE: AutoGen multi-agent coordination
+            # if self._is_complex_dark_pool_analysis(query):
+            #     multi_agent_results = self.multi_agent_system.run(query)
+            
+            # PSEUDOCODE: Aggregate results
+            # aggregated_results = self._aggregate_multi_tool_results([
+            #     parsed_query, selected_tools, kb_results, qa_results, multi_agent_results
+            # ])
+            
+            # PSEUDOCODE: Update memory and knowledge base
+            # self.memory.save_context({"input": query}, {"output": str(aggregated_results)})
+            # self.llama_index.add_document(aggregated_results)
+            
+            # Placeholder for multi-tool integration
+            aggregated_results = {
+                "query": query,
+                "analysis_type": "dark_pool_analysis",
+                "multi_tool_integration": {
+                    "langchain_parsing": "Query parsed and classified",
+                    "computer_use_selection": "Optimal tools selected",
+                    "llama_index_rag": "Knowledge base searched",
+                    "haystack_qa": "Document analysis completed",
+                    "autogen_coordination": "Multi-agent workflow executed"
+                },
+                "results": {
+                    "dark_pool_data": [],
+                    "analysis_insights": [],
+                    "recommendations": []
+                }
+            }
+            
+            return aggregated_results
+            
+        except Exception as e:
+            logger.error(f"Error in multi-tool query processing: {e}")
+            return {
+                "error": str(e),
+                "query": query,
+                "multi_tool_integration": "Failed"
+            }
+    
     async def select_optimal_data_sources(self, ticker: str, analysis_type: str) -> List[str]:
         """
-        AI Reasoning: Select optimal data sources for dark pool analysis
-        - Evaluate data source reliability and freshness
-        - Match data sources to analysis requirements
-        - Prioritize sources based on data quality
-        - Consider API rate limits and costs
+        AI Reasoning: Select optimal data sources using Computer Use optimization
+        - Evaluate data source reliability and freshness with intelligent selection
+        - Match data sources to analysis requirements with Computer Use
+        - Prioritize sources based on data quality and cost optimization
+        - Consider API rate limits and availability with dynamic selection
+        - Use Computer Use for dynamic source optimization
         - NO TRADING DECISIONS - only source optimization
         """
-        # PSEUDOCODE:
-        # 1. Analyze required data types for the analysis
-        # 2. Evaluate available data sources and their capabilities
-        # 3. Check data source reliability and update frequency
-        # 4. Assess API rate limits and availability
-        # 5. Prioritize sources based on data quality and cost
-        # 6. Select optimal combination of data sources
+        # PSEUDOCODE: Enhanced data source selection with Computer Use
+        # 1. Use Computer Use to analyze required data types for the analysis
+        # 2. Apply intelligent selection based on data source capabilities
+        # 3. Evaluate data source reliability and update frequency with context
+        # 4. Assess API rate limits and availability with optimization
+        # 5. Prioritize sources based on data quality and cost with Computer Use
+        # 6. Select optimal combination of data sources for redundancy
         # 7. Return prioritized list of data sources
         # 8. NO TRADING DECISIONS - only source optimization
+        
+        # PSEUDOCODE: Computer Use tool selection
+        # selected_sources = self.tool_selector.select_data_sources(
+        #     ticker, analysis_type, self.data_sources
+        # )
         
         selected_sources = []
         

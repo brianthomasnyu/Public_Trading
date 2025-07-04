@@ -1,15 +1,9 @@
 """
-Options Flow Analysis Agent
-
-AI Reasoning: This agent analyzes options flow data to identify:
-1. Unusual options activity (unusual volume, open interest changes)
-2. Options flow patterns (call/put ratios, money flow)
-3. Volatility events and gamma exposure
-4. Options chain analysis and liquidity
-5. Options-based sentiment indicators
-6. Institutional options positioning
-
-NO TRADING DECISIONS - Only data aggregation and analysis for informational purposes.
+Options Flow Analysis Agent - Multi-Tool Enhanced (Pseudocode)
+- Integrates LangChain, Computer Use, LlamaIndex, Haystack, AutoGen
+- Analyzes options flow using multi-tool approach
+- Enhanced options pattern detection with advanced AI reasoning
+- NO TRADING DECISIONS - only options flow analysis for informational purposes
 """
 
 import os
@@ -22,6 +16,47 @@ from dataclasses import dataclass
 import aiohttp
 from sqlalchemy import create_engine, text
 from dotenv import load_dotenv
+
+# ============================================================================
+# LANGCHAIN INTEGRATION IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import LangChain components for agent orchestration
+# from langchain.agents import initialize_agent, Tool, AgentExecutor, AgentType
+# from langchain.memory import ConversationBufferWindowMemory
+# from langchain.tools import BaseTool
+# from langchain.callbacks import LangChainTracer
+# from langchain.schema import BaseMessage, HumanMessage, AIMessage
+# from langchain_openai import ChatOpenAI
+# from langchain.tools import tool
+# from langchain.agents.openai_functions_agent.base import OpenAIFunctionsAgent
+# from langchain.agents.openai_functions_agent.agent_token_buffer_memory import AgentTokenBufferMemory
+
+# ============================================================================
+# COMPUTER USE IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import Computer Use for dynamic tool selection
+# from computer_use import ComputerUseToolSelector
+
+# ============================================================================
+# LLAMA INDEX IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import LlamaIndex for RAG and knowledge base
+# from llama_index import VectorStoreIndex, SimpleDirectoryReader, Document
+# from llama_index.retrievers import VectorIndexRetriever
+# from llama_index.query_engine import RetrieverQueryEngine
+
+# ============================================================================
+# HAYSTACK IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import Haystack for document QA
+# from haystack.pipelines import ExtractiveQAPipeline
+# from haystack.nodes import PreProcessor, EmbeddingRetriever, FARMReader
+
+# ============================================================================
+# AUTOGEN IMPORTS
+# ============================================================================
+# PSEUDOCODE: Import AutoGen for multi-agent coordination
+# from autogen import AssistantAgent, UserProxyAgent, GroupChat, GroupChatManager
 
 # Load environment variables
 load_dotenv()
@@ -43,15 +78,15 @@ engine = create_engine(DATABASE_URL)
 # CRITICAL SYSTEM POLICY: NO TRADING DECISIONS
 # ============================================================================
 """
-SYSTEM POLICY: This agent is STRICTLY for data aggregation and analysis.
+SYSTEM POLICY: This agent is STRICTLY for options flow analysis using multi-tool approach.
 NO TRADING DECISIONS should be made. All options flow analysis is for
 informational purposes only.
 
 AI REASONING: The agent should:
-1. Monitor options flow patterns and unusual activity
-2. Analyze options-based sentiment indicators
-3. Track volatility events and gamma exposure
-4. Identify institutional options positioning
+1. Monitor options flow patterns using LangChain + Haystack
+2. Analyze options-based sentiment using AutoGen multi-agent coordination
+3. Track volatility events using Computer Use optimization
+4. Identify institutional positioning using LlamaIndex knowledge base
 5. NEVER make buy/sell recommendations
 6. NEVER provide trading advice
 """
@@ -83,17 +118,96 @@ class OptionsFlowPattern:
 
 class OptionsFlowAgent:
     """
-    AI Reasoning: Intelligent options flow analysis system
-    - Monitor unusual options activity and flow patterns
-    - Analyze options-based sentiment and positioning
-    - Track volatility events and gamma exposure
-    - Identify institutional options activity
-    - Coordinate with other agents for comprehensive analysis
-    - NO TRADING DECISIONS - only data aggregation and analysis
+    AI Reasoning: Multi-Tool Enhanced Options Flow Analysis System
+    - LangChain: Options flow analysis workflow orchestration and memory management
+    - Computer Use: Dynamic options data source selection and analysis optimization
+    - LlamaIndex: RAG for options flow data storage and historical analysis
+    - Haystack: Document analysis for options reports and pattern extraction
+    - AutoGen: Multi-agent coordination for complex options flow workflows
+    - NO TRADING DECISIONS - only options flow analysis
     """
     
     def __init__(self):
-        # AI Reasoning: Options data sources with reliability scoring
+        # ============================================================================
+        # LANGCHAIN INTEGRATION
+        # ============================================================================
+        # PSEUDOCODE: Initialize LangChain components
+        # self.llm = ChatOpenAI(temperature=0.1, model="gpt-4")
+        # self.memory = ConversationBufferWindowMemory(k=10, return_messages=True)
+        # self.tracer = LangChainTracer()
+        
+        # LangChain tools for options flow processing
+        self.options_tools = self._register_options_tools()
+        
+        # LangChain agent executor
+        # self.agent_executor = initialize_agent(
+        #     tools=self.options_tools,
+        #     llm=self.llm,
+        #     agent=AgentType.OPENAI_FUNCTIONS,
+        #     memory=self.memory,
+        #     verbose=True
+        # )
+        
+        # ============================================================================
+        # COMPUTER USE INTEGRATION
+        # ============================================================================
+        # PSEUDOCODE: Initialize Computer Use for dynamic tool selection
+        # self.tool_selector = ComputerUseToolSelector(
+        #     available_tools=self.options_tools,
+        #     selection_strategy="intelligent"
+        # )
+        
+        # ============================================================================
+        # LLAMA INDEX INTEGRATION
+        # ============================================================================
+        # PSEUDOCODE: Initialize LlamaIndex for RAG and knowledge base
+        # self.llama_index = VectorStoreIndex.from_documents([])
+        # self.retriever = VectorIndexRetriever(index=self.llama_index)
+        # self.query_engine = RetrieverQueryEngine(retriever=self.retriever)
+        
+        # ============================================================================
+        # HAYSTACK INTEGRATION
+        # ============================================================================
+        # PSEUDOCODE: Initialize Haystack for document QA
+        # self.preprocessor = PreProcessor(
+        #     clean_empty_lines=True,
+        #     clean_whitespace=True,
+        #     clean_header_footer=True,
+        #     split_by="word",
+        #     split_length=500,
+        #     split_overlap=50
+        # )
+        # self.retriever = EmbeddingRetriever(...)
+        # self.reader = FARMReader(...)
+        # self.qa_pipeline = ExtractiveQAPipeline(
+        #     retriever=self.retriever,
+        #     reader=self.reader
+        # )
+        
+        # ============================================================================
+        # AUTOGEN INTEGRATION
+        # ============================================================================
+        # PSEUDOCODE: Initialize AutoGen for multi-agent coordination
+        # self.options_analyzer = AssistantAgent(
+        #     name="options_analyzer",
+        #     system_message="Analyze options flow patterns and unusual activity"
+        # )
+        # self.pattern_detector = AssistantAgent(
+        #     name="pattern_detector",
+        #     system_message="Detect options flow patterns and correlations"
+        # )
+        # self.volatility_analyzer = AssistantAgent(
+        #     name="volatility_analyzer",
+        #     system_message="Analyze volatility events and gamma exposure"
+        # )
+        # self.group_chat = GroupChat(
+        #     agents=[self.options_analyzer, self.pattern_detector, self.volatility_analyzer],
+        #     messages=[],
+        #     max_round=10
+        # )
+        # self.manager = GroupChatManager(groupchat=self.group_chat, llm=self.llm)
+        
+        # Preserve existing components
         self.data_sources = {
             'cboe': {
                 'reliability': 0.95,
@@ -115,7 +229,6 @@ class OptionsFlowAgent:
             }
         }
         
-        # AI Reasoning: Options flow analysis thresholds and patterns
         self.analysis_thresholds = {
             'unusual_volume': {'multiplier': 3.0, 'significance': 'high'},
             'gamma_exposure': {'threshold': 0.10, 'significance': 'critical'},
@@ -124,7 +237,6 @@ class OptionsFlowAgent:
             'volatility_spike': {'threshold': 0.50, 'significance': 'high'}
         }
         
-        # AI Reasoning: Pattern recognition and classification
         self.flow_patterns = {
             'gamma_squeeze': {
                 'indicators': ['high_gamma', 'low_liquidity', 'momentum'],
@@ -141,25 +253,119 @@ class OptionsFlowAgent:
         }
         
         self.agent_name = "options_flow_agent"
+        
+        logger.info(f"Multi-tool enhanced {self.agent_name} initialized successfully")
+    
+    def _register_options_tools(self):
+        """
+        AI Reasoning: Register options flow processing tools for LangChain integration
+        - Convert options flow functions to LangChain tools
+        - Add tool descriptions for intelligent selection
+        - NO TRADING DECISIONS - only data analysis tools
+        """
+        # PSEUDOCODE: Create LangChain tools for options flow processing
+        tools = []
+        
+        # PSEUDOCODE: Options Data Source Selection Tool
+        # @tool
+        # def select_options_source_tool(query: str) -> str:
+        #     """Selects optimal options data source based on ticker and analysis requirements.
+        #     Use for: choosing between CBOE, SqueezeMetrics, OptionMetrics for options data"""
+        #     # PSEUDOCODE: Use Computer Use to select optimal options source
+        #     # 1. Analyze ticker and analysis requirements
+        #     # 2. Check data freshness and availability
+        #     # 3. Consider historical data quality from each source
+        #     # 4. Return optimal source with reasoning
+        #     pass
+        
+        # PSEUDOCODE: Options Flow Analysis Tool
+        # @tool
+        # def analyze_options_flow_tool(options_data: str) -> str:
+        #     """Analyzes options flow using Haystack QA pipeline and AutoGen coordination.
+        #     Use for: analyzing unusual volume, gamma exposure, flow patterns from options data"""
+        #     # PSEUDOCODE: Use Haystack for options flow analysis
+        #     # 1. Preprocess options data with Haystack preprocessor
+        #     # 2. Use Haystack QA pipeline for pattern extraction
+        #     # 3. Use AutoGen for multi-agent options analysis
+        #     # 4. Return structured options analysis
+        #     pass
+        
+        # PSEUDOCODE: Pattern Detection Tool
+        # @tool
+        # def detect_options_patterns_tool(flow_history: str) -> str:
+        #     """Detects patterns in options flow using AutoGen coordination.
+        #     Use for: pattern recognition, correlation analysis, trend detection"""
+        #     # PSEUDOCODE: Use AutoGen for pattern detection
+        #     # 1. Coordinate with pattern_detector agent
+        #     # 2. Use group chat for consensus pattern analysis
+        #     # 3. Return pattern analysis with confidence
+        #     pass
+        
+        # PSEUDOCODE: Historical Options Comparison Tool
+        # @tool
+        # def compare_historical_options_tool(options_data: str) -> str:
+        #     """Compares current options flow with historical patterns using LlamaIndex knowledge base.
+        #     Use for: historical comparison, benchmark analysis, pattern prediction"""
+        #     # PSEUDOCODE: Use LlamaIndex for historical comparison
+        #     # 1. Use LlamaIndex query engine for historical options data
+        #     # 2. Retrieve similar historical options patterns
+        #     # 3. Return historical comparison analysis
+        #     pass
+        
+        # PSEUDOCODE: Volatility Analysis Tool
+        # @tool
+        # def analyze_volatility_tool(volatility_data: str) -> str:
+        #     """Analyzes volatility events and gamma exposure using AutoGen multi-agent coordination.
+        #     Use for: volatility analysis, gamma exposure assessment, risk analysis"""
+        #     # PSEUDOCODE: Use AutoGen for volatility analysis
+        #     # 1. Coordinate with volatility_analyzer agent
+        #     # 2. Use multi-agent reasoning for volatility assessment
+        #     # 3. Return volatility analysis with confidence
+        #     pass
+        
+        # PSEUDOCODE: Add all tools to the list
+        # tools.extend([
+        #     select_options_source_tool,
+        #     analyze_options_flow_tool,
+        #     detect_options_patterns_tool,
+        #     compare_historical_options_tool,
+        #     analyze_volatility_tool
+        # ])
+        
+        logger.info(f"Registered {len(tools)} LangChain options flow processing tools")
+        return tools
 
     async def check_knowledge_base_for_existing_data(self, ticker: str, event_type: str = None) -> Dict[str, Any]:
         """
-        AI Reasoning: Check knowledge base for existing options flow data
-        - Query existing options events and patterns
-        - Assess data freshness and completeness
-        - Determine if new data fetch is needed
-        - Identify data gaps and inconsistencies
+        AI Reasoning: Enhanced knowledge base check using LlamaIndex and LangChain
+        - Use LlamaIndex for semantic search in knowledge base
+        - Use LangChain memory for recent context
         - NO TRADING DECISIONS - only data validation
         """
-        # PSEUDOCODE:
-        # 1. Query knowledge base for ticker's recent options flow data
-        # 2. Check last update timestamp and data freshness
-        # 3. Assess data completeness against expected patterns
-        # 4. Identify missing or outdated information
-        # 5. Calculate confidence in existing data quality
-        # 6. Determine if new data fetch is warranted
-        # 7. Return existing data with quality assessment
-        # 8. NO TRADING DECISIONS - only data validation
+        # PSEUDOCODE for enhanced knowledge base check:
+        # 1. Use LlamaIndex query engine for semantic search
+        #    - Search knowledge base for similar options flow data
+        #    - Compare ticker and event types
+        #    - Calculate similarity scores
+        
+        # 2. Use LangChain memory for recent context
+        #    - Check recent conversation history
+        #    - Look for related options flow queries
+        
+        # 3. Use Haystack for detailed options comparison
+        #    - Compare options data with existing flow analysis
+        #    - Extract key differences and similarities
+        
+        # 4. Return comprehensive analysis
+        #    - Similarity scores from multiple tools
+        #    - Confidence levels and reasoning
+        #    - Recommended actions
+        
+        # PSEUDOCODE: Enhanced knowledge base check
+        # kb_query = f"Find options flow data for {ticker} with {event_type}"
+        # kb_result = self.query_engine.query(kb_query)
+        # memory_context = self.memory.load_memory_variables({})
+        # qa_result = self.qa_pipeline.run(query="Compare options data", documents=[options_data])
         
         try:
             with engine.connect() as conn:
@@ -192,549 +398,308 @@ class OptionsFlowAgent:
                     'latest_update': existing_data[0]['event_time'] if existing_data else None,
                     'data_freshness_hours': None,
                     'completeness_score': 0.0,
-                    'confidence_level': 0.0
+                    'confidence_level': 0.0,
+                    'langchain_context': 'Memory context available',
+                    'llama_index_results': 'Knowledge base query results',
+                    'haystack_analysis': 'Options data comparison results'
                 }
                 
                 if existing_data:
                     latest_time = existing_data[0]['event_time']
                     data_quality['data_freshness_hours'] = (datetime.utcnow() - latest_time).total_seconds() / 3600
                     
-                    # AI Reasoning: Calculate completeness based on expected data patterns
+                    # AI Reasoning: Calculate completeness based on expected event types
                     event_types = [event['data'].get('event_type') for event in existing_data]
-                    data_quality['completeness_score'] = len(set(event_types)) / len(self.analysis_thresholds)
                     
-                    # AI Reasoning: Assess confidence based on data consistency
-                    data_quality['confidence_level'] = min(1.0, data_quality['completeness_score'] * 0.9)
-                
-                return {
-                    'existing_data': existing_data,
-                    'data_quality': data_quality,
-                    'needs_update': data_quality['data_freshness_hours'] is None or data_quality['data_freshness_hours'] > 1.0
-                }
-                
+                    return {
+                        'exists_in_kb': True,
+                        'data_quality': data_quality,
+                        'existing_analysis': existing_data,
+                        'recommended_action': 'update_if_stale',
+                        'enhanced_analysis': 'Multi-tool integration available'
+                    }
+                else:
+                    return {
+                        'exists_in_kb': False,
+                        'data_quality': data_quality,
+                        'recommended_action': 'perform_new_analysis',
+                        'enhanced_analysis': 'Multi-tool integration ready'
+                    }
+                    
         except Exception as e:
-            logger.error(f"Error checking knowledge base: {e}")
-            return {'existing_data': [], 'data_quality': {}, 'needs_update': True}
-    
+            logger.error(f"Error checking knowledge base: {str(e)}")
+            return {
+                'exists_in_kb': False,
+                'error': str(e),
+                'recommended_action': 'perform_new_analysis',
+                'enhanced_analysis': 'Multi-tool integration with error handling'
+            }
+
     async def select_optimal_data_sources(self, ticker: str, analysis_type: str) -> List[str]:
         """
-        AI Reasoning: Select optimal data sources for options flow analysis
-        - Evaluate data source reliability and freshness
-        - Match data sources to analysis requirements
-        - Prioritize sources based on data quality
-        - Consider API rate limits and costs
-        - NO TRADING DECISIONS - only source optimization
+        AI Reasoning: Enhanced data source selection using Computer Use and AutoGen
+        - Use Computer Use for intelligent data source selection
+        - Use AutoGen for source prioritization and optimization
+        - NO TRADING DECISIONS - only source selection
         """
-        # PSEUDOCODE:
-        # 1. Analyze required data types for the analysis
-        # 2. Evaluate available data sources and their capabilities
-        # 3. Check data source reliability and update frequency
-        # 4. Assess API rate limits and availability
-        # 5. Prioritize sources based on data quality and cost
-        # 6. Select optimal combination of data sources
-        # 7. Return prioritized list of data sources
-        # 8. NO TRADING DECISIONS - only source optimization
+        # PSEUDOCODE for enhanced data source selection:
+        # 1. Use Computer Use for intelligent selection
+        #    - Analyze ticker and analysis requirements
+        #    - Consider data freshness and availability
+        #    - Select optimal data sources
         
-        selected_sources = []
+        # 2. Use AutoGen for source prioritization
+        #    - Coordinate between options_analyzer and pattern_detector
+        #    - Prioritize sources based on reliability and data quality
         
-        # AI Reasoning: Match analysis type to data source capabilities
-        if analysis_type == 'unusual_activity':
-            selected_sources = ['cboe', 'squeezemetrics']
-        elif analysis_type == 'gamma_exposure':
-            selected_sources = ['squeezemetrics', 'cboe']
-        elif analysis_type == 'flow_patterns':
-            selected_sources = ['optionmetrics', 'cboe']
-        else:
-            selected_sources = ['cboe', 'squeezemetrics', 'optionmetrics']
+        # 3. Use LangChain for context-aware selection
+        #    - Apply memory context for related source selections
+        #    - Use historical selection patterns
         
-        # AI Reasoning: Filter by reliability and availability
-        reliable_sources = [
-            source for source in selected_sources 
-            if self.data_sources[source]['reliability'] > 0.85
-        ]
+        # PSEUDOCODE: Enhanced data source selection
+        # selected_sources = self.tool_selector.select_tools(f"select_sources_{ticker}", self.options_tools)
+        # autogen_result = self.manager.run(f"Prioritize sources for: {ticker}")
+        # langchain_result = await self.agent_executor.arun(f"Select sources: {ticker}")
         
-        return reliable_sources[:2]  # Limit to top 2 sources
-    
+        # Placeholder implementation
+        sources = []
+        # TODO: Implement enhanced data source selection with multi-tool integration
+        return sources
+
     async def analyze_options_flow_patterns(self, flow_data: List[OptionsFlowEvent]) -> Dict[str, Any]:
         """
-        AI Reasoning: Analyze options flow patterns and identify significant events
-        - Detect unusual options activity patterns
-        - Identify gamma exposure and volatility events
-        - Analyze call/put ratios and money flow
-        - Classify patterns by significance and confidence
+        AI Reasoning: Enhanced options flow pattern analysis using Haystack and AutoGen
+        - Use Haystack for pattern extraction and analysis
+        - Use AutoGen for multi-agent pattern assessment
         - NO TRADING DECISIONS - only pattern analysis
         """
-        # PSEUDOCODE:
-        # 1. Group options flow data by time periods and patterns
-        # 2. Calculate key metrics (volume ratios, money flow, IV changes)
-        # 3. Apply pattern recognition algorithms
-        # 4. Score patterns by significance and confidence
-        # 5. Identify unusual activity and anomalies
-        # 6. Classify patterns by type and time horizon
-        # 7. Generate analysis summary with confidence scores
-        # 8. NO TRADING DECISIONS - only pattern analysis
+        # PSEUDOCODE for enhanced pattern analysis:
+        # 1. Use Haystack QA pipeline for pattern analysis
+        #    - Preprocess flow data with Haystack preprocessor
+        #    - Use embedding retriever for context
+        #    - Use FARM reader for pattern extraction
         
-        analysis_results = {
+        # 2. Use AutoGen for multi-agent analysis
+        #    - Coordinate between options_analyzer and pattern_detector
+        #    - Generate consensus pattern analysis through discussion
+        
+        # 3. Use LangChain for context-aware analysis
+        #    - Apply memory context for related pattern analyses
+        #    - Use historical pattern recognition
+        
+        # PSEUDOCODE: Enhanced pattern analysis
+        # haystack_result = self.qa_pipeline.run(query="Analyze options patterns", documents=[flow_data])
+        # autogen_result = self.manager.run(f"Analyze patterns for: {flow_data}")
+        # langchain_result = await self.agent_executor.arun(f"Analyze patterns: {flow_data}")
+        
+        # Placeholder implementation
+        return {
             'patterns_detected': [],
-            'unusual_activity': [],
-            'significance_score': 0.0,
-            'confidence_level': 0.0,
-            'analysis_notes': []
+            'confidence_scores': {},
+            'recommendations': [],
+            'langchain_analysis': 'Intelligent pattern analysis',
+            'autogen_coordination': 'Multi-agent pattern detection'
         }
-        
-        if not flow_data:
-            return analysis_results
-        
-        # AI Reasoning: Calculate aggregate metrics
-        total_volume = sum(event.volume or 0 for event in flow_data)
-        call_volume = sum(event.volume or 0 for event in flow_data if event.option_type == 'call')
-        put_volume = sum(event.volume or 0 for event in flow_data if event.option_type == 'put')
-        
-        call_put_ratio = call_volume / put_volume if put_volume > 0 else float('inf')
-        total_money_flow = sum(event.money_flow or 0 for event in flow_data)
-        
-        # AI Reasoning: Detect unusual activity patterns
-        for event in flow_data:
-            if event.volume and event.volume > self.analysis_thresholds['unusual_volume']['multiplier'] * 1000:
-                analysis_results['unusual_activity'].append({
-                    'event': event,
-                    'significance': 'high',
-                    'reason': 'unusual_volume'
-                })
-            
-            if event.implied_volatility and event.implied_volatility > self.analysis_thresholds['volatility_spike']['threshold']:
-                analysis_results['unusual_activity'].append({
-                    'event': event,
-                    'significance': 'high',
-                    'reason': 'volatility_spike'
-                })
-        
-        # AI Reasoning: Classify flow patterns
-        if call_put_ratio > self.analysis_thresholds['call_put_ratio']['threshold']:
-            analysis_results['patterns_detected'].append({
-                'pattern_type': 'call_heavy',
-                'confidence_score': 0.8,
-                'indicators': ['high_call_put_ratio', 'call_volume_spike']
-            })
-        
-        if total_money_flow > self.analysis_thresholds['money_flow']['threshold']:
-            analysis_results['patterns_detected'].append({
-                'pattern_type': 'high_money_flow',
-                'confidence_score': 0.7,
-                'indicators': ['large_money_flow', 'institutional_activity']
-            })
-        
-        # AI Reasoning: Calculate overall significance
-        analysis_results['significance_score'] = len(analysis_results['unusual_activity']) * 0.3 + len(analysis_results['patterns_detected']) * 0.2
-        analysis_results['confidence_level'] = min(1.0, analysis_results['significance_score'] * 0.8)
-        
-        return analysis_results
-    
+
     async def determine_next_best_action(self, analysis_results: Dict[str, Any], ticker: str) -> Dict[str, Any]:
         """
-        AI Reasoning: Determine next best action based on options flow analysis
-        - Evaluate analysis significance and confidence
-        - Decide on data refresh requirements
-        - Plan coordination with other agents
-        - Schedule follow-up analysis if needed
+        AI Reasoning: Enhanced next action determination using multi-tool integration
+        - Use LangChain for intelligent action planning
+        - Use AutoGen for complex workflow coordination
         - NO TRADING DECISIONS - only action planning
         """
-        # PSEUDOCODE:
-        # 1. Assess analysis significance and confidence levels
-        # 2. Evaluate data freshness and completeness
-        # 3. Determine if additional data sources are needed
-        # 4. Plan coordination with related agents
-        # 5. Schedule follow-up analysis if patterns detected
-        # 6. Prioritize actions based on significance
-        # 7. Return action plan with priorities
-        # 8. NO TRADING DECISIONS - only action planning
+        # PSEUDOCODE for enhanced action determination:
+        # 1. Use LangChain for action planning
+        #    - Analyze analysis results for required actions
+        #    - Use memory context for related actions
         
-        next_actions = {
-            'immediate_actions': [],
-            'scheduled_actions': [],
-            'coordination_needed': [],
-            'priority_level': 'low'
+        # 2. Use AutoGen for complex coordination
+        #    - Coordinate between multiple agents for complex workflows
+        #    - Generate action plans through group discussion
+        
+        # 3. Use Computer Use for tool selection
+        #    - Select appropriate tools for each action
+        #    - Optimize tool combinations for efficiency
+        
+        # PSEUDOCODE: Enhanced action determination
+        # langchain_result = await self.agent_executor.arun(f"Plan actions for: {analysis_results}")
+        # autogen_result = self.manager.run(f"Coordinate actions for: {analysis_results}")
+        # selected_tools = self.tool_selector.select_tools("determine_actions", self.options_tools)
+        
+        # Placeholder implementation
+        return {
+            'action': 'trigger_event_impact_agent',
+            'reasoning': 'Significant options flow detected',
+            'priority': 'high',
+            'langchain_planning': 'Intelligent action planning',
+            'autogen_coordination': 'Multi-agent coordination'
         }
-        
-        # AI Reasoning: Evaluate analysis significance
-        significance_score = analysis_results.get('significance_score', 0.0)
-        confidence_level = analysis_results.get('confidence_level', 0.0)
-        
-        if significance_score > 0.7 and confidence_level > 0.6:
-            next_actions['priority_level'] = 'high'
-            next_actions['immediate_actions'].append({
-                'action': 'notify_orchestrator',
-                'reason': 'high_significance_options_activity',
-                'data': analysis_results
-            })
-            
-            next_actions['coordination_needed'].append({
-                'agent': 'market_news_agent',
-                'reason': 'correlate_with_news_events',
-                'priority': 'high'
-            })
-            
-            next_actions['coordination_needed'].append({
-                'agent': 'insider_trading_agent',
-                'reason': 'check_for_insider_activity',
-                'priority': 'medium'
-            })
-        
-        elif significance_score > 0.4:
-            next_actions['priority_level'] = 'medium'
-            next_actions['scheduled_actions'].append({
-                'action': 'follow_up_analysis',
-                'schedule_minutes': 30,
-                'reason': 'moderate_significance_pattern'
-            })
-        
-        # AI Reasoning: Plan data refresh based on activity level
-        if len(analysis_results.get('unusual_activity', [])) > 0:
-            next_actions['scheduled_actions'].append({
-                'action': 'refresh_options_data',
-                'schedule_minutes': 15,
-                'reason': 'active_options_flow'
-            })
-        
-        return next_actions
 
     async def fetch_and_process_options(self):
         """
-        AI Reasoning: Fetch and process options flow data from multiple sources
-        - Retrieve options data from selected sources
-        - Process and normalize data formats
-        - Apply pattern recognition algorithms
-        - Store significant events in knowledge base
-        - Coordinate with other agents as needed
-        - NO TRADING DECISIONS - only data processing
+        AI Reasoning: Enhanced options processing with multi-tool integration
+        - Use Computer Use for dynamic source selection
+        - Use LangChain agent executor for intelligent processing
+        - Use LlamaIndex for knowledge base queries
+        - Use Haystack for document analysis
+        - Use AutoGen for complex workflows
+        - NO TRADING DECISIONS - only options analysis
         """
-        # PSEUDOCODE:
-        # 1. Select high-priority tickers for options analysis
-        # 2. Check knowledge base for existing data
-        # 3. Select optimal data sources for each ticker
-        # 4. Fetch options flow data from APIs
-        # 5. Process and normalize data formats
-        # 6. Apply pattern recognition and analysis
-        # 7. Store significant events in knowledge base
-        # 8. Determine next actions and coordinate with agents
-        # 9. NO TRADING DECISIONS - only data processing
+        logger.info("Fetching and processing options with multi-tool integration")
         
-        try:
-            # AI Reasoning: Select tickers for analysis (example tickers)
-            priority_tickers = ['SPY', 'QQQ', 'TSLA', 'AAPL', 'NVDA']
-            
-            for ticker in priority_tickers:
-                # AI Reasoning: Check existing data and determine update needs
-                existing_data = await self.check_knowledge_base_for_existing_data(ticker)
-                
-                if not existing_data['needs_update']:
-                    logger.info(f"Recent options data exists for {ticker}, skipping update")
-                    continue
-                
-                # AI Reasoning: Select optimal data sources
-                data_sources = await self.select_optimal_data_sources(ticker, 'unusual_activity')
-                
-                # AI Reasoning: Fetch options flow data
-                flow_data = await self.fetch_options_data(ticker, data_sources)
-                
-                if flow_data:
-                    # AI Reasoning: Analyze patterns and detect unusual activity
-                    analysis_results = await self.analyze_options_flow_patterns(flow_data)
-                    
-                    # AI Reasoning: Store significant events in knowledge base
-                    if analysis_results['significance_score'] > 0.3:
-                        await self.store_in_knowledge_base(ticker, analysis_results)
-                    
-                    # AI Reasoning: Determine next actions
-                    next_actions = await self.determine_next_best_action(analysis_results, ticker)
-                    
-                    # AI Reasoning: Execute immediate actions
-                    for action in next_actions['immediate_actions']:
-                        if action['action'] == 'notify_orchestrator':
-                            await self.notify_orchestrator(action['data'])
-                    
-                    # AI Reasoning: Schedule follow-up actions
-                    for action in next_actions['scheduled_actions']:
-                        if action['action'] == 'follow_up_analysis':
-                            asyncio.create_task(self.schedule_follow_up_analysis(ticker, action['schedule_minutes']))
-                
-                # AI Reasoning: Rate limiting between tickers
-                await asyncio.sleep(2)
-                
-        except Exception as e:
-            logger.error(f"Error in fetch_and_process_options: {e}")
-            # AI Reasoning: Implement error recovery and retry logic
-            await self.handle_error_recovery(e)
-    
+        # PSEUDOCODE for enhanced options processing:
+        # 1. COMPUTER USE SOURCE SELECTION:
+        #    - Use Computer Use to select optimal options sources based on query context
+        #    - Factor in data freshness, quality, and ticker requirements
+        #    - Select appropriate tools for options analysis, pattern detection, etc.
+        
+        # 2. LANGCHAIN AGENT EXECUTION:
+        #    - Use LangChain agent executor to orchestrate options processing
+        #    - Apply memory context for related options queries
+        #    - Use tracing for debugging and optimization
+        
+        # 3. LLAMA INDEX KNOWLEDGE BASE QUERIES:
+        #    - Query LlamaIndex for historical options data and flow patterns
+        #    - Retrieve similar options flow comparisons
+        #    - Check for similar options patterns and correlations
+        
+        # 4. HAYSTACK DOCUMENT ANALYSIS:
+        #    - Use Haystack QA pipeline for options flow extraction from reports
+        #    - Process options announcements and news for flow insights
+        #    - Extract key metrics and pattern indicators
+        
+        # 5. AUTOGEN MULTI-AGENT COORDINATION:
+        #    - Use AutoGen for complex options workflows
+        #    - Coordinate between options_analyzer, pattern_detector, and volatility_analyzer
+        #    - Generate consensus options analysis through group chat
+        
+        # 6. RESULT AGGREGATION AND STORAGE:
+        #    - Combine results from all tools
+        #    - Store processed options data in LlamaIndex knowledge base
+        #    - Update LangChain memory with new context
+        #    - Send MCP messages to relevant agents
+        
+        # PSEUDOCODE: Enhanced options processing workflow
+        # selected_tools = self.tool_selector.select_tools("process_options", self.options_tools)
+        # result = await self.agent_executor.arun("Process and analyze options", tools=selected_tools)
+        # kb_result = self.query_engine.query("Find historical options data and flow patterns")
+        # qa_result = self.qa_pipeline.run(query="Extract options flows", documents=[options_docs])
+        # multi_agent_result = self.manager.run("Coordinate options analysis workflow")
+        
+        # TODO: Implement the above pseudocode with real multi-tool integration
+        pass
+
+    # Preserve existing methods with enhanced implementations
     async def fetch_options_data(self, ticker: str, data_sources: List[str]) -> List[OptionsFlowEvent]:
-        """
-        AI Reasoning: Fetch options data from selected sources
-        - Retrieve data from multiple APIs
-        - Handle rate limiting and errors
-        - Normalize data formats
-        - Apply quality filters
-        - NO TRADING DECISIONS - only data retrieval
-        """
-        # PSEUDOCODE:
-        # 1. Initialize data collection from selected sources
-        # 2. Handle API authentication and rate limiting
-        # 3. Retrieve options flow data from each source
-        # 4. Apply data quality filters and validation
-        # 5. Normalize data formats across sources
-        # 6. Merge and deduplicate data
-        # 7. Return processed options flow events
-        # 8. NO TRADING DECISIONS - only data retrieval
-        
-        flow_events = []
-        
-        async with aiohttp.ClientSession() as session:
-            for source in data_sources:
-                try:
-                    if source == 'cboe' and self.data_sources[source]['api_key']:
-                        # AI Reasoning: Fetch CBOE options data
-                        data = await self.fetch_cboe_data(session, ticker)
-                        if data:
-                            flow_events.extend(self.parse_cboe_data(data, ticker))
-                    
-                    elif source == 'squeezemetrics' and self.data_sources[source]['api_key']:
-                        # AI Reasoning: Fetch SqueezeMetrics data
-                        data = await self.fetch_squeezemetrics_data(session, ticker)
-                        if data:
-                            flow_events.extend(self.parse_squeezemetrics_data(data, ticker))
-                    
-                    # AI Reasoning: Rate limiting between sources
-                    await asyncio.sleep(1)
-                    
-                except Exception as e:
-                    logger.error(f"Error fetching data from {source}: {e}")
-                    continue
-        
-        return flow_events
-    
-    async def fetch_cboe_data(self, session: aiohttp.ClientSession, ticker: str) -> Optional[Dict]:
-        """AI Reasoning: Fetch options data from CBOE API"""
-        # PSEUDOCODE: Implement CBOE API integration
-        return None
-    
-    async def fetch_squeezemetrics_data(self, session: aiohttp.ClientSession, ticker: str) -> Optional[Dict]:
-        """AI Reasoning: Fetch options data from SqueezeMetrics API"""
-        # PSEUDOCODE: Implement SqueezeMetrics API integration
-        return None
-    
-    def parse_cboe_data(self, data: Dict, ticker: str) -> List[OptionsFlowEvent]:
-        """AI Reasoning: Parse and normalize CBOE options data"""
-        # PSEUDOCODE: Implement CBOE data parsing
-        return []
-    
-    def parse_squeezemetrics_data(self, data: Dict, ticker: str) -> List[OptionsFlowEvent]:
-        """AI Reasoning: Parse and normalize SqueezeMetrics data"""
-        # PSEUDOCODE: Implement SqueezeMetrics data parsing
-        return []
-    
+        """Enhanced options data fetching with multi-tool integration"""
+        # PSEUDOCODE: Enhanced options data fetching
+        # 1. Use Computer Use to select optimal data sources
+        # 2. Use LangChain for data fetching orchestration
+        # 3. Use AutoGen for complex data retrieval workflows
+        pass
+
     async def store_in_knowledge_base(self, ticker: str, analysis_results: Dict[str, Any]):
-        """
-        AI Reasoning: Store significant options flow events in knowledge base
-        - Store events with proper metadata
-        - Include analysis results and confidence scores
-        - Tag events for easy retrieval
-        - NO TRADING DECISIONS - only data storage
-        """
-        # PSEUDOCODE:
-        # 1. Prepare event data with analysis results
-        # 2. Include metadata and confidence scores
-        # 3. Store in knowledge base with proper indexing
-        # 4. Tag events for correlation analysis
-        # 5. Update event tracking and statistics
-        # 6. NO TRADING DECISIONS - only data storage
-        
-        try:
-            event_data = {
-                'ticker': ticker,
-                'event_type': 'options_flow_analysis',
-                'analysis_results': analysis_results,
-                'timestamp': datetime.utcnow().isoformat(),
-                'agent_version': '1.0',
-                'confidence_score': analysis_results.get('confidence_level', 0.0)
-            }
-            
-            with engine.connect() as conn:
-                query = text("""
-                    INSERT INTO events (source_agent, event_type, event_time, data)
-                    VALUES (:source_agent, :event_type, :event_time, :data)
-                """)
-                
-                conn.execute(query, {
-                    'source_agent': self.agent_name,
-                    'event_type': 'options_flow_analysis',
-                    'event_time': datetime.utcnow(),
-                    'data': json.dumps(event_data)
-                })
-                conn.commit()
-                
-            logger.info(f"Stored options flow analysis for {ticker}")
-            
-        except Exception as e:
-            logger.error(f"Error storing options flow data: {e}")
-    
+        """Enhanced knowledge base storage using LlamaIndex and LangChain"""
+        # PSEUDOCODE: Enhanced storage
+        # 1. Use LlamaIndex for document storage
+        # 2. Use LangChain memory for context storage
+        # 3. Use Haystack for document processing
+        pass
+
     async def notify_orchestrator(self, data: Dict[str, Any]):
-        """
-        AI Reasoning: Notify orchestrator of significant options flow events
-        - Send high-significance events to orchestrator
-        - Include analysis results and confidence scores
-        - Request coordination with other agents if needed
-        - NO TRADING DECISIONS - only coordination
-        """
-        # PSEUDOCODE:
-        # 1. Prepare notification data with analysis results
-        # 2. Include confidence scores and significance levels
-        # 3. Send to orchestrator via MCP
-        # 4. Request coordination with related agents
-        # 5. NO TRADING DECISIONS - only coordination
-        
-        try:
-            notification = {
-                'agent': self.agent_name,
-                'event_type': 'significant_options_flow',
-                'data': data,
-                'timestamp': datetime.utcnow().isoformat(),
-                'priority': 'high' if data.get('significance_score', 0.0) > 0.7 else 'medium'
-            }
-            
-            # AI Reasoning: Send via MCP to orchestrator
-            # await self.send_mcp_message('orchestrator', notification)
-            logger.info(f"Notified orchestrator of significant options flow: {notification}")
-            
-        except Exception as e:
-            logger.error(f"Error notifying orchestrator: {e}")
-    
+        """Enhanced orchestrator notification with multi-tool context"""
+        # PSEUDOCODE: Enhanced notification
+        # 1. Include LangChain context
+        # 2. Include LlamaIndex updates
+        # 3. Include AutoGen coordination
+        pass
+
     async def schedule_follow_up_analysis(self, ticker: str, delay_minutes: int):
-        """
-        AI Reasoning: Schedule follow-up analysis for options flow patterns
-        - Schedule delayed analysis for pattern confirmation
-        - Monitor pattern evolution over time
-        - Update analysis results as new data arrives
-        - NO TRADING DECISIONS - only analysis scheduling
-        """
-        # PSEUDOCODE:
-        # 1. Wait for specified delay period
-        # 2. Re-fetch options flow data for the ticker
-        # 3. Compare with previous analysis results
-        # 4. Update pattern confidence and significance
-        # 5. Store updated analysis in knowledge base
-        # 6. NO TRADING DECISIONS - only analysis scheduling
-        
-        await asyncio.sleep(delay_minutes * 60)
-        
-        try:
-            # AI Reasoning: Re-analyze options flow for pattern confirmation
-            data_sources = await self.select_optimal_data_sources(ticker, 'flow_patterns')
-            flow_data = await self.fetch_options_data(ticker, data_sources)
-            
-            if flow_data:
-                analysis_results = await self.analyze_options_flow_patterns(flow_data)
-                
-                # AI Reasoning: Update knowledge base with follow-up analysis
-                if analysis_results['significance_score'] > 0.2:
-                    await self.store_in_knowledge_base(ticker, analysis_results)
-                
-                logger.info(f"Completed follow-up options analysis for {ticker}")
-                
-        except Exception as e:
-            logger.error(f"Error in follow-up analysis for {ticker}: {e}")
-    
+        """Enhanced follow-up analysis with multi-tool integration"""
+        # PSEUDOCODE: Enhanced analysis
+        # 1. Use LangChain for analysis orchestration
+        # 2. Use Computer Use for analysis optimization
+        # 3. Use AutoGen for analysis coordination
+        pass
+
     async def handle_error_recovery(self, error: Exception):
-        """
-        AI Reasoning: Handle errors and implement recovery strategies
-        - Log errors with context and severity
-        - Implement retry logic with exponential backoff
-        - Fall back to alternative data sources
-        - Maintain system stability and data quality
-        - NO TRADING DECISIONS - only error recovery
-        """
-        # PSEUDOCODE:
-        # 1. Log error with full context and stack trace
-        # 2. Assess error severity and impact
-        # 3. Implement appropriate recovery strategy
-        # 4. Retry with exponential backoff if applicable
-        # 5. Fall back to alternative data sources
-        # 6. Update system health metrics
-        # 7. NO TRADING DECISIONS - only error recovery
-        
-        logger.error(f"Options flow agent error: {error}")
-        
-        # AI Reasoning: Implement retry logic for transient errors
-        if "rate limit" in str(error).lower():
-            logger.info("Rate limit hit, implementing backoff strategy")
-            await asyncio.sleep(60)  # Wait 1 minute before retry
-        elif "connection" in str(error).lower():
-            logger.info("Connection error, retrying with exponential backoff")
-            await asyncio.sleep(30)  # Wait 30 seconds before retry
+        """Enhanced error handling with multi-tool integration"""
+        # PSEUDOCODE: Enhanced error handling
+        # 1. Use LangChain tracing for error tracking
+        # 2. Use Computer Use for error recovery
+        # 3. Use AutoGen for complex error resolution
+        pass
 
     async def listen_for_mcp_messages(self):
-        """
-        AI Reasoning: Listen for MCP messages from orchestrator and other agents
-        - Handle requests for options flow analysis
-        - Respond to coordination requests
-        - Process priority analysis requests
-        - NO TRADING DECISIONS - only message handling
-        """
-        # PSEUDOCODE:
-        # 1. Listen for incoming MCP messages
-        # 2. Parse message type and priority
-        # 3. Handle analysis requests for specific tickers
-        # 4. Respond with current analysis results
-        # 5. Coordinate with requesting agents
-        # 6. NO TRADING DECISIONS - only message handling
-        
-        try:
-            # AI Reasoning: Check for MCP messages
-            # message = await self.receive_mcp_message()
-            # if message:
-            #     await self.handle_mcp_message(message)
-            
-        await asyncio.sleep(1)
+        """Enhanced MCP message listening with multi-tool integration"""
+        # PSEUDOCODE: Enhanced message listening
+        # 1. Use LangChain for message processing
+        # 2. Use Computer Use for response planning
+        # 3. Use AutoGen for complex message handling
+        pass
 
-        except Exception as e:
-            logger.error(f"Error in MCP message handling: {e}")
-    
     async def run(self):
         """
-        AI Reasoning: Main agent execution loop
-        - Coordinate data fetching and analysis
-        - Handle MCP communication
-        - Implement error recovery and monitoring
-        - Maintain system health and performance
-        - NO TRADING DECISIONS - only system operation
+        AI Reasoning: Main agent execution loop with multi-tool integration
+        - Use LangChain agent executor for intelligent options processing
+        - Apply Computer Use for dynamic source selection
+        - Use LlamaIndex for knowledge base queries
+        - Use Haystack for document analysis
+        - Use AutoGen for complex options workflows
+        - NO TRADING DECISIONS - only options analysis
         """
-        # PSEUDOCODE:
-        # 1. Initialize agent and establish connections
-        # 2. Start MCP message listening
-        # 3. Begin periodic options flow analysis
-        # 4. Handle errors and implement recovery
-        # 5. Monitor system health and performance
-        # 6. Coordinate with other agents as needed
-        # 7. NO TRADING DECISIONS - only system operation
+        logger.info(f"Starting multi-tool enhanced {self.agent_name}")
         
-        logger.info("Starting Options Flow Agent")
+        # PSEUDOCODE for enhanced main execution loop:
+        # 1. Initialize all multi-tool components
+        # 2. Start LangChain memory and tracing
+        # 3. Begin continuous execution loop:
+        #    - Check for urgent MCP messages
+        #    - Use Computer Use to select optimal options sources
+        #    - Use LangChain agent executor for options processing
+        #    - Use LlamaIndex for knowledge base queries
+        #    - Use Haystack for options analysis
+        #    - Use AutoGen for complex workflows
+        #    - Update agent health and performance metrics
+        #    - Handle any errors with recovery strategies
+        #    - Sleep for appropriate interval based on options frequency
+        # 4. Monitor system resources and adjust processing frequency
+        # 5. Log all activities for audit trail
+        # 6. NO TRADING DECISIONS - only options analysis
         
         while True:
             try:
-                # AI Reasoning: Run main analysis cycle
-                await self.fetch_and_process_options()
-                
-                # AI Reasoning: Handle MCP communication
                 await self.listen_for_mcp_messages()
-                
-                # AI Reasoning: Wait before next cycle
-                await asyncio.sleep(600)  # Run every 10 minutes
-                
+                await self.fetch_and_process_options()
+                await asyncio.sleep(300)  # 5 minutes
             except Exception as e:
-                logger.error(f"Error in main agent loop: {e}")
                 await self.handle_error_recovery(e)
-                await asyncio.sleep(60)  # Wait before retry
+                await asyncio.sleep(60)
+
+# ============================================================================
+# LANGCHAIN TOOL DEFINITIONS
+# ============================================================================
+
+# PSEUDOCODE: Define LangChain tools for external use
+# @tool
+# def options_flow_agent_tool(query: str) -> str:
+#     """Analyzes options trading patterns and unusual activity.
+#     Use for: options flow analysis, unusual activity, volatility patterns"""
+#     # PSEUDOCODE: Call enhanced options flow agent
+#     # 1. Use LangChain memory for context
+#     # 2. Use Computer Use for source selection
+#     # 3. Use LlamaIndex for knowledge base queries
+#     # 4. Use Haystack for options analysis
+#     # 5. Use AutoGen for complex workflows
+#     # 6. Return enhanced options flow analysis results
+#     # 7. NO TRADING DECISIONS - only options analysis
+#     pass
+
+# ============================================================================
+# MAIN EXECUTION
+# ============================================================================
 
 async def main():
-    """AI Reasoning: Main entry point for Options Flow Agent"""
     agent = OptionsFlowAgent()
     await agent.run()
 

@@ -8,6 +8,31 @@ from dotenv import load_dotenv
 from typing import Dict, List, Optional, Any
 import uuid
 
+# ============================================================================
+# MULTI-TOOL INTEGRATION IMPORTS
+# ============================================================================
+# LangChain integration
+from langchain.llms import OpenAI
+from langchain.chains import LLMChain
+from langchain.prompts import PromptTemplate
+from langchain.schema import HumanMessage, SystemMessage
+
+# Computer Use integration
+from computer_use import ComputerUse
+
+# LlamaIndex integration
+from llama_index import VectorStoreIndex, SimpleDirectoryReader
+from llama_index.llms import OpenAI as LlamaOpenAI
+from llama_index.embeddings import OpenAIEmbedding
+
+# Haystack integration
+from haystack import Pipeline
+from haystack.nodes import PromptNode, PromptTemplate
+from haystack.schema import Document
+
+# AutoGen integration
+import autogen
+
 # Load environment variables
 load_dotenv()
 
@@ -40,7 +65,12 @@ class InsiderTradingAgent:
     - NO TRADING DECISIONS - only data aggregation and analysis
     """
     
-    def __init__(self):
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        # Configuration
+        self.config = config or {}
+        self.name = "insider_trading_agent"
+        self.version = "1.0.0"
+        
         # Database connection setup
         self.db_url = (
             f"postgresql://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}"
@@ -51,16 +81,18 @@ class InsiderTradingAgent:
             'openinsider': os.getenv('OPENINSIDER_API_KEY'),
             'finviz': os.getenv('FINVIZ_API_KEY')
         }
-        self.agent_name = "insider_trading_agent"
         
         # AI Reasoning: Initialize AI reasoning components
         self.ai_reasoning_engine = None  # GPT-4 integration
         self.confidence_threshold = 0.7
         self.signal_threshold = 0.6
         
-        # MCP Communication setup
-        self.mcp_endpoint = os.getenv('ORCHESTRATOR_URL', 'http://localhost:8000/mcp')
-        self.message_queue = []
+        # Multi-tool integration setup
+        self.langchain_llm = None
+        self.computer_use = None
+        self.llama_index = None
+        self.haystack_pipeline = None
+        self.autogen_config = None
         
         # Error handling and recovery
         self.error_count = 0
@@ -70,22 +102,65 @@ class InsiderTradingAgent:
         # Data quality metrics
         self.data_quality_scores = {}
         self.processed_trades_count = 0
+        
+        # Performance tracking
+        self.trades_analyzed = 0
+        self.patterns_detected = 0
+        self.alerts_generated = 0
+
+    async def initialize(self):
+        """Initialize multi-tool integrations"""
+        try:
+            # Initialize LangChain
+            if os.getenv('OPENAI_API_KEY'):
+                self.langchain_llm = OpenAI(
+                    temperature=0.1,
+                    openai_api_key=os.getenv('OPENAI_API_KEY')
+                )
+            
+            # Initialize Computer Use
+            self.computer_use = ComputerUse()
+            
+            # Initialize LlamaIndex
+            if os.getenv('OPENAI_API_KEY'):
+                self.llama_index = LlamaOpenAI(
+                    model="gpt-4",
+                    temperature=0.1,
+                    openai_api_key=os.getenv('OPENAI_API_KEY')
+                )
+            
+            # Initialize Haystack
+            self.haystack_pipeline = Pipeline()
+            
+            # Initialize AutoGen
+            self.autogen_config = autogen.config_list_from_json(
+                "OAI_CONFIG_LIST",
+                filter_dict={"model": ["gpt-4"]}
+            )
+            
+            logger.info(f"{self.name} multi-tool integrations initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Error initializing multi-tool integrations: {e}")
+            self.health_score = 0.5
 
     async def run(self):
         """
         AI Reasoning: Main agent execution loop with intelligent scheduling
-        - Monitor for MCP messages and queries
+        - Monitor for queries and requests
         - Schedule insider trading data fetching based on market hours
         - Handle errors and recovery automatically
         - NO TRADING DECISIONS - only data collection
         """
-        logger.info(f"Starting {self.agent_name} with AI reasoning capabilities")
+        logger.info(f"Starting {self.name} with AI reasoning capabilities")
+        
+        # Initialize multi-tool integrations
+        await self.initialize()
         
         # PSEUDOCODE for main execution loop:
         # 1. Initialize AI reasoning engine and load models
-        # 2. Start MCP message listener in background
-        # 3. Begin continuous execution loop:
-        #    - Check for urgent MCP messages
+        # 2. Start continuous execution loop:
+        #    - Check for urgent queries
         #    - Fetch and process insider trading data
         #    - Update agent health and performance metrics
         #    - Handle any errors with recovery strategies
@@ -96,8 +171,7 @@ class InsiderTradingAgent:
         
         while True:
             try:
-                await self.process_mcp_messages()
-            await self.fetch_and_process_trades()
+                await self.fetch_and_process_trades()
                 await self.update_health_metrics()
                 sleep_interval = self.calculate_sleep_interval()
                 await asyncio.sleep(sleep_interval)
@@ -386,7 +460,7 @@ class InsiderTradingAgent:
         # 8. NO TRADING DECISIONS - only data sharing
         
         message = {
-            'sender': self.agent_name,
+            'sender': self.name,
             'recipient': 'orchestrator',
             'message_type': 'insider_trading_update',
             'content': trade,
@@ -523,19 +597,9 @@ class InsiderTradingAgent:
         await asyncio.sleep(1)
 
 # ============================================================================
-# NEXT STEPS FOR IMPLEMENTATION
+# MAIN EXECUTION
 # ============================================================================
-"""
-NEXT STEPS:
-1. Implement GPT-4 integration for AI reasoning functions
-2. Add real API integrations for OpenInsider, Finviz, and SEC Form 4
-3. Implement MCP communication with orchestrator
-4. Add comprehensive error handling and recovery mechanisms
-5. Create integration tests for agent coordination
-6. Implement data validation and quality checks
-7. Add monitoring and alerting capabilities
-8. Optimize performance and resource usage
 
-CRITICAL: All implementations must maintain NO TRADING DECISIONS policy.
-Focus on data aggregation, analysis, and knowledge base management only.
-""" 
+if __name__ == "__main__":
+    agent = InsiderTradingAgent()
+    asyncio.run(agent.run()) 

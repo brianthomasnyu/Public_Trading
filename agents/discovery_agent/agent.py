@@ -1,6 +1,6 @@
 """
-Discovery Agent - Intelligent Question Generation and Agent Coordination
-=====================================================================
+Discovery Agent - Multi-Tool Enhanced
+====================================
 
 This agent continuously generates context-aware market questions and coordinates
 with other agents to get comprehensive answers, serving as a blueprint for
@@ -15,6 +15,7 @@ import asyncio
 import logging
 import json
 import time
+import os
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
@@ -23,6 +24,35 @@ import requests
 from sqlalchemy import create_engine, text
 from dotenv import load_dotenv
 import uuid
+
+# Multi-Tool Integration Imports
+from langchain.llms import ChatOpenAI
+from langchain.agents import AgentExecutor, create_react_agent
+from langchain.memory import ConversationBufferWindowMemory
+from langchain.tools import Tool
+from langchain.prompts import PromptTemplate
+from langchain.schema import BaseMessage
+from langchain.tracing import LangChainTracer
+
+from llama_index import VectorStoreIndex, Document, ServiceContext
+from llama_index.llms import OpenAI
+from llama_index.embeddings import OpenAIEmbedding
+from llama_index.storage.storage_context import StorageContext
+
+from haystack import Pipeline
+from haystack.nodes import PreProcessor, EmbeddingRetriever, PromptNode
+from haystack.schema import Document as HaystackDocument
+
+import autogen
+from autogen import AssistantAgent, UserProxyAgent, GroupChat, GroupChatManager
+
+# Computer Use Integration
+try:
+    from computer_use import ComputerUseToolSelector
+    COMPUTER_USE_AVAILABLE = True
+except ImportError:
+    COMPUTER_USE_AVAILABLE = False
+    ComputerUseToolSelector = None
 
 # Load environment variables
 load_dotenv()
@@ -167,6 +197,219 @@ class DiscoveryAgent:
         self.questions_generated = 0
         self.questions_completed = 0
         self.agent_coordination_count = 0
+        
+        # Multi-Tool Integration
+        self._initialize_langchain()
+        self._initialize_llama_index()
+        self._initialize_haystack()
+        self._initialize_autogen()
+        self._initialize_computer_use()
+        
+        # Performance tracking
+        self.health_score = 1.0
+        self.last_update = datetime.now()
+        self.error_count = 0
+        
+        logger.info(f"Initialized {self.name} v{self.version} with multi-tool integration")
+
+    def _initialize_langchain(self):
+        """Initialize LangChain for agent orchestration"""
+        try:
+            self.llm = ChatOpenAI(
+                model="gpt-4",
+                temperature=0.1,
+                api_key=os.getenv("OPENAI_API_KEY")
+            )
+            
+            self.memory = ConversationBufferWindowMemory(
+                memory_key="chat_history",
+                return_messages=True,
+                k=10
+            )
+            
+            # Create tools for question generation and coordination
+            self.tools = [
+                Tool(
+                    name="generate_questions",
+                    func=self._generate_questions_tool,
+                    description="Generate context-aware market questions"
+                ),
+                Tool(
+                    name="coordinate_agents",
+                    func=self._coordinate_agents_tool,
+                    description="Coordinate with multiple agents for comprehensive answers"
+                ),
+                Tool(
+                    name="synthesize_answers",
+                    func=self._synthesize_answers_tool,
+                    description="Synthesize answers from multiple agents"
+                )
+            ]
+            
+            # Create agent executor
+            prompt = PromptTemplate.from_template(
+                "You are a discovery agent expert. Use the available tools to generate questions and coordinate with other agents.\n\n"
+                "Available tools: {tools}\n"
+                "Chat history: {chat_history}\n"
+                "Question: {input}\n"
+                "Answer:"
+            )
+            
+            self.agent = create_react_agent(
+                llm=self.llm,
+                tools=self.tools,
+                prompt=prompt
+            )
+            
+            self.agent_executor = AgentExecutor(
+                agent=self.agent,
+                tools=self.tools,
+                memory=self.memory,
+                verbose=True,
+                max_iterations=5
+            )
+            
+            logger.info("LangChain integration initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize LangChain: {e}")
+            self.agent_executor = None
+
+    def _initialize_llama_index(self):
+        """Initialize LlamaIndex for knowledge base management"""
+        try:
+            # Initialize embedding model
+            embed_model = OpenAIEmbedding(
+                model="text-embedding-ada-002",
+                api_key=os.getenv("OPENAI_API_KEY")
+            )
+            
+            # Create service context
+            service_context = ServiceContext.from_defaults(
+                llm=OpenAI(model="gpt-4", api_key=os.getenv("OPENAI_API_KEY")),
+                embed_model=embed_model
+            )
+            
+            # Initialize storage context
+            storage_context = StorageContext.from_defaults()
+            
+            # Create vector store index
+            self.llama_index = VectorStoreIndex(
+                [],
+                service_context=service_context,
+                storage_context=storage_context
+            )
+            
+            # Create query engine
+            self.query_engine = self.llama_index.as_query_engine(
+                response_mode="compact",
+                streaming=True
+            )
+            
+            logger.info("LlamaIndex integration initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize LlamaIndex: {e}")
+            self.query_engine = None
+
+    def _initialize_haystack(self):
+        """Initialize Haystack for document QA"""
+        try:
+            # Create preprocessing pipeline
+            self.preprocessor = PreProcessor(
+                clean_empty_lines=True,
+                clean_whitespace=True,
+                clean_header_footer=True,
+                split_by="word",
+                split_length=500,
+                split_overlap=50
+            )
+            
+            # Create embedding retriever
+            self.retriever = EmbeddingRetriever(
+                document_store=None,  # Will be set when document store is available
+                embedding_model="sentence-transformers/all-MiniLM-L6-v2",
+                model_format="sentence_transformers"
+            )
+            
+            # Create prompt node for QA
+            self.prompt_node = PromptNode(
+                model_name_or_path="gpt-4",
+                api_key=os.getenv("OPENAI_API_KEY"),
+                default_prompt_template="question-answering"
+            )
+            
+            # Create QA pipeline
+            self.qa_pipeline = Pipeline()
+            self.qa_pipeline.add_node(component=self.retriever, name="Retriever", inputs=["Query"])
+            self.qa_pipeline.add_node(component=self.prompt_node, name="PromptNode", inputs=["Retriever"])
+            
+            logger.info("Haystack integration initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize Haystack: {e}")
+            self.qa_pipeline = None
+
+    def _initialize_autogen(self):
+        """Initialize AutoGen for multi-agent coordination"""
+        try:
+            # Create question generation assistant
+            self.question_assistant = AssistantAgent(
+                name="question_generator",
+                system_message="You are an expert question generator. Generate context-aware market questions for investigation.",
+                llm_config={"config_list": [{"model": "gpt-4", "api_key": os.getenv("OPENAI_API_KEY")}]}
+            )
+            
+            # Create coordination assistant
+            self.coordination_assistant = AssistantAgent(
+                name="coordination_specialist",
+                system_message="You are an expert in coordinating with multiple agents to get comprehensive answers.",
+                llm_config={"config_list": [{"model": "gpt-4", "api_key": os.getenv("OPENAI_API_KEY")}]}
+            )
+            
+            # Create user proxy
+            self.user_proxy = UserProxyAgent(
+                name="user_proxy",
+                human_input_mode="NEVER",
+                max_consecutive_auto_reply=10,
+                llm_config={"config_list": [{"model": "gpt-4", "api_key": os.getenv("OPENAI_API_KEY")}]}
+            )
+            
+            # Create group chat
+            self.group_chat = GroupChat(
+                agents=[self.user_proxy, self.question_assistant, self.coordination_assistant],
+                messages=[],
+                max_round=10
+            )
+            
+            # Create group chat manager
+            self.chat_manager = GroupChatManager(
+                groupchat=self.group_chat,
+                llm_config={"config_list": [{"model": "gpt-4", "api_key": os.getenv("OPENAI_API_KEY")}]}
+            )
+            
+            logger.info("AutoGen integration initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize AutoGen: {e}")
+            self.chat_manager = None
+
+    def _initialize_computer_use(self):
+        """Initialize Computer Use for dynamic tool selection"""
+        try:
+            if COMPUTER_USE_AVAILABLE:
+                self.tool_selector = ComputerUseToolSelector(
+                    available_tools=self.tools,
+                    optimization_strategy="performance"
+                )
+                logger.info("Computer Use integration initialized successfully")
+            else:
+                self.tool_selector = None
+                logger.warning("Computer Use not available, using default tool selection")
+                
+        except Exception as e:
+            logger.error(f"Failed to initialize Computer Use: {e}")
+            self.tool_selector = None
         
     async def initialize(self):
         """Initialize the discovery agent"""
